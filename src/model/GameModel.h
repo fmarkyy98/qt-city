@@ -2,7 +2,7 @@
 
 namespace model {
 
-class GameModel{
+class GameModel {
 
 };
 
