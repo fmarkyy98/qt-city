@@ -71,6 +71,7 @@ CMakeLists.txt.user*
 # --------
 *.dll
 *.exe
+out/
 
 # VS 
 .vs/
