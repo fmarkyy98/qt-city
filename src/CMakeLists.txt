@@ -6,6 +6,10 @@ set(INCLUDES
 	${CMAKE_CURRENT_SOURCE_DIR}/persistence/
 )
 
+set(LIBS
+	Qt6::Widgets
+)
+
 file(GLOB INTERNAL_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/model/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/view/*.h
@@ -21,12 +25,10 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/view/MainWindow.cpp
 )
 
-# qt6_wrap_ui(UI_HEADERS ${UIS})
-
 add_executable(${PROJECT_NAME} ${SOURCES} ${INTERNAL_HEADERS} ${UI_HEADERS})
 
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
-target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDES})
+target_link_libraries(${TARGET} ${LIBS})
+target_include_directories(${TARGET} PRIVATE ${INCLUDES})
 
 if(WIN32)
 	add_custom_command(TARGET ${TARGET} POST_BUILD

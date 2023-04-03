@@ -17,7 +17,4 @@ find_package(Qt6 REQUIRED COMPONENTS
 	Core
 )
 
-message(${PROJECT_SOURCE_DIR})
-message(${CMAKE_PREFIX_PATH})
-
 add_subdirectory(src)
