@@ -16,6 +16,12 @@ file(GLOB INTERNAL_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/persistence/*.h
 )
 
+file(GLOB PUBLIC_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/model/include/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/view/include/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/persistence/include/*.h
+)
+
 file(GLOB_RECURSE UIS 
 	${CMAKE_CURRENT_SOURCE_DIR}/*.ui
 )
