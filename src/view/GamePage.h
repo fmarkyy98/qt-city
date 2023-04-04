@@ -19,8 +19,6 @@ signals:
     void showMenuPage();
 
 private slots:
-    void onMenuButtonClicked();
-
     void onSaveButtonClicked();
 
     void onSettingsButtonClicked();
@@ -32,6 +30,8 @@ private slots:
     void onFasterButtonClicked();
 
     void onExitButtonClicked();
+
+    void on_menuButton_clicked();
 
 private:
     Ui::GamePage *ui;

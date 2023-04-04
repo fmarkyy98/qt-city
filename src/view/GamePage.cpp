@@ -14,11 +14,6 @@ GamePage::~GamePage()
     delete ui;
 }
 
-void GamePage::onMenuButtonClicked()
-{
-    emit showMenuPage();
-}
-
 void GamePage::onSaveButtonClicked()
 {
     //TODO
@@ -52,5 +47,17 @@ void GamePage::onFasterButtonClicked()
 void GamePage::onExitButtonClicked()
 {
     //TODO
+}
+
+
+/*void GamePage::onMenuButtonClicked()
+{
+    emit showMenuPage();
+}
+*/
+
+void GamePage::on_menuButton_clicked()
+{
+    emit showMenuPage();
 }
 
