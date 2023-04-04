@@ -5,7 +5,6 @@
 
 #include <QObject>
 
-namespace common {
 namespace details {
 
 class IServiceMeta : public QObject {
@@ -22,13 +21,11 @@ class IService {
 using IServiceMeta = details::IServiceMeta;
 
 public:
-    IService() : meta_(std::make_unique<Meta_T>())
+    IService() : m_pMeta(std::make_unique<Meta_T>())
     {}
 
-    Meta_T& meta() { return static_cast<Meta_T&>(*meta_); }
+    Meta_T& meta() { return static_cast<Meta_T&>(*m_pMeta); }
 
 private:
-    std::unique_ptr<IServiceMeta> meta_;
+    std::unique_ptr<IServiceMeta> m_pMeta;
 };
-
-}  // namespace common
