@@ -29,6 +29,8 @@ file(GLOB_RECURSE UIS
 set(SOURCES
     main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/MainWindow.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/GamePage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/MenuPage.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${INTERNAL_HEADERS} ${UI_HEADERS})
