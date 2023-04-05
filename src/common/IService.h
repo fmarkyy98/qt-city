@@ -18,14 +18,14 @@ signals:
 template<typename Meta_T>
 requires std::is_base_of_v<details::IServiceMeta, Meta_T>
 class IService {
-using IServiceMeta = details::IServiceMeta;
-
 public:
-    IService() : m_pMeta(std::make_unique<Meta_T>())
+    using Meta = Meta_T;
+
+    IService() : m_pMeta(std::make_unique<Meta>())
     {}
 
-    Meta_T& meta() { return static_cast<Meta_T&>(*m_pMeta); }
+    Meta* meta() { return static_cast<Meta*>(m_pMeta.get()); }
 
 private:
-    std::unique_ptr<IServiceMeta> m_pMeta;
+    std::unique_ptr<details::IServiceMeta> m_pMeta;
 };
