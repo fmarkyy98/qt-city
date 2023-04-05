@@ -1,5 +1,4 @@
-#ifndef WORKPLACEBASE_H
-#define WORKPLACEBASE_H
+#pragma once
 
 #include <QObject>
 
@@ -12,5 +11,3 @@ public:
 signals:
 
 };
-
-#endif // WORKPLACEBASE_H
