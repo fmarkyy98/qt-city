@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QObject>
+
 #include "IFileIOService.h"
 
 class FileIOService
