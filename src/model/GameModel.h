@@ -6,4 +6,4 @@ class GameModel {
 
 };
 
-} // namespace model
+}  // namespace model
