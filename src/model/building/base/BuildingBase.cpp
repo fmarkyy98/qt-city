@@ -35,11 +35,11 @@ void BuildingBase::advanceBuildingProcess() {
         emit buildingProcessFinished();
 }
 
-bool BuildingBase::canEvolvBuilding() const {
+bool BuildingBase::canEvolveBuilding() const {
     return m_buildingLevel < s_maxBuildingLevel;
 }
 
-void BuildingBase::evolvBuilding() {
+void BuildingBase::evolveBuilding() {
     ++m_buildingLevel;
     m_buildingProgress = 0;
 }

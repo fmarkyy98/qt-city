@@ -24,8 +24,8 @@ public:
     bool canBuildOnZone(const ZoneType& zoneType) const;
     bool isBuildInProgress() const;
     void advanceBuildingProcess();
-    bool canEvolvBuilding() const;
-    void evolvBuilding();
+    bool canEvolveBuilding() const;
+    void evolveBuilding();
 
 protected:
     int m_width;
