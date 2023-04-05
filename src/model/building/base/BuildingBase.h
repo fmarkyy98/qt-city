@@ -4,8 +4,6 @@
 
 #include "../../zone/ZoneType.h"
 
-namespace model {
-
 class BuildingBase : public QObject
 {
     Q_OBJECT
@@ -40,5 +38,3 @@ private:
     static constexpr int s_finishedBuildingValue = 128;
     static constexpr int s_maxBuildingLevel = 3;
 };
-
-}  // namespace model

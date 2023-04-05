@@ -1,7 +1,5 @@
 #include "BuildingBase.h"
 
-using namespace model;
-
 BuildingBase::BuildingBase(QObject *parent)
     : QObject(parent)
 {}
