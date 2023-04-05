@@ -2,8 +2,6 @@
 
 #include <list>
 
-#include <QObject>
-
 #include "../common/IService.h" // TODO normális útvonalat megadni.
 
 class IFileIOServiceMeta : public details::IServiceMeta {
