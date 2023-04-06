@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include <QStackedWidget>
@@ -12,16 +11,14 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
 
 private slots:
     void showMenuPage();
     void showGamePage();
 
 private:
-    QStackedWidget *stackedWidget;
-    GamePage *gamePage;
-    MenuPage *menuPage;
+    QStackedWidget *m_pStackedWidget;
+    GamePage *m_pGamePage;
+    MenuPage *m_pMenuPage;
 
 };
-#endif // MAINWINDOW_H

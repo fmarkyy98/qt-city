@@ -1,30 +1,25 @@
-#include "mainwindow.h"
+#include "Mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    stackedWidget = new QStackedWidget(this);
-    gamePage = new GamePage(this);
-    menuPage = new MenuPage(this);
-    stackedWidget->addWidget(gamePage);
-    stackedWidget->addWidget(menuPage);
-    connect(gamePage, &GamePage::showMenuPage, this, &MainWindow::showMenuPage);
-    connect(menuPage, &MenuPage::showGamePage, this, &MainWindow::showGamePage);
-    setCentralWidget(stackedWidget);
+    m_pStackedWidget = new QStackedWidget(this);
+    m_pGamePage = new GamePage();
+    m_pMenuPage = new MenuPage();
+    m_pStackedWidget->addWidget(m_pGamePage);
+    m_pStackedWidget->addWidget(m_pMenuPage);
+    connect(m_pGamePage, &GamePage::showMenuPage, this, &MainWindow::showMenuPage);
+    connect(m_pMenuPage, &MenuPage::showGamePage, this, &MainWindow::showGamePage);
+    setCentralWidget(m_pStackedWidget);
     showMenuPage();
-}
-
-MainWindow::~MainWindow()
-{
-    //delete ui;
 }
 
 void MainWindow::showGamePage()
 {
-    stackedWidget->setCurrentWidget(gamePage);
+    m_pStackedWidget->setCurrentWidget(m_pGamePage);
 }
 
 void MainWindow::showMenuPage()
 {
-    stackedWidget->setCurrentWidget(menuPage);
+    m_pStackedWidget->setCurrentWidget(m_pMenuPage);
 }

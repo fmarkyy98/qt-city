@@ -1,5 +1,4 @@
-#ifndef MENUPAGE_H
-#define MENUPAGE_H
+#pragma once
 
 #include <QWidget>
 
@@ -19,10 +18,11 @@ signals:
     void showGamePage();
 
 private slots:
-    void on_newGameButton_clicked();
+    void onNewGameButtonClicked();
+
+private:
+    void initConnections();
 
 private:
     Ui::MenuPage *ui;
 };
-
-#endif // MENUPAGE_H
