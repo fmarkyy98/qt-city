@@ -1,5 +1,4 @@
-#ifndef GAMEPAGE_H
-#define GAMEPAGE_H
+#pragma once
 
 #include <QWidget>
 
@@ -31,10 +30,12 @@ private slots:
 
     void onExitButtonClicked();
 
-    void on_menuButton_clicked();
+    void onMenuButtonClicked();
 
 private:
+    void initConnections();
+private:
     Ui::GamePage *ui;
+
 };
 
-#endif // GAMEPAGE_H
