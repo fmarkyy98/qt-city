@@ -5,19 +5,19 @@ BuildingBase::BuildingBase(QObject *parent)
 {}
 
 std::pair<int, int> BuildingBase::getSize() const {
-    return {m_width, m_height};
+    return {m_Width, m_Height};
 }
 
 int BuildingBase::getWidth() const {
-    return m_width;
+    return m_Width;
 }
 
 int BuildingBase::getHeight() const {
-    return m_height;
+    return m_Height;
 }
 
 int BuildingBase::getLevel() {
-    return m_buildingLevel;
+    return m_BuildingLevel;
 }
 
 bool BuildingBase::canBuildOnZone(const ZoneType& zoneType) const {
@@ -25,22 +25,24 @@ bool BuildingBase::canBuildOnZone(const ZoneType& zoneType) const {
 }
 
 bool BuildingBase::isBuildInProgress() const {
-    return m_buildingProgress < s_finishedBuildingValue;
+    return m_BuildingProgress < s_FinishedBuildingValue;
 }
 
 void BuildingBase::advanceBuildingProcess() {
-    m_buildingProgress += 16 / (m_width * m_height);
+    m_BuildingProgress += 16 / (m_Width * m_Height);
 
-    if (m_buildingProgress > s_finishedBuildingValue)
+    if (m_BuildingProgress > s_FinishedBuildingValue) {
+        ++m_BuildingLevel;
+        evolveSpecificBuildingImpl();
         emit buildingProcessFinished();
+    }
 }
 
 bool BuildingBase::canEvolveBuilding() const {
-    return m_buildingLevel < s_maxBuildingLevel;
+    return m_BuildingLevel < s_MaxBuildingLevel;
 }
 
-void BuildingBase::evolveBuilding() {
-    ++m_buildingLevel;
-    m_buildingProgress = 0;
+void BuildingBase::startEvolveBuilding() {
+    m_BuildingProgress = 0;
 }
 
