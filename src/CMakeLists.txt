@@ -1,6 +1,7 @@
 set(TARGET QtCity)
 
 set(INCLUDES 
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/
 	${CMAKE_CURRENT_SOURCE_DIR}/model/
 	${CMAKE_CURRENT_SOURCE_DIR}/view/
 	${CMAKE_CURRENT_SOURCE_DIR}/persistence/
@@ -11,6 +12,7 @@ set(LIBS
 )
 
 file(GLOB INTERNAL_HEADERS
+        ${CMAKE_CURRENT_SOURCE_DIR}/common/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/model/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/view/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/persistence/*.h
@@ -28,8 +30,18 @@ file(GLOB_RECURSE UIS
 
 set(SOURCES
     main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/view/MainWindow.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/BuildingBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/WorkplaceBase.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/ResidentialBuilding.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModel.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/persistence/FileIOService.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/view/GamePage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/MainWindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/MenuPage.cpp
 )
 
