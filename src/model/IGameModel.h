@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../common/IService.h" // TODO normális útvonalat megadni.
-#include "zone/ZoneType.h"
+#include "../common/zone/ZoneType.h"
 
 class IGameModelMeta : public details::IServiceMeta {
 signals:

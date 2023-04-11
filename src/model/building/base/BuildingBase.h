@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "../../zone/ZoneType.h"
+#include "../../../common/zone/ZoneType.h"
 
 class BuildingBase : public QObject
 {
