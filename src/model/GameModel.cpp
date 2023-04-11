@@ -9,4 +9,3 @@ void GameModel::load(const QString &path)
 {
     std::runtime_error("TODO/marko");
 }
-

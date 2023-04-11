@@ -2,18 +2,15 @@
 
 #include <QObject>
 
-#include "../../zone/ZoneType.h"
+#include "../../../common/building/BuildingType.h"
+#include "../../../common/zone/ZoneType.h"
 
-class BuildingBase : public QObject
-{
+class BuildingBase : public QObject {
     Q_OBJECT
 public:
-    explicit BuildingBase(QObject *parent = nullptr);
+    explicit BuildingBase(QObject* parent = nullptr);
 
-signals:
-    void buildingProcessFinished();
-
-public:
+    virtual BuildingType getType() const = 0;
     virtual ZoneType getCompatibleZone() const = 0;
 
     std::pair<int, int> getSize() const;
@@ -25,16 +22,22 @@ public:
     bool isBuildInProgress() const;
     void advanceBuildingProcess();
     bool canEvolveBuilding() const;
-    void evolveBuilding();
+    void startEvolveBuilding();
+
+signals:
+    void buildingProcessFinished();
 
 protected:
-    int m_width;
-    int m_height;
+    virtual void evolveSpecificBuildingImpl() = 0;
 
-    int m_buildingProgress = 0;
-    int m_buildingLevel = 1;
+protected:
+    int m_Width;
+    int m_Height;
+
+    int m_BuildingProgress = 0;
+    int m_BuildingLevel = 0;
 
 private:
-    static constexpr int s_finishedBuildingValue = 128;
-    static constexpr int s_maxBuildingLevel = 3;
+    static constexpr int s_FinishedBuildingValue = 128;
+    static constexpr int s_MaxBuildingLevel = 3;
 };
