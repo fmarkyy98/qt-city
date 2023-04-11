@@ -1,8 +1,9 @@
 #pragma once
 
-enum class ZoneType {
+enum class BuildingType {
     Residential,
-    Industrial,
+    Factory,
+    Police,
     None,
 
     Count // Cool trick to get the count of the enum values.
