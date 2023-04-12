@@ -2,12 +2,8 @@
 
 #include "building/base/BuildingBase.h"
 
-class Tile
+struct Tile
 {
-public:
-    BuildingBase* getBuilding();
-    ZoneType getZone();
-private:
-    BuildingBase* m_Building;
-    ZoneType m_ZoneType;
+    BuildingBase* building = nullptr;
+    ZoneType zoneType = ZoneType::None;
 };

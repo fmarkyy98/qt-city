@@ -7,12 +7,14 @@ class GameBoard : public QObject
 {
     Q_OBJECT
 public:
-    explicit GameBoard();
-    Tile at(std::pair<int,int>)const;
+    explicit GameBoard(QObject* parent = nullptr);
+    const Tile& at(std::pair<int,int> position)const;
+    Tile& at(std::pair<int,int> position);
     void placeBuilding(BuildingType buildingType, std::pair<int, int> position);
     void placeZone(ZoneType zoneType, std::pair<int, int> position);
+    void reset();
 
 private:
-    std::array<std::array<Tile, 15>, 20> m_Board;
-    QList<std::unique_ptr<BuildingBase>> m_Buildings; //new helyett std::make_unique<ResidetalBuidling>()
+    std::array<std::array<Tile, 15>, 20> m_TileMatrix;
+    std::vector<std::unique_ptr<BuildingBase>> m_Buildings;
 };
