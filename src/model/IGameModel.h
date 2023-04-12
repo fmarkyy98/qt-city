@@ -17,4 +17,6 @@ public:
     virtual void placeZone(ZoneType zoneType, int row, int col) = 0;
     virtual void save(const QString& path) const = 0;
     virtual void load(const QString& path) = 0;
+    virtual int getHeight() = 0;
+    virtual int getWidth() = 0;
 };

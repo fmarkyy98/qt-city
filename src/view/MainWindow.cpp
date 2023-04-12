@@ -1,11 +1,11 @@
-#include "Mainwindow.h"
+#include "MainWindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(std::shared_ptr<IGameModel> model, QWidget *parent)
     : QMainWindow(parent)
 {
     m_pStackedWidget = new QStackedWidget(this);
-    m_pGamePage = new GamePage();
-    m_pMenuPage = new MenuPage();
+    m_pGamePage = new GamePage(model);
+    m_pMenuPage = new MenuPage(model);
     m_pStackedWidget->addWidget(m_pGamePage);
     m_pStackedWidget->addWidget(m_pMenuPage);
     connect(m_pGamePage, &GamePage::showMenuPage, this, &MainWindow::showMenuPage);
@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::showGamePage()
 {
     m_pStackedWidget->setCurrentWidget(m_pGamePage);
+    m_pGamePage->newGame();
 }
 
 void MainWindow::showMenuPage()

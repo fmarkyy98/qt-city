@@ -3,6 +3,7 @@
 #include <QObject>
 
 #include "IGameModel.h"
+#include "../persistence/IFileIOService.h"
 
 class GameModel
     : public QObject
@@ -10,6 +11,12 @@ class GameModel
 {
     Q_OBJECT
 
-    void save(const QString& path) const override;
-    void load(const QString& path) override;
+public:
+    GameModel(std::shared_ptr<IFileIOService> fileIOService) {}
+    virtual ZoneType zoneAt(int row, int col) const {return ZoneType::None;}
+    virtual void placeZone(ZoneType zoneType, int row, int col) {};
+    virtual void save(const QString& path) const {};
+    virtual void load(const QString& path) {};
+    virtual int getHeight() {return 15;}
+    virtual int getWidth() {return 20;}
 };

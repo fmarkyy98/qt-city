@@ -1,12 +1,17 @@
 #include "GamePage.h"
 #include "ui_GamePage.h"
+#include <QDir>
+#include <iostream>
 
-GamePage::GamePage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::GamePage)
+GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::GamePage)
+    , m_pGameModel(model)
 {
     ui->setupUi(this);
     initConnections();
+    rowInd = 0;
+    columnInd = 0;
 }
 
 GamePage::~GamePage()
@@ -65,4 +70,67 @@ void GamePage::initConnections()
     connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
 }
 
+void GamePage::onTimeElapsed()
+{
+    //TODO
+}
+
+void GamePage::onBoardChanged()
+{
+    //TODO
+}
+
+void GamePage::onZonesChanged()
+{
+    //TODO
+}
+
+void GamePage::onMoneyChanaged()
+{
+    //TODO
+}
+
+void GamePage::newGame()
+{
+    //QDir dir("../resource/");
+    std::cerr<<m_pGameModel->getHeight();
+    std::cerr<<m_pGameModel->getWidth();
+    ui->tableWidget->setRowCount(m_pGameModel->getWidth());
+    ui->tableWidget->setColumnCount(m_pGameModel->getHeight());
+    for(int y=0;y<m_pGameModel->getHeight();y++)
+    {
+        for(int x=0;x<m_pGameModel->getWidth();x++)
+        {
+            QTableWidgetItem* newItem = new QTableWidgetItem;
+            //newItem->setIcon(QIcon("/Users/nemesviko/Desktop/QtCity/qt-city/resource/forest-icon-png-7089.png"));
+            newItem->setIcon(QIcon(":/images/free"));
+
+            ui->tableWidget->setItem(x, y, newItem);
+
+        }
+    }
+    connect(ui->tableWidget,&QAbstractItemView::clicked,this,[this](const QModelIndex& idx)->void{
+        rowInd=idx.row();
+        columnInd=idx.column();
+        qDebug() << "Clicked: " << idx.row()<<","<<idx.column();
+        qDebug() << "Saved: " << rowInd<<","<<columnInd;
+    });
+
+}
+
+/*std::tuple<int, int> GamePage::saveClickedRow(int row, int column)
+{
+    qDebug() << row << column;
+    return std::make_tuple(row, column);
+}*/
+
+void GamePage::on_tableWidget_2_cellClicked(int row, int column)
+{
+    //if(column==0) m_pGameModel->placeZone()  -road nincsen?
+    /*switch(column)
+    {
+        case 0:
+            m_pGameModel->placeZone(ZoneType::Residential, )
+    }*/
+}
 

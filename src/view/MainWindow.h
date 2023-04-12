@@ -10,7 +10,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(std::shared_ptr<IGameModel> model, QWidget *parent = nullptr);
 
 private slots:
     void showMenuPage();
