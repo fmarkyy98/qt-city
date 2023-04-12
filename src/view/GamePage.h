@@ -45,8 +45,9 @@ private slots:
 
     void onMenuButtonClicked();
 
+    void onRefreshboard();
 
-    void on_tableWidget_2_cellClicked(int row, int column);
+    void onTableWidget2Clicked(int row, int column);
 
 private:
     void initConnections();

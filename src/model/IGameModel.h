@@ -4,6 +4,7 @@
 #include "../common/zone/ZoneType.h"
 
 class IGameModelMeta : public details::IServiceMeta {
+    Q_OBJECT
 signals:
     void onMoneyChanged(int money);
     void onBoardChanged();
