@@ -2,7 +2,9 @@
 
 #include <QObject>
 
+#include <memory>
 #include "IGameModel.h"
+#include "GameBoard.h"
 #include "../persistence/IFileIOService.h"
 
 class GameModel
@@ -12,11 +14,22 @@ class GameModel
     Q_OBJECT
 
 public:
-    GameModel(std::shared_ptr<IFileIOService> fileIOService) {}
-    virtual ZoneType zoneAt(int row, int col) const {return ZoneType::None;}
-    virtual void placeZone(ZoneType zoneType, int row, int col) {};
-    virtual void save(const QString& path) const {};
-    virtual void load(const QString& path) {};
-    virtual int getHeight() {return 15;}
-    virtual int getWidth() {return 20;}
+    explicit GameModel(std::shared_ptr<IFileIOService> fileIOService,
+                       QObject* parent = nullptr);
+    void save(const QString& path) const override;
+    void load(const QString& path) override;
+    int getHeight() const override;
+    int getWidth() const override;
+    void placeZone(ZoneType zoneType, int row, int col) override;
+    void placeBuilding(BuildingType buildingType, int row, int col) override;
+    ZoneType zoneAt(int row, int col) const override;
+    BuildingType buildingAt(int row, int col) const override;
+    void newGame() override;
+
+private:
+    GameBoard m_Board;
+    std::shared_ptr<IFileIOService> m_FileIOService;
+
+private:
+    bool canPlaceBuilding(); //TODO
 };

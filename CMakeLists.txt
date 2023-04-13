@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
         src/view/MenuPage.h
         src/view/MenuPage.ui
         src/view/MenuPage.cpp
+        src/model/GameBoard.h
+        src/model/GameBoard.cpp
         src/model/GameModel.h
         src/model/GameModel.cpp
         src/model/IGameModel.h
