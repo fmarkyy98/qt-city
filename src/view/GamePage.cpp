@@ -127,54 +127,57 @@ void GamePage::onTableWidget2Clicked(int row, int column)
     switch(column)
     {
         case 0:
-            m_pGameModel->placeZone(ZoneType::Residential, row, column);
+            m_pGameModel->placeZone(ZoneType::Residential, rowInd, columnInd);
+            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
         break;
         case 1:
-            m_pGameModel->placeZone(ZoneType::Residential, row, column);
+            m_pGameModel->placeZone(ZoneType::Residential, rowInd, columnInd);
+            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
         break;
         case 2:
-            m_pGameModel->placeZone(ZoneType::Industrial, row, column);
+            m_pGameModel->placeZone(ZoneType::Industrial, rowInd, columnInd);
+            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
         break;
         case 3:
-            m_pGameModel->placeZone(ZoneType::Industrial, row, column);
+            m_pGameModel->placeZone(ZoneType::Industrial, rowInd, columnInd);
+            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
         break;
         case 4:
-            m_pGameModel->placeZone(ZoneType::Service, row, column);
+            m_pGameModel->placeZone(ZoneType::Service, rowInd, columnInd);
+            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
         break;
         case 5:
-            m_pGameModel->placeZone(ZoneType::Service, row, column);
+            m_pGameModel->placeZone(ZoneType::Service, rowInd, columnInd);
+            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
         break;
         case 6:
             m_pGameModel->placeZone(ZoneType::Service, row, column);
+            m_pGameModel->placeBuilding(BuildingType::Residential, row, column);
         break;
     }
 }
 
 void GamePage::onRefreshboard()
 {
-    ui->tableWidget->clearContents();
     for(int y=0;y<m_pGameModel->getHeight();y++)
     {
         for(int x=0;x<m_pGameModel->getWidth();x++)
         {
-            QTableWidgetItem* newItem = new QTableWidgetItem;
-
             //itt building at majd
-            switch (m_pGameModel->zoneAt(x,y)) {
-                case ZoneType::Industrial:
-                    newItem->setIcon(QIcon(":/images/factory"));
+            switch (m_pGameModel->buildingAt(x,y)) {
+                case BuildingType::Factory:
+                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/factory"));
                     break;
-                case ZoneType::Residential:
-                    newItem->setIcon(QIcon(":/images/house"));
+                case BuildingType::Residential:
+                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/house"));
                     break;
-                case ZoneType::Service:
-                    newItem->setIcon(QIcon(":/images/store"));
+                case BuildingType::Police:
+                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/police"));
                     break;
                 default:
-                    newItem->setIcon(QIcon(":/images/free"));
+                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/free"));
                     break;
             }
-            ui->tableWidget->setItem(x, y, newItem);
 
         }
     }
