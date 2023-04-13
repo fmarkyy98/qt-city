@@ -152,6 +152,33 @@ void GamePage::onTableWidget2Clicked(int row, int column)
 
 void GamePage::onRefreshboard()
 {
-    //TODO
+    ui->tableWidget->clearContents();
+    for(int y=0;y<m_pGameModel->getHeight();y++)
+    {
+        for(int x=0;x<m_pGameModel->getWidth();x++)
+        {
+            QTableWidgetItem* newItem = new QTableWidgetItem;
+
+            //itt building at majd
+            switch (m_pGameModel->zoneAt(x,y)) {
+                case ZoneType::Industrial:
+                    newItem->setIcon(QIcon(":/images/factory"));
+                    break;
+                case ZoneType::Residential:
+                    newItem->setIcon(QIcon(":/images/house"));
+                    break;
+                case ZoneType::Service:
+                    newItem->setIcon(QIcon(":/images/store"));
+                    break;
+                default:
+                    newItem->setIcon(QIcon(":/images/free"));
+                    break;
+            }
+            ui->tableWidget->setItem(x, y, newItem);
+
+        }
+    }
+
+
 }
 
