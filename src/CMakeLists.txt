@@ -36,6 +36,7 @@ set(SOURCES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/ResidentialBuilding.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/GameBoard.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModel.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/persistence/FileIOService.cpp
