@@ -11,6 +11,7 @@ MainWindow::MainWindow(std::shared_ptr<IGameModel> model, QWidget *parent)
     connect(m_pGamePage, &GamePage::showMenuPage, this, &MainWindow::showMenuPage);
     connect(m_pMenuPage, &MenuPage::showGamePage, this, &MainWindow::showGamePage);
     setCentralWidget(m_pStackedWidget);
+    setStyleSheet("MainWindow {border-image: url(:/images/background) 0 0 0 0 stretch stretch;}");
     showMenuPage();
 }
 

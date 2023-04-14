@@ -8,5 +8,6 @@
         <file alias="factory">factory_318-936853.png</file>
         <file alias="forest">forest.png</file>
         <file alias="road">road_16.png</file>
+        <file alias="background">background.png</file>
     </qresource>
 </RCC>

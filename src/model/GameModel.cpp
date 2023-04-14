@@ -19,12 +19,12 @@ void GameModel::load(const QString &path)
 
 int GameModel::getHeight() const
 {
-    return 15;
+    return 20;
 }
 
 int GameModel::getWidth() const
 {
-    return 20;
+    return 15;
 }
 
 void GameModel::placeZone(ZoneType zoneType, int row, int col)

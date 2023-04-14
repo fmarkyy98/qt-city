@@ -66,6 +66,7 @@ private:
     std::shared_ptr<IGameModel> m_pGameModel;
     bool isGamePaused;
     int rowInd, columnInd;
+    std::vector<QString> images;
     QTimer timer;
 
 };
