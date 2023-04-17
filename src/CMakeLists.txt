@@ -34,6 +34,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/BuildingBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/WorkplaceBase.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/Factory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/ResidentialBuilding.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameBoard.cpp

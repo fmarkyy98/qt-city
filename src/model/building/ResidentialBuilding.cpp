@@ -13,6 +13,22 @@ ZoneType ResidentialBuilding::getCompatibleZone() const {
     return s_Zone;
 }
 
+std::pair<int, int> ResidentialBuilding::getSize() const {
+    return {s_Width, s_Height};
+}
+
+int ResidentialBuilding::getWidth() const {
+    return s_Width;
+}
+
+int ResidentialBuilding::getHeight() const {
+    return s_Height;
+}
+
+int ResidentialBuilding::getCapacity() const {
+    return s_CapacityByLevel[m_BuildingLevel];
+}
+
 int ResidentialBuilding::getChildInhabitantCount() const {
     return m_ChildInhabitantCount;
 }
@@ -30,7 +46,7 @@ int ResidentialBuilding::getInhabitantCount() const {
 }
 
 ResidentialBuilding& ResidentialBuilding::setChildInhabitantCount(int childCount) {
-    if (childCount + m_AdultInhabitantCount + m_RetiredInhabitantCount > m_Capacity)
+    if (childCount + m_AdultInhabitantCount + m_RetiredInhabitantCount > getCapacity())
         throw std::invalid_argument("Inhabitant limit exceeded :(");
 
     m_ChildInhabitantCount = childCount;
@@ -39,7 +55,7 @@ ResidentialBuilding& ResidentialBuilding::setChildInhabitantCount(int childCount
 }
 
 ResidentialBuilding& ResidentialBuilding::setAdultInhabitantCount(int adultCount) {
-    if (m_ChildInhabitantCount + adultCount + m_RetiredInhabitantCount > m_Capacity)
+    if (m_ChildInhabitantCount + adultCount + m_RetiredInhabitantCount > getCapacity())
         throw std::invalid_argument("Inhabitant limit exceeded :(");
 
     m_AdultInhabitantCount = adultCount;
@@ -48,7 +64,7 @@ ResidentialBuilding& ResidentialBuilding::setAdultInhabitantCount(int adultCount
 }
 
 ResidentialBuilding& ResidentialBuilding::setRetiredInhabitantCount(int retiredCount) {
-    if (m_ChildInhabitantCount + m_AdultInhabitantCount + retiredCount > m_Capacity)
+    if (m_ChildInhabitantCount + m_AdultInhabitantCount + retiredCount > getCapacity())
         throw std::invalid_argument("Inhabitant limit exceeded :(");
 
     m_RetiredInhabitantCount = retiredCount;
@@ -57,7 +73,7 @@ ResidentialBuilding& ResidentialBuilding::setRetiredInhabitantCount(int retiredC
 }
 
 void ResidentialBuilding::settleIn(int childCount, int adultCount, int retiredCount) {
-    if (getInhabitantCount() + childCount + adultCount + retiredCount > m_Capacity)
+    if (getInhabitantCount() + childCount + adultCount + retiredCount > getCapacity())
         throw std::invalid_argument("Inhabitant limit exceeded :(");
 
     m_ChildInhabitantCount += childCount;
@@ -86,5 +102,5 @@ void ResidentialBuilding::increseInhabitantAge() {
 }
 
 void ResidentialBuilding::evolveSpecificBuildingImpl() {
-    m_Capacity = s_CapacityByLevel[m_BuildingLevel];
+    // TODO do we need this?
 }

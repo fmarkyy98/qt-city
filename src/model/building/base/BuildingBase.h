@@ -11,11 +11,11 @@ public:
     explicit BuildingBase(QObject* parent = nullptr);
 
     virtual BuildingType getType() const = 0;
-    virtual ZoneType getCompatibleZone() const = 0;
 
-    std::pair<int, int> getSize() const;
-    int getWidth() const;
-    int getHeight() const;
+    virtual std::pair<int, int> getSize() const = 0;
+    virtual int getWidth() const = 0;
+    virtual int getHeight() const = 0;
+
     int getLevel();
 
     bool canBuildOnZone(const ZoneType& zoneType) const;
@@ -28,12 +28,11 @@ signals:
     void buildingProcessFinished();
 
 protected:
+    virtual ZoneType getCompatibleZone() const = 0;
+
     virtual void evolveSpecificBuildingImpl() = 0;
 
 protected:
-    int m_Width;
-    int m_Height;
-
     int m_BuildingProgress = 0;
     int m_BuildingLevel = 0;
 
