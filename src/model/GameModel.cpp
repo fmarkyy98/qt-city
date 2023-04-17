@@ -1,4 +1,5 @@
 #include "GameModel.h"
+#include "QtCore/qdebug.h"
 
 GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
                      QObject *parent)
@@ -18,12 +19,12 @@ void GameModel::load(const QString &path)
 
 int GameModel::getHeight() const
 {
-    return 15;
+    return 20;
 }
 
 int GameModel::getWidth() const
 {
-    return 20;
+    return 15;
 }
 
 void GameModel::placeZone(ZoneType zoneType, int row, int col)
@@ -45,7 +46,14 @@ ZoneType GameModel::zoneAt(int row, int col) const
 
 BuildingType GameModel::buildingAt(int row, int col) const
 {
-    return m_Board.at({row, col}).building->getType();
+    auto building = m_Board.at({row, col}).building;
+    if(building != nullptr)
+    {
+        qDebug() << "buildingAt: " << row<<","<<col;
+    }
+    return building != nullptr
+        ? building->getType()
+        : BuildingType::None;
 }
 
 void GameModel::newGame()

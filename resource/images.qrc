@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="house">icons8-house-100.png</file>
+        <file alias="free">free.png</file>
+        <file alias="police">police-station.png</file>
+        <file alias="stadium">stadium.png</file>
+        <file alias="store">store.png</file>
+        <file alias="factory">factory_318-936853.png</file>
+        <file alias="forest">forest.png</file>
+        <file alias="road">road_16.png</file>
+        <file alias="background">background.png</file>
+    </qresource>
+</RCC>

@@ -15,6 +15,6 @@ public:
     void reset();
 
 private:
-    std::array<std::array<Tile, 15>, 20> m_TileMatrix;
+    std::array<std::array<Tile, 20>, 15> m_TileMatrix;
     std::vector<std::unique_ptr<BuildingBase>> m_Buildings;
 };

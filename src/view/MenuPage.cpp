@@ -3,9 +3,10 @@
 #include <QScreen>
 
 
-MenuPage::MenuPage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::MenuPage)
+MenuPage::MenuPage(std::shared_ptr<IGameModel> model, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::MenuPage)
+    , m_pGameModel(model)
 {
     ui->setupUi(this);
     initConnections();

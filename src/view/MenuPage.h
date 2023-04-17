@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QWidget>
+#include "../model/IGameModel.h"
+#include "GamePage.h"
 
 namespace Ui {
 class MenuPage;
@@ -11,7 +13,7 @@ class MenuPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit MenuPage(QWidget *parent = nullptr);
+    explicit MenuPage(std::shared_ptr<IGameModel> model, QWidget *parent = nullptr);
     ~MenuPage();
 
 signals:
@@ -22,7 +24,11 @@ private slots:
 
 private:
     void initConnections();
+    void initGame();
+    void newGame();
+    void load();
 
 private:
     Ui::MenuPage *ui;
+    std::shared_ptr<IGameModel> m_pGameModel;
 };
