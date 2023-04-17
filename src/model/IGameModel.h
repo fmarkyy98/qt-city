@@ -24,4 +24,5 @@ public:
     virtual void save(const QString& path) const = 0;
     virtual void load(const QString& path) = 0;
     virtual void newGame() = 0;
+    virtual void advanceSimulation() = 0;
 };

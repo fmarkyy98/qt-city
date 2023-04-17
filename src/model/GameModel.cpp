@@ -60,3 +60,8 @@ void GameModel::newGame()
 {
     m_Board.reset();
 }
+
+void GameModel::advanceSimulation()
+{
+    //TODO
+}
