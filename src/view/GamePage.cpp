@@ -13,7 +13,13 @@ GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
     initConnections();
     rowInd = 0;
     columnInd = 0;
-    images = {":/images/road",":/images/house", ":/images/factory", ":/images/store", ":/images/police", ":/images/stadium", ":/images/forest"};
+    images = {":/images/road",
+              ":/images/house",
+              ":/images/factory",
+              ":/images/store",
+              ":/images/police",
+              ":/images/stadium",
+              ":/images/forest"};
 }
 
 GamePage::~GamePage()
