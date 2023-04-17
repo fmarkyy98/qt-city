@@ -25,6 +25,7 @@ public:
     ZoneType zoneAt(int row, int col) const override;
     BuildingType buildingAt(int row, int col) const override;
     void newGame() override;
+    void advanceSimulation() override;
 
 private:
     GameBoard m_Board;
