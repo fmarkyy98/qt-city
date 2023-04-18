@@ -21,6 +21,7 @@ public:
     int getHeight() const override;
     int getWidth() const override;
     void placeZone(ZoneType zoneType, int row, int col) override;
+    void breakDownZone(int row, int col);
     void placeBuilding(BuildingType buildingType, int row, int col) override;
     ZoneType zoneAt(int row, int col) const override;
     BuildingType buildingAt(int row, int col) const override;
@@ -30,6 +31,7 @@ public:
 private:
     GameBoard m_Board;
     std::shared_ptr<IFileIOService> m_FileIOService;
+    int m_money;
 
 private:
     bool canPlaceBuilding(); //TODO

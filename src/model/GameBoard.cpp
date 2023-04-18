@@ -43,9 +43,27 @@ void GameBoard::placeBuilding(BuildingType buildingType, std::pair<int, int> pos
 void GameBoard::placeZone(ZoneType zoneType, std::pair<int, int> position)
 {
     auto [row, col] = position;
-    m_TileMatrix[row][col].zoneType = zoneType;
-    // TODO --dinero
+    if(m_TileMatrix[row][col].zoneType == ZoneType::None){
+        m_TileMatrix[row][col].zoneType = zoneType;
+    }
+    else
+    {
+        std::runtime_error("TODO");
+    }
 }
+
+void GameBoard::breakDownZone(std::pair<int, int> position)
+{
+    auto [row, col] = position;
+    if(m_TileMatrix[row][col].building == nullptr){
+        m_TileMatrix[row][col].zoneType = ZoneType::None;
+    }
+    else
+    {
+        std::runtime_error("TODO");
+    }
+}
+
 
 void GameBoard::reset()
 {

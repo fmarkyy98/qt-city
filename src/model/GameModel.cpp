@@ -29,14 +29,44 @@ int GameModel::getWidth() const
 
 void GameModel::placeZone(ZoneType zoneType, int row, int col)
 {
-    m_Board.placeZone(zoneType, {row,col});
-    emit meta()->onZonesChanged();
+    //Placing a zone costs 500
+    if(m_money >= 500){
+        m_Board.placeZone(zoneType, {row,col});
+        emit meta()->onZonesChanged();
+        emit meta()->onMoneyChanged(m_money);
+    }
+    else
+    {
+        std::runtime_error("TODO");
+    }
+}
+
+void GameModel::breakDownZone(int row, int col)
+{
+    //Breaking down a zone costs 500
+    if(m_money >= 100){
+        m_Board.breakDownZone({row,col});
+        emit meta()->onZonesChanged();
+        emit meta()->onMoneyChanged(m_money);
+    }
+    else
+    {
+        std::runtime_error("TODO");
+    }
 }
 
 void GameModel::placeBuilding(BuildingType buildingType, int row, int col)
 {
+    //Building a building costs 500
+    if(m_money >= 750){
     m_Board.placeBuilding(buildingType, {row,col});
     emit meta()->onBoardChanged();
+    emit meta()->onMoneyChanged(m_money);
+    }
+    else
+    {
+        std::runtime_error("TODO");
+    }
 }
 
 ZoneType GameModel::zoneAt(int row, int col) const
@@ -64,4 +94,10 @@ void GameModel::newGame()
 void GameModel::advanceSimulation()
 {
     //TODO
+    for (int i = 0; i < getHeight(); ++i) {
+        for (int j = 0; j < getWidth(); ++j) {
+            if(m_Board)//TODO
+        }
+    }
+    emit meta()->onMoneyChanged(m_money);
 }

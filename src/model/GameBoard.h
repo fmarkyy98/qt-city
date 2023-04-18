@@ -12,6 +12,8 @@ public:
     Tile& at(std::pair<int,int> position);
     void placeBuilding(BuildingType buildingType, std::pair<int, int> position);
     void placeZone(ZoneType zoneType, std::pair<int, int> position);
+    void breakDownZone(std::pair<int, int> position);
+    void catastrophe();//TODO
     void reset();
 
 private:
