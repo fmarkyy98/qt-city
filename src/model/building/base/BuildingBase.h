@@ -1,24 +1,25 @@
 #pragma once
 
-#include <QObject>
+#include "Enums.h"
 
-#include "../../../common/building/BuildingType.h"
-#include "../../../common/zone/ZoneType.h"
+#include <QtCore>
+
+#include <utility>
 
 class BuildingBase : public QObject {
     Q_OBJECT
 public:
     explicit BuildingBase(QObject* parent = nullptr);
 
-    virtual BuildingType getType() const = 0;
-    virtual ZoneType getCompatibleZone() const = 0;
+    virtual QtCity::BuildingType getType() const = 0;
+    virtual QtCity::ZoneType getCompatibleZone() const = 0;
 
     std::pair<int, int> getSize() const;
     int getWidth() const;
     int getHeight() const;
     int getLevel();
 
-    bool canBuildOnZone(const ZoneType& zoneType) const;
+    bool canBuildOnZone(const QtCity::ZoneType& zoneType) const;
     bool isBuildInProgress() const;
     void advanceBuildingProcess();
     bool canEvolveBuilding() const;

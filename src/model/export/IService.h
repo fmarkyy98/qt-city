@@ -3,15 +3,14 @@
 #include <memory>
 #include <concepts>
 
-#include <QObject>
-
 namespace details {
+    Q_NAMESPACE
 
-class IServiceMeta : public QObject {
-    Q_OBJECT
+        class IServiceMeta : public QObject {
+        Q_OBJECT
 
-signals:
-};
+        signals:
+    };
 
 }  // namespace details
 
