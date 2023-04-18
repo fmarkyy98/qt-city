@@ -8,7 +8,7 @@ int BuildingBase::getLevel() {
     return m_BuildingLevel;
 }
 
-bool BuildingBase::canBuildOnZone(const ZoneType& zoneType) const {
+bool BuildingBase::canBuildOnZone(const QtCity::ZoneType& zoneType) const {
     return zoneType == getCompatibleZone();
 }
 

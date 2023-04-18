@@ -1,16 +1,16 @@
 #pragma once
 
-#include <QObject>
-
 #include "base/BuildingBase.h"
+
+#include <QObject>
 
 class ResidentialBuilding : public BuildingBase {
     Q_OBJECT
 public:
     ResidentialBuilding(QObject* parent = nullptr);
 
-    BuildingType getType() const override;
-    ZoneType getCompatibleZone() const override;
+    QtCity::BuildingType getType() const override;
+    QtCity::ZoneType getCompatibleZone() const override;
 
     std::pair<int, int> getSize() const override;
     int getWidth() const override;
@@ -40,10 +40,15 @@ private:
     int m_RetiredInhabitantCount = 0;
 
 private:
+<<<<<<< HEAD
     static constexpr BuildingType s_Type = BuildingType::Residential;
     static constexpr ZoneType s_Zone = ZoneType::Residential;
     static constexpr int s_Width = 1;
     static constexpr int s_Height = 1;
+=======
+    static constexpr QtCity::BuildingType s_Type = QtCity::BuildingType::Residential;
+    static constexpr QtCity::ZoneType s_Zone = QtCity::ZoneType::Residential;
+>>>>>>> master
     static constexpr int s_CapacityByLevel[] = {0, 100, 200, 400};
 };
 

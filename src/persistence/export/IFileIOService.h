@@ -1,8 +1,8 @@
 #pragma once
 
-#include <list>
+#include "IService.h" 
 
-#include "../common/IService.h" // TODO normális útvonalat megadni.
+#include <list>
 
 class IFileIOServiceMeta : public details::IServiceMeta {
 signals:

@@ -5,11 +5,11 @@ ResidentialBuilding::ResidentialBuilding(QObject* parent)
 {}
 
 
-BuildingType ResidentialBuilding::getType() const {
+QtCity::BuildingType ResidentialBuilding::getType() const {
     return s_Type;
 }
 
-ZoneType ResidentialBuilding::getCompatibleZone() const {
+QtCity::ZoneType ResidentialBuilding::getCompatibleZone() const {
     return s_Zone;
 }
 
