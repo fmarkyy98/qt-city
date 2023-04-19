@@ -76,7 +76,7 @@ qct::ZoneType GameModel::zoneAt(int row, int col) const
 
 qct::BuildingType GameModel::buildingAt(int row, int col) const
 {
-    auto building = m_Board.at({row, col}).building;
+    auto building = m_Board.at({row, col}).structure;
     if(building != nullptr)
     {
         qDebug() << "buildingAt: " << row<<","<<col;
@@ -98,7 +98,6 @@ void GameModel::advanceSimulation()
     //TODO
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
-            //TODO
         }
     }
 }

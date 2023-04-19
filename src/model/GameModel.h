@@ -20,18 +20,11 @@ public:
     void load(const QString& path) override;
     int getHeight() const override;
     int getWidth() const override;
-<<<<<<< HEAD
-    void placeZone(ZoneType zoneType, int row, int col) override;
-    void breakDownZone(int row, int col);
-    void placeBuilding(BuildingType buildingType, int row, int col) override;
-    ZoneType zoneAt(int row, int col) const override;
-    BuildingType buildingAt(int row, int col) const override;
-=======
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
+    void breakDownZone(int row, int col);
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
     qct::ZoneType zoneAt(int row, int col) const override;
     qct::BuildingType buildingAt(int row, int col) const override;
->>>>>>> master
     void newGame() override;
     void advanceSimulation() override;
 
