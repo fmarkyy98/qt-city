@@ -2,15 +2,15 @@
 
 #include "base/BuildingBase.h"
 
-#include <QObject>
-
 class ResidentialBuilding : public BuildingBase {
     Q_OBJECT
 public:
     ResidentialBuilding(QObject* parent = nullptr);
 
-    QtCity::BuildingType getType() const override;
-    QtCity::ZoneType getCompatibleZone() const override;
+    DECLARE_STRUCTURE_BASE_MEMBERS
+    DECLARE_BUILDING_BASE_MEMBERS
+
+    int getCapacity() const;
 
     int getChildInhabitantCount() const;
     int getAdultInhabitantCount() const;
@@ -29,14 +29,15 @@ protected:
     void evolveSpecificBuildingImpl() override;
 
 private:
-    int m_Capacity = s_CapacityByLevel[m_BuildingLevel];
     int m_ChildInhabitantCount = 0;
     int m_AdultInhabitantCount = 0;
     int m_RetiredInhabitantCount = 0;
 
 private:
-    static constexpr QtCity::BuildingType s_Type = QtCity::BuildingType::Residential;
-    static constexpr QtCity::ZoneType s_Zone = QtCity::ZoneType::Residential;
+    static constexpr qct::BuildingType s_Type = qct::BuildingType::Residential;
+    static constexpr qct::ZoneType s_Zone = qct::ZoneType::Residential;
+    static constexpr int s_Width = 1;
+    static constexpr int s_Height = 1;
     static constexpr int s_CapacityByLevel[] = {0, 100, 200, 400};
 };
 

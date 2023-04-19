@@ -3,6 +3,8 @@
 #include <memory>
 #include <concepts>
 
+#include <QObject>
+
 namespace details {
     Q_NAMESPACE
 

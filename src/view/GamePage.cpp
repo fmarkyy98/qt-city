@@ -150,36 +150,36 @@ void GamePage::onTableWidget2Clicked(int row, int column)
     switch(column)
     {
         case 0:
-            m_pGameModel->placeZone(ZoneType::None, rowInd, columnInd);
-            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
-            //m_pGameModel->placeBuilding(BuildingType::Road, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
+            //m_pGameModel->placeBuilding(qct::BuildingType::Road, rowInd, columnInd);
         break;
         case 1:
-            m_pGameModel->placeZone(ZoneType::Residential, rowInd, columnInd);
-            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::Residential, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
         break;
         case 2:
-            m_pGameModel->placeZone(ZoneType::Industrial, rowInd, columnInd);
-            m_pGameModel->placeBuilding(BuildingType::Factory, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::Industrial, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Factory, rowInd, columnInd);
         break;
         case 3:
-            m_pGameModel->placeZone(ZoneType::Service, rowInd, columnInd);
-            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
-            //m_pGameModel->placeBuilding(BuildingType::Service, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
+            //m_pGameModel->placeBuilding(qct::BuildingType::Service, rowInd, columnInd);
         break;
         case 4:
-            m_pGameModel->placeZone(ZoneType::None, rowInd, columnInd);
-            m_pGameModel->placeBuilding(BuildingType::Police, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Police, rowInd, columnInd);
         break;
         case 5:
-            m_pGameModel->placeZone(ZoneType::None, rowInd, columnInd);
-            m_pGameModel->placeBuilding(BuildingType::Residential, rowInd, columnInd);
-            //m_pGameModel->placeBuilding(BuildingType::Stadium, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
+            //m_pGameModel->placeBuilding(qct::BuildingType::Stadium, rowInd, columnInd);
         break;
         case 6:
-            m_pGameModel->placeZone(ZoneType::None, row, column);
-            m_pGameModel->placeBuilding(BuildingType::Residential, row, column);
-            //m_pGameModel->placeBuilding(BuildingType::Forest, row, column);
+            m_pGameModel->placeZone(qct::ZoneType::None, row, column);
+            m_pGameModel->placeBuilding(qct::BuildingType::Residential, row, column);
+            //m_pGameModel->placeBuilding(qct::BuildingType::Forest, row, column);
         break;
     }
 }
@@ -191,32 +191,32 @@ void GamePage::onRefreshboard()
         for(int x=0;x<m_pGameModel->getWidth();x++)
         {
             switch (m_pGameModel->buildingAt(x,y)) {
-              /*case BuildingType::Road:
+              /*case qct::BuildingType::Road:
                     ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/road"));
                     break;
-                case BuildingType::Service:
+                case qct::BuildingType::Service:
                     ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/store"));
                     break;
-                case BuildingType::Stadion:
+                case qct::BuildingType::Stadion:
                     ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/stadium"));
                     break;
-                case BuildingType::Forest:
+                case qct::BuildingType::Forest:
                     ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/forest"));
                     break;
                 */
-                case BuildingType::Factory:
+                case qct::BuildingType::Factory:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/factory"));
                     //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/factory"));
                     break;
-                case BuildingType::Residential:
+                case qct::BuildingType::Residential:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/house"));
                     //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/house"));
                     break;
-                case BuildingType::Police:
+                case qct::BuildingType::Police:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/police"));
                     //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/police"));
                     break;
-                case BuildingType::None:
+                case qct::BuildingType::None:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/free"));
                     //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/police"));
                     break;

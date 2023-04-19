@@ -37,9 +37,15 @@ set(SOURCES
     main.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/BuildingBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/StructureBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/WorkplaceBase.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/Factory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/Police.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/ResidentialBuilding.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/Road.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/Stadium.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/building/Store.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameBoard.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModel.cpp
