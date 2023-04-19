@@ -10,8 +10,8 @@ public:
     explicit GameBoard(QObject* parent = nullptr);
     const Tile& at(std::pair<int,int> position)const;
     Tile& at(std::pair<int,int> position);
-    void placeBuilding(BuildingType buildingType, std::pair<int, int> position);
-    void placeZone(ZoneType zoneType, std::pair<int, int> position);
+    void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position);
+    void placeZone(qct::ZoneType zoneType, std::pair<int, int> position);
     void reset();
 
 private:

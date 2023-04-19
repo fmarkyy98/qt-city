@@ -4,26 +4,8 @@ ResidentialBuilding::ResidentialBuilding(QObject* parent)
     : BuildingBase(parent)
 {}
 
-
-QtCity::BuildingType ResidentialBuilding::getType() const {
-    return s_Type;
-}
-
-QtCity::ZoneType ResidentialBuilding::getCompatibleZone() const {
-    return s_Zone;
-}
-
-std::pair<int, int> ResidentialBuilding::getSize() const {
-    return {s_Width, s_Height};
-}
-
-int ResidentialBuilding::getWidth() const {
-    return s_Width;
-}
-
-int ResidentialBuilding::getHeight() const {
-    return s_Height;
-}
+DEFINE_STRUCTURE_BASE_MEMBERS(ResidentialBuilding)
+DEFINE_BUILDING_BASE_MEMBERS(ResidentialBuilding)
 
 int ResidentialBuilding::getCapacity() const {
     return s_CapacityByLevel[m_BuildingLevel];

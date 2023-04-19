@@ -1,14 +1,14 @@
 #include "BuildingBase.h"
 
 BuildingBase::BuildingBase(QObject *parent)
-    : QObject(parent)
+    : StructureBase(parent)
 {}
 
 int BuildingBase::getLevel() {
     return m_BuildingLevel;
 }
 
-bool BuildingBase::canBuildOnZone(const QtCity::ZoneType& zoneType) const {
+bool BuildingBase::canBuildOnZone(const qct::ZoneType& zoneType) const {
     return zoneType == getCompatibleZone();
 }
 
@@ -34,3 +34,4 @@ void BuildingBase::startEvolveBuilding() {
     m_BuildingProgress = 0;
 }
 
+void BuildingBase::evolveSpecificBuildingImpl() {}

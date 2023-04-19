@@ -27,24 +27,24 @@ int GameModel::getWidth() const
     return 15;
 }
 
-void GameModel::placeZone(ZoneType zoneType, int row, int col)
+void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
 {
     m_Board.placeZone(zoneType, {row,col});
     emit meta()->onZonesChanged();
 }
 
-void GameModel::placeBuilding(BuildingType buildingType, int row, int col)
+void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
 {
     m_Board.placeBuilding(buildingType, {row,col});
     emit meta()->onBoardChanged();
 }
 
-ZoneType GameModel::zoneAt(int row, int col) const
+qct::ZoneType GameModel::zoneAt(int row, int col) const
 {
     return m_Board.at({row, col}).zoneType;
 }
 
-BuildingType GameModel::buildingAt(int row, int col) const
+qct::BuildingType GameModel::buildingAt(int row, int col) const
 {
     auto building = m_Board.at({row, col}).building;
     if(building != nullptr)
@@ -53,7 +53,7 @@ BuildingType GameModel::buildingAt(int row, int col) const
     }
     return building != nullptr
         ? building->getType()
-        : BuildingType::None;
+        : qct::BuildingType::None;
 }
 
 void GameModel::newGame()

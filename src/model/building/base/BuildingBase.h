@@ -1,22 +1,33 @@
 #pragma once
 
-#include "Enums.h"
+#include "StructureBase.h"
 
-#include <QtCore>
+#define DECLARE_BUILDING_BASE_MEMBERS              \
+qct::ZoneType getCompatibleZone() const override;  \
+std::pair<int, int> getSize() const override;      \
+int getWidth() const override;                     \
+int getHeight() const override;
 
-#include <utility>
+#define DEFINE_BUILDING_BASE_MEMBERS(CLASS)       \
+qct::ZoneType CLASS::getCompatibleZone() const {  \
+    return s_Zone;                                \
+}                                                 \
+std::pair<int, int> CLASS::getSize() const {      \
+    return {s_Width, s_Height};                   \
+}                                                 \
+int CLASS::getWidth() const {                     \
+    return s_Width;                               \
+}                                                 \
+int CLASS::getHeight() const {                    \
+    return s_Height;                              \
+}
 
-class BuildingBase : public QObject {
+class BuildingBase : public StructureBase {
     Q_OBJECT
 public:
     explicit BuildingBase(QObject* parent = nullptr);
 
-<<<<<<< HEAD
-    virtual BuildingType getType() const = 0;
-=======
-    virtual QtCity::BuildingType getType() const = 0;
-    virtual QtCity::ZoneType getCompatibleZone() const = 0;
->>>>>>> master
+    virtual qct::BuildingType getType() const = 0;
 
     virtual std::pair<int, int> getSize() const = 0;
     virtual int getWidth() const = 0;
@@ -24,7 +35,7 @@ public:
 
     int getLevel();
 
-    bool canBuildOnZone(const QtCity::ZoneType& zoneType) const;
+    bool canBuildOnZone(const qct::ZoneType& zoneType) const;
     bool isBuildInProgress() const;
     void advanceBuildingProcess();
     bool canEvolveBuilding() const;
@@ -34,9 +45,9 @@ signals:
     void buildingProcessFinished();
 
 protected:
-    virtual ZoneType getCompatibleZone() const = 0;
+    virtual qct::ZoneType getCompatibleZone() const = 0;
 
-    virtual void evolveSpecificBuildingImpl() = 0;
+    virtual void evolveSpecificBuildingImpl();
 
 protected:
     int m_BuildingProgress = 0;

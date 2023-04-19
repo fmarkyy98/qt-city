@@ -16,18 +16,18 @@ Tile &GameBoard::at(std::pair<int, int> position)
     return m_TileMatrix[row][col];
 }
 
-void GameBoard::placeBuilding(BuildingType buildingType, std::pair<int, int> position)
+void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position)
 {
     std::unique_ptr<BuildingBase> newBuilding;
     auto [row, col] = position;
     switch (buildingType) {
-    case BuildingType::Residential:
+    case qct::BuildingType::Residential:
         newBuilding = std::make_unique<ResidentialBuilding>();
         break;
-    case BuildingType::Factory:
+    case qct::BuildingType::Factory:
         newBuilding = std::make_unique<Factory>();
         break;
-    case BuildingType::Police:
+    case qct::BuildingType::Police:
         newBuilding = std::make_unique<ResidentialBuilding>(); //POLICE
         break;
     }
@@ -41,7 +41,7 @@ void GameBoard::placeBuilding(BuildingType buildingType, std::pair<int, int> pos
     m_Buildings.push_back(std::move(newBuilding));
 }
 
-void GameBoard::placeZone(ZoneType zoneType, std::pair<int, int> position)
+void GameBoard::placeZone(qct::ZoneType zoneType, std::pair<int, int> position)
 {
     auto [row, col] = position;
     m_TileMatrix[row][col].zoneType = zoneType;
@@ -53,7 +53,7 @@ void GameBoard::reset()
     for (auto& col : m_TileMatrix) {
         for (auto& tile : col) {
             tile.building = nullptr;
-            tile.zoneType = ZoneType::None;
+            tile.zoneType = qct::ZoneType::None;
         }
     }
 }

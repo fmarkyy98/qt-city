@@ -5,5 +5,5 @@
 struct Tile
 {
     BuildingBase* building = nullptr;
-    ZoneType zoneType = ZoneType::None;
+    qct::ZoneType zoneType = qct::ZoneType::None;
 };

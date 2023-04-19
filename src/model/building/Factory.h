@@ -1,33 +1,21 @@
 #pragma once
 
-#include <QObject>
-
 #include "base/WorkplaceBase.h"
 
 class Factory : public WorkplaceBase {
     Q_OBJECT
 public:
-    Factory(QObject* parent = nullptr);
+    explicit Factory(QObject* parent = nullptr);
 
-    BuildingType getType() const override;
-    ZoneType getCompatibleZone() const override;
-
-    std::pair<int, int> getSize() const override;
-    int getWidth() const override;
-    int getHeight() const override;
-
-    int getWorkerCapacity() const override;
-    double getProfitAfterWorker() const override;
-
-protected:
-    void evolveSpecificBuildingImpl() override;
+    DECLARE_STRUCTURE_BASE_MEMBERS
+    DECLARE_BUILDING_BASE_MEMBERS
+    DECLARE_WORKPLACE_BASE_MEMBERS
 
 private:
-    static constexpr BuildingType s_Type = BuildingType::Factory;
-    static constexpr ZoneType s_Zone = ZoneType::Industrial;
+    static constexpr qct::BuildingType s_Type = qct::BuildingType::Factory;
+    static constexpr qct::ZoneType s_Zone = qct::ZoneType::Industrial;
     static constexpr int s_Width = 1;
     static constexpr int s_Height = 1;
     static constexpr int s_WorkerCapacityByLevel[] = {0, 300, 600, 1200};
     static constexpr double s_ProfitByLevel[] = {0, 0.8, 1, 1.2};
 };
-

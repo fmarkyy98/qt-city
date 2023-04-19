@@ -2,6 +2,18 @@
 
 #include "BuildingBase.h"
 
+#define DECLARE_WORKPLACE_BASE_MEMBERS   \
+int getWorkerCapacity() const override;  \
+double getProfitAfterWorker() const override;
+
+#define DEFINE_WORKPLACE_BASE_MEMBERS(CLASS)          \
+int CLASS::getWorkerCapacity() const {                \
+    return s_WorkerCapacityByLevel[m_BuildingLevel];  \
+}                                                     \
+double CLASS::getProfitAfterWorker() const {          \
+    return s_ProfitByLevel[m_BuildingLevel];          \
+}
+
 class WorkplaceBase : public BuildingBase {
     Q_OBJECT
 public:

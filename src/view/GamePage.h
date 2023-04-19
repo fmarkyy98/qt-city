@@ -2,9 +2,8 @@
 
 #include <QWidget>
 #include <QTimer>
-#include "../model/IGameModel.h"
-#include "../common/building/BuildingType.h"
-#include "../common/zone/ZoneType.h"
+#include "model/IGameModel.h"
+#include "model/export/Enums.h"
 
 namespace Ui {
 class GamePage;
@@ -57,8 +56,8 @@ private:
 
     void save();
     void load();
-    void placeBuilding(BuildingType buildingType);
-    void placeZone(ZoneType zoneType);
+    void placeBuilding(qct::BuildingType buildingType);
+    void placeZone(qct::ZoneType zoneType);
     void saveClickedRow(int row, int column);
 
 private:
