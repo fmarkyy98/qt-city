@@ -142,17 +142,12 @@ void GamePage::newGame()
 
 void GamePage::onTableWidget2Clicked(int row, int column)
 {
-    /*Needed:
-     * Building: Road, Industrial, Service, Stadium, Forest
-     *
-    */
     qDebug() << "Column:: " << column;
     switch(column)
     {
         case 0:
             m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
-            //m_pGameModel->placeBuilding(qct::BuildingType::Road, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Road, rowInd, columnInd);
         break;
         case 1:
             m_pGameModel->placeZone(qct::ZoneType::Residential, rowInd, columnInd);
@@ -164,8 +159,7 @@ void GamePage::onTableWidget2Clicked(int row, int column)
         break;
         case 3:
             m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
-            //m_pGameModel->placeBuilding(qct::BuildingType::Service, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Store, rowInd, columnInd);
         break;
         case 4:
             m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
@@ -173,13 +167,11 @@ void GamePage::onTableWidget2Clicked(int row, int column)
         break;
         case 5:
             m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
-            //m_pGameModel->placeBuilding(qct::BuildingType::Stadium, rowInd, columnInd);
+            m_pGameModel->placeBuilding(qct::BuildingType::Stadium, rowInd, columnInd);
         break;
         case 6:
             m_pGameModel->placeZone(qct::ZoneType::None, row, column);
-            m_pGameModel->placeBuilding(qct::BuildingType::Residential, row, column);
-            //m_pGameModel->placeBuilding(qct::BuildingType::Forest, row, column);
+            m_pGameModel->placeBuilding(qct::BuildingType::Forest, row, column);
         break;
     }
 }
@@ -191,40 +183,30 @@ void GamePage::onRefreshboard()
         for(int x=0;x<m_pGameModel->getWidth();x++)
         {
             switch (m_pGameModel->buildingAt(x,y)) {
-              /*case qct::BuildingType::Road:
-                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/road"));
+                case qct::BuildingType::Road:
+                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/road"));
                     break;
-                case qct::BuildingType::Service:
-                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/store"));
+                case qct::BuildingType::Store:
+                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/store"));
                     break;
-                case qct::BuildingType::Stadion:
-                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/stadium"));
+                case qct::BuildingType::Stadium:
+                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/stadium"));
                     break;
                 case qct::BuildingType::Forest:
-                    ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/forest"));
+                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/forest"));
                     break;
-                */
                 case qct::BuildingType::Factory:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/factory"));
-                    //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/factory"));
                     break;
                 case qct::BuildingType::Residential:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/house"));
-                    //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/house"));
                     break;
                 case qct::BuildingType::Police:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/police"));
-                    //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/police"));
                     break;
                 case qct::BuildingType::None:
                     ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/free"));
-                    //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/police"));
                     break;
-                /*default:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/free"));
-                    //ui->tableWidget->item(x,y)->setIcon(QIcon(":/images/free"));
-                    break;
-                    */
             }
 
         }

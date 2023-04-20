@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IService.h" 
-#include "Enums.h"
+#include "export/IService.h"
+#include "export/Enums.h"
 
 class IGameModelMeta : public details::IServiceMeta {
     Q_OBJECT

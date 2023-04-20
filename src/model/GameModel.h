@@ -5,7 +5,7 @@
 #include <memory>
 #include "IGameModel.h"
 #include "GameBoard.h"
-#include "persistence/export/IFileIOService.h"
+#include "../persistence/export/IFileIOService.h"
 
 class GameModel
     : public QObject

@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "Enums.h"
+#include "../../export/Enums.h"
 
 #define DECLARE_STRUCTURE_BASE_MEMBERS  \
 qct::BuildingType getType() const override;

@@ -2,8 +2,8 @@
 
 #include <QWidget>
 #include <QTimer>
-#include "model/IGameModel.h"
-#include "model/export/Enums.h"
+#include "../model/IGameModel.h"
+#include "../model/export/Enums.h"
 
 namespace Ui {
 class GamePage;
