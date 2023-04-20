@@ -9,12 +9,12 @@ GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
 
 void GameModel::save(const QString &path) const
 {
-    std::runtime_error("TODO/marko");
+    throw std::runtime_error("TODO/marko");
 }
 
 void GameModel::load(const QString &path)
 {
-    std::runtime_error("TODO/marko");
+    throw std::runtime_error("TODO/marko");
 }
 
 int GameModel::getHeight() const
@@ -37,7 +37,7 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
     }
     else
     {
-        std::runtime_error("TODO");
+        throw std::runtime_error("TODO");
     }
 }
 
@@ -51,21 +51,19 @@ void GameModel::breakDownZone(int row, int col)
     }
     else
     {
-        std::runtime_error("TODO");
+        throw std::runtime_error("TODO");
     }
 }
 
 void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
 {
-    if(m_money >= m_costOfBuildingBuilding){
-    m_Board.placeBuilding(buildingType, {row,col});
-    emit meta()->onBoardChanged();
-    m_money -= m_costOfBuildingBuilding;
-    emit meta()->onMoneyChanged(m_money);
-    }
-    else
-    {
-        std::runtime_error("TODO");
+    if (m_money >= m_costOfBuildingBuilding) {
+        m_Board.placeBuilding(buildingType, {row,col});
+        emit meta()->onBoardChanged();
+        m_money -= m_costOfBuildingBuilding;
+        emit meta()->onMoneyChanged(m_money);
+    } else {
+        throw std::runtime_error("TODO");
     }
 }
 

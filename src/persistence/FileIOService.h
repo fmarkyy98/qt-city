@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include "IFileIOService.h"
+#include "export/IFileIOService.h"
 
 class FileIOService
     : public QObject

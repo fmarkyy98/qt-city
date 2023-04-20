@@ -19,6 +19,7 @@ MenuPage::~MenuPage()
 
 void MenuPage::onNewGameButtonClicked()
 {
+    m_pGameModel->newGame();
     emit showGamePage();
 }
 

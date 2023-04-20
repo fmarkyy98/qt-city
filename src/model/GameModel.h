@@ -5,7 +5,7 @@
 #include <memory>
 #include "IGameModel.h"
 #include "GameBoard.h"
-#include "persistence/export/IFileIOService.h"
+#include "../persistence/export/IFileIOService.h"
 
 class GameModel
     : public QObject
@@ -32,7 +32,7 @@ private:
     GameBoard m_Board;
     std::shared_ptr<IFileIOService> m_FileIOService;
     int m_money;
-    int m_moneyAtStart = 5000;
+    int m_moneyAtStart = 500000;
     int m_costOfPlacingZone = 500;
     int m_costOfBreakingZone = 100;
     int m_costOfBuildingBuilding= 750;
