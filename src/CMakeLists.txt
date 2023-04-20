@@ -35,6 +35,7 @@ file(GLOB_RECURSE UIS
 
 set(SOURCES
     main.cpp
+    ../resource/images.qrc
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/BuildingBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/StructureBase.cpp
