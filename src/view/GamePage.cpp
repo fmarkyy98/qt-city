@@ -162,11 +162,11 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             m_pGameModel->placeBuilding(qct::BuildingType::Store, rowInd, columnInd);
         break;
         case 4:
-            m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
             m_pGameModel->placeBuilding(qct::BuildingType::Police, rowInd, columnInd);
         break;
         case 5:
-            m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
+            m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
             m_pGameModel->placeBuilding(qct::BuildingType::Stadium, rowInd, columnInd);
         break;
         case 6:

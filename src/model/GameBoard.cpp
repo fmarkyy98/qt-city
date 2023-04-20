@@ -84,7 +84,7 @@ void GameBoard::placeZone(qct::ZoneType zoneType, std::pair<int, int> position)
     }
     else
     {
-        std::runtime_error("TODO");
+        throw std::runtime_error("TODO");
     }
 }
 
@@ -96,7 +96,7 @@ void GameBoard::breakDownZone(std::pair<int, int> position)
     }
     else
     {
-        std::runtime_error("TODO");
+        throw std::runtime_error("TODO");
     }
 }
 
