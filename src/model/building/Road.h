@@ -11,4 +11,5 @@ public:
 
 private:
     static constexpr qct::BuildingType s_Type = qct::BuildingType::Road;
+    static constexpr qct::ZoneType s_Zone = qct::ZoneType::All;
 };

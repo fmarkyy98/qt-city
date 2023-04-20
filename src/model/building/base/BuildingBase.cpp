@@ -8,10 +8,6 @@ int BuildingBase::getLevel() {
     return m_BuildingLevel;
 }
 
-bool BuildingBase::canBuildOnZone(const qct::ZoneType& zoneType) const {
-    return zoneType == getCompatibleZone();
-}
-
 bool BuildingBase::isBuildInProgress() const {
     return m_BuildingProgress < s_FinishedBuildingValue;
 }
