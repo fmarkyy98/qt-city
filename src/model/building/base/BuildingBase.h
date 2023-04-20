@@ -3,15 +3,11 @@
 #include "StructureBase.h"
 
 #define DECLARE_BUILDING_BASE_MEMBERS              \
-qct::ZoneType getCompatibleZone() const override;  \
 std::pair<int, int> getSize() const override;      \
 int getWidth() const override;                     \
 int getHeight() const override;
 
 #define DEFINE_BUILDING_BASE_MEMBERS(CLASS)       \
-qct::ZoneType CLASS::getCompatibleZone() const {  \
-    return s_Zone;                                \
-}                                                 \
 std::pair<int, int> CLASS::getSize() const {      \
     return {s_Width, s_Height};                   \
 }                                                 \
@@ -27,15 +23,12 @@ class BuildingBase : public StructureBase {
 public:
     explicit BuildingBase(QObject* parent = nullptr);
 
-    virtual qct::BuildingType getType() const = 0;
-
     virtual std::pair<int, int> getSize() const = 0;
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
 
     int getLevel();
 
-    bool canBuildOnZone(const qct::ZoneType& zoneType) const;
     bool isBuildInProgress() const;
     void advanceBuildingProcess();
     bool canEvolveBuilding() const;
@@ -45,8 +38,6 @@ signals:
     void buildingProcessFinished();
 
 protected:
-    virtual qct::ZoneType getCompatibleZone() const = 0;
-
     virtual void evolveSpecificBuildingImpl();
 
 protected:

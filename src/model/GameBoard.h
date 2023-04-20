@@ -12,9 +12,12 @@ public:
     Tile& at(std::pair<int,int> position);
     void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position);
     void placeZone(qct::ZoneType zoneType, std::pair<int, int> position);
+    void breakDownZone(std::pair<int, int> position);
+    void catastrophe();//TODO
     void reset();
 
 private:
     std::array<std::array<Tile, 20>, 15> m_TileMatrix;
     std::vector<std::unique_ptr<BuildingBase>> m_Buildings;
+    std::vector<std::unique_ptr<StructureBase>> m_Structures;
 };
