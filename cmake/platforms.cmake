@@ -12,6 +12,16 @@ if(WIN32)
 elseif(LINUX)
     message(STATUS ">>>Linux")
 elseif(APPLE)
+    set(CMAKE_INSTALL_PREFIX "/usr/local")
+    set(CMAKE_PREFIX_PATH "/Users/nemesviko/Qt/6.4.2/macos")
+    set(MACDEPLOYQT_EXECUTABLE "/Users/nemesviko/Qt/6.4.2/macos/bin/macdeployqt")
+    set_target_properties(${TARGET} PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER my.qtcity.com
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
+)
     message(STATUS ">>>Apple")
 else()
     # 
