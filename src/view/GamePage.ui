@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,15,3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,15,3,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -391,6 +391,11 @@
        </iconset>
       </property>
      </item>
+     <item row="0" column="7">
+      <property name="text">
+       <string>Price: </string>
+      </property>
+     </item>
      <item row="1" column="0">
       <property name="text">
        <string>Road</string>
@@ -432,6 +437,24 @@
       </property>
      </item>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Budget: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Time: </string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

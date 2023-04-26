@@ -65,6 +65,8 @@ private:
     std::shared_ptr<IGameModel> m_pGameModel;
     bool isGamePaused;
     int rowInd, columnInd;
+    qct::BuildingType chosenBuildingType;
+    qct::ZoneType chosenZoneType;
     std::vector<QString> images;
     QTimer timer;
 

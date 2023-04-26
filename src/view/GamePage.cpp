@@ -1,6 +1,7 @@
 #include "GamePage.h"
 #include "ui_GamePage.h"
 #include <QDir>
+#include <QMessageBox>
 #include <QtGui>
 #include <iostream>
 
@@ -125,8 +126,8 @@ void GamePage::newGame()
     for(int i=0; i<7; i++)
     {
         ui->tableWidget_2->item(0,i)->setData(Qt::DecorationRole, QPixmap(this->images[i]));
-        //ui->tableWidget_2->item(1,i)->setData(Qt::TextAlignmentRole,Qt::AlignCenter);
     }
+    ui->tableWidget_2->item(0,7)->setText("Choose a building!");
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget_2->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -142,36 +143,52 @@ void GamePage::newGame()
 
 void GamePage::onTableWidget2Clicked(int row, int column)
 {
+    //TODO: epuletet nonetypera le lehet rakni akkor is ha pl road van mar ott
+    QMessageBox messageBox;
     qDebug() << "Column:: " << column;
     switch(column)
     {
         case 0:
-            m_pGameModel->placeZone(qct::ZoneType::None, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Road, rowInd, columnInd);
+            chosenBuildingType=qct::BuildingType::Road;
+            chosenZoneType=qct::ZoneType::None;
+            ui->tableWidget_2->item(0,7)->setText("Price: \nCapacity: ");
         break;
         case 1:
-            m_pGameModel->placeZone(qct::ZoneType::Residential, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Residential, rowInd, columnInd);
+            chosenBuildingType=qct::BuildingType::Residential;
+            chosenZoneType=qct::ZoneType::Residential;
         break;
         case 2:
-            m_pGameModel->placeZone(qct::ZoneType::Industrial, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Factory, rowInd, columnInd);
+            chosenBuildingType=qct::BuildingType::Factory;
+            chosenZoneType=qct::ZoneType::Industrial;
         break;
         case 3:
-            m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Store, rowInd, columnInd);
+            chosenBuildingType=qct::BuildingType::Store;
+            chosenZoneType=qct::ZoneType::Service;
         break;
         case 4:
-            m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Police, rowInd, columnInd);
+            chosenBuildingType=qct::BuildingType::Police;
+            chosenZoneType=qct::ZoneType::Service;
         break;
         case 5:
-            m_pGameModel->placeZone(qct::ZoneType::Service, rowInd, columnInd);
-            m_pGameModel->placeBuilding(qct::BuildingType::Stadium, rowInd, columnInd);
+            chosenBuildingType=qct::BuildingType::Stadium;
+            chosenZoneType=qct::ZoneType::Service;
         break;
         case 6:
-            m_pGameModel->placeZone(qct::ZoneType::None, row, column);
-            m_pGameModel->placeBuilding(qct::BuildingType::Forest, row, column);
+            chosenBuildingType=qct::BuildingType::Forest;
+            chosenZoneType=qct::ZoneType::None;
+        break;
+        case 7:
+            if (row == 0) {
+                //TODO
+            } else {
+                try {
+                    m_pGameModel->placeZone(chosenZoneType, rowInd, columnInd);
+                    m_pGameModel->placeBuilding(chosenBuildingType, rowInd, columnInd);
+                } catch (...) {
+                    messageBox.critical(0,"Error","The field is not empty!");
+                }
+
+            }
         break;
     }
 }

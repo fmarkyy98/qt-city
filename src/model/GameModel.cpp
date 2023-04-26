@@ -19,7 +19,7 @@ void GameModel::load(const QString &path)
 
 int GameModel::getHeight() const
 {
-    return 20;
+    return 25;
 }
 
 int GameModel::getWidth() const
