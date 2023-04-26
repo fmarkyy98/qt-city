@@ -100,6 +100,16 @@ void GameBoard::breakDownZone(std::pair<int, int> position)
     }
 }
 
+const std::vector<BuildingBase*> GameBoard::getBuildings() const
+{
+    std::vector<BuildingBase*> buildings;
+    buildings.reserve(m_Buildings.size());
+    for (auto&& building : m_Buildings)
+        buildings.push_back(building.get());
+
+    return buildings;
+}
+
 
 void GameBoard::reset()
 {

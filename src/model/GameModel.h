@@ -29,6 +29,12 @@ public:
     void advanceSimulation() override;
 
 private:
+    bool canPlaceBuilding(); //TODO
+    void advanceBuildingProcesses(const std::vector<BuildingBase *> &buildings);
+    void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
+    void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
+
+private:
     GameBoard m_Board;
     std::shared_ptr<IFileIOService> m_FileIOService;
     int m_money;
@@ -36,7 +42,4 @@ private:
     int m_costOfPlacingZone = 500;
     int m_costOfBreakingZone = 100;
     int m_costOfBuildingBuilding= 750;
-
-private:
-    bool canPlaceBuilding(); //TODO
 };
