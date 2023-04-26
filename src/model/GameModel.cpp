@@ -1,4 +1,6 @@
 #include "GameModel.h"
+#include "building/ResidentialBuilding.h"
+#include "building/base/WorkplaceBase.h"
 #include "QtCore/qdebug.h"
 
 GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
@@ -86,9 +88,52 @@ void GameModel::newGame()
 
 void GameModel::advanceSimulation()
 {
-    //TODO
+    auto buildings = m_Board.getBuildings();
+    advanceBuildingProcesses(buildings);
+    increaseInhabitantAge(buildings);
+    distributeInhabitantsToWorkplaces(buildings);
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
+            //if(m_Board.at({row, col}).zoneType); //TODO
+        }
+    }
+}
+
+void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings)
+{
+    for (auto building : m_Board.getBuildings()) {
+        if (building->isBuildInProgress()) {
+            building->advanceBuildingProcess();
+        }
+    }
+}
+
+void GameModel::increaseInhabitantAge(const std::vector<BuildingBase *> &buildings)
+{
+    for (auto building :buildings) {
+        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
+            house->increseInhabitantAge();
+        }
+    }
+}
+
+void GameModel::distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings)
+{
+    int adultsSum = 0;
+    int availableWorkplaceCount = 0;
+    for (auto building : buildings) {
+        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
+            adultsSum += house->getAdultInhabitantCount();
+        }
+        if (auto workplace = dynamic_cast<WorkplaceBase*>(building); workplace != nullptr) {
+            availableWorkplaceCount += workplace->getWorkerCapacity();
+        }
+    }
+    double workplaceLoadRatio = std::min(adultsSum / static_cast<double>(availableWorkplaceCount), 1.0);
+
+    for (auto building : buildings) {
+        if (auto workplace = dynamic_cast<WorkplaceBase*>(building); workplace != nullptr) {
+            workplace->setWorkerCount(workplace->getWorkerCapacity() * workplaceLoadRatio);
         }
     }
 }

@@ -13,6 +13,7 @@ public:
     void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position);
     void placeZone(qct::ZoneType zoneType, std::pair<int, int> position);
     void breakDownZone(std::pair<int, int> position);
+    const std::vector<BuildingBase*> getBuildings() const;
     void catastrophe();//TODO
     void reset();
 
