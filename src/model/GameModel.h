@@ -24,7 +24,7 @@ public:
     void breakDownZone(int row, int col);
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
     qct::ZoneType zoneAt(int row, int col) const override;
-    qct::BuildingType buildingAt(int row, int col) const override;
+    const StructureBase* structureAt(int row, int col) const override;
     void newGame() override;
     void advanceSimulation() override;
 

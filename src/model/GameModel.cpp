@@ -72,16 +72,9 @@ qct::ZoneType GameModel::zoneAt(int row, int col) const
     return m_Board.at({row, col}).zoneType;
 }
 
-qct::BuildingType GameModel::buildingAt(int row, int col) const
+const StructureBase* GameModel::structureAt(int row, int col) const
 {
-    auto building = m_Board.at({row, col}).structure;
-    if(building != nullptr)
-    {
-        qDebug() << "buildingAt: " << row<<","<<col;
-    }
-    return building != nullptr
-        ? building->getType()
-        : qct::BuildingType::None;
+    return m_Board.at({row, col}).structure;
 }
 
 void GameModel::newGame()

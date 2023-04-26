@@ -4,7 +4,7 @@ BuildingBase::BuildingBase(QObject *parent)
     : StructureBase(parent)
 {}
 
-int BuildingBase::getLevel() {
+int BuildingBase::getLevel() const {
     return m_BuildingLevel;
 }
 

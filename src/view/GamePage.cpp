@@ -4,6 +4,14 @@
 #include <QtGui>
 #include <iostream>
 
+#include "../model/building/ResidentialBuilding.h"
+#include "../model/building/Factory.h"
+#include "../model/building/Forest.h"
+#include "../model/building/Police.h"
+#include "../model/building/Road.h"
+#include "../model/building/Stadium.h"
+#include "../model/building/Store.h"
+
 GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::GamePage)
@@ -176,42 +184,59 @@ void GamePage::onTableWidget2Clicked(int row, int column)
     }
 }
 
-void GamePage::onRefreshboard()
-{
-    for(int y=0;y<m_pGameModel->getHeight();y++)
-    {
-        for(int x=0;x<m_pGameModel->getWidth();x++)
-        {
-            switch (m_pGameModel->buildingAt(x,y)) {
-                case qct::BuildingType::Road:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/road"));
-                    break;
-                case qct::BuildingType::Store:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/store"));
-                    break;
-                case qct::BuildingType::Stadium:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/stadium"));
-                    break;
-                case qct::BuildingType::Forest:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/forest"));
-                    break;
-                case qct::BuildingType::Factory:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/factory"));
-                    break;
-                case qct::BuildingType::Residential:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/house"));
-                    break;
-                case qct::BuildingType::Police:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/police"));
-                    break;
-                case qct::BuildingType::None:
-                    ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/free"));
-                    break;
-            }
+void GamePage::onRefreshboard() {
+    // Viki TODO minden épülettípusra a megfelelő atribútumokat megjeleníteni.
+    for (int y = 0; y < m_pGameModel->getHeight(); y++) {
+        for (int x = 0; x < m_pGameModel->getWidth(); x++) {
+            auto structure = m_pGameModel->structureAt(x, y);
 
+            switch (structure->getType()) {
+            case qct::BuildingType::Road: {
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/road"));
+            } break;
+
+            case qct::BuildingType::Store: {
+                auto store = static_cast<const Store*>(structure);
+                int leve = store->getLevel();
+                // TODO level alapján elágazni
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/store"));
+            } break;
+
+            case qct::BuildingType::Stadium: {
+                auto stadium = static_cast<const Stadium*>(structure);
+                // TODO
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/stadium"));
+            } break;
+
+            case qct::BuildingType::Forest: {
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/forest"));
+            } break;
+
+            case qct::BuildingType::Factory: {
+                auto factory = static_cast<const Factory*>(structure);
+                // TODO
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/factory"));
+            } break;
+
+            case qct::BuildingType::Residential: {
+                auto residential = static_cast<const ResidentialBuilding*>(structure);
+                // TODO
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/house"));
+            } break;
+
+            case qct::BuildingType::Police: {
+                auto police = static_cast<const Police*>(structure);
+                // TODO
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/police"));
+            } break;
+
+            case qct::BuildingType::None: {
+                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/free"));
+            } break;
+
+            default: {} break;
+            }
         }
     }
-
-
 }
 

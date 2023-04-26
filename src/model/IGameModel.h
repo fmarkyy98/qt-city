@@ -3,6 +3,8 @@
 #include "export/IService.h"
 #include "export/Enums.h"
 
+class StructureBase;
+
 class IGameModelMeta : public details::IServiceMeta {
     Q_OBJECT
 signals:
@@ -17,7 +19,7 @@ public:
     virtual int getHeight() const = 0;
     virtual int getWidth() const = 0;
     virtual qct::ZoneType zoneAt(int row, int col) const = 0;
-    virtual qct::BuildingType buildingAt(int row, int col) const = 0;
+    virtual const StructureBase* structureAt(int row, int col) const = 0;
     virtual void placeZone(qct::ZoneType zoneType, int row, int col) = 0;
     virtual void placeBuilding(qct::BuildingType buildingType, int row, int col) = 0;
     virtual void save(const QString& path) const = 0;
