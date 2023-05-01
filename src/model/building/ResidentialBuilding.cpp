@@ -11,6 +11,10 @@ int ResidentialBuilding::getCapacity() const {
     return s_CapacityByLevel[m_BuildingLevel];
 }
 
+int ResidentialBuilding::getCapacity(int level) const {
+    return s_CapacityByLevel[level];
+}
+
 int ResidentialBuilding::getChildInhabitantCount() const {
     return m_ChildInhabitantCount;
 }
