@@ -37,16 +37,17 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
         throw std::invalid_argument("Not enough money left for Zone placement!");
 
     m_Board.placeZone(zoneType, {row,col});
-    emit meta()->onZonesChanged();
+    emit meta()->zonesChanged();
+    emit meta()->boardChanged();
     m_money -= m_costOfPlacingZone;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 void GameModel::breakDownZone(int row, int col) {
     m_Board.breakDownZone({row,col});
-    emit meta()->onZonesChanged();
+    emit meta()->zonesChanged();
     m_money += m_costOfBreakingZone / 3;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) {
@@ -54,9 +55,9 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) 
         throw std::invalid_argument("Not enough money left for Building construction!");
 
     m_Board.placeBuilding(buildingType, {row,col});
-    emit meta()->onBoardChanged();
+    emit meta()->boardChanged();
     m_money -= m_costOfBuildingBuilding;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 qct::ZoneType GameModel::zoneAt(int row, int col) const {
@@ -70,7 +71,7 @@ const StructureBase* GameModel::structureAt(int row, int col) const {
 void GameModel::newGame() {
     m_Board.reset();
     m_money = m_moneyAtStart;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 void GameModel::advanceSimulation() {
@@ -150,7 +151,7 @@ void GameModel::buildOnRandomZone()
 {
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
-            auto p = std::make_pair(i, j);
+            auto p = std::make_pair(j, i);
             if (static_cast<int>(m_Board.at(p).zoneType) & static_cast<int>(qct::ZoneType::NotNone) &&
                 checkForRoad(p))
             {
@@ -159,7 +160,7 @@ void GameModel::buildOnRandomZone()
                     auto buildings = getCompatibleBuildings(m_Board.at(p).zoneType);
                     int randomIndex = QRandomGenerator::global()->bounded(buildings.size());
                     auto randomElement = buildings[randomIndex];
-                    placeBuilding(randomElement, i, j);
+                    placeBuilding(randomElement, j, i);
                 }
             }
         }

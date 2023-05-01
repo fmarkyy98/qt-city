@@ -29,6 +29,11 @@ GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
               ":/images/police",
               ":/images/stadium",
               ":/images/forest"};
+    stackedWidget = new QStackedWidget(this);
+    stackedWidget->addWidget(ui->tableWidget_2);
+    stackedWidget->addWidget(ui->tableWidget_3);
+    stackedWidget->setCurrentWidget(ui->tableWidget_2);
+    ui->verticalLayout->insertWidget(2,stackedWidget);
 }
 
 GamePage::~GamePage()
@@ -86,12 +91,16 @@ void GamePage::initConnections()
     connect(ui->slowerButton, &QPushButton::clicked, this, &GamePage::onSlowerButtonClicked);
     connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
     connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, &GamePage::onTableWidget2Clicked);
-    connect(m_pGameModel->meta(), &IGameModel::Meta::onBoardChanged, this, &GamePage::onRefreshboard);
+    connect(&timer, &QTimer::timeout, this, &GamePage::onTimeElapsed);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::moneyChanged, this, &GamePage::onMoneyChanaged);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::dateChanged, this, &GamePage::onDateChanged);
+
 }
 
 void GamePage::onTimeElapsed()
 {
-    //TODO
+    m_pGameModel->advanceSimulation();
 }
 
 void GamePage::onBoardChanged()
@@ -104,17 +113,21 @@ void GamePage::onZonesChanged()
     //TODO
 }
 
-void GamePage::onMoneyChanaged()
+void GamePage::onMoneyChanaged(int money)
 {
-    //TODO
+    ui->label_3->setText("Pemz: " + QString::number(money) + " csengőPengő");
+}
+
+void GamePage::onDateChanged(const QDate& date)
+{
+    ui->label_2->setText(date.toString("yyyy.MM.dd"));
 }
 
 void GamePage::newGame()
 {
     //m_pGameModel->newGame();
     //Ui::GamePage->setStyleSheet("background-image: url(:/images/background)");
-    changedBuilding=false;
-    changedZone=false;
+
     std::cerr<<m_pGameModel->getHeight();
     std::cerr<<m_pGameModel->getWidth();
     ui->tableWidget->setRowCount(m_pGameModel->getWidth());
@@ -133,7 +146,7 @@ void GamePage::newGame()
     }
 
 
-    for(int i=1; i<7; i++)
+    for(int i=1; i<8; i++)
     {
         ui->tableWidget_2->item(0,i)->setData(Qt::DecorationRole, QPixmap(this->images[i-1]));
     }
@@ -141,14 +154,61 @@ void GamePage::newGame()
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget_2->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    ui->tableWidget_3->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableWidget_3->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     connect(ui->tableWidget,&QAbstractItemView::clicked,this,[this](const QModelIndex& idx)->void{
         rowInd=idx.row();
         columnInd=idx.column();
+        auto structure = m_pGameModel->structureAt(rowInd, columnInd);
+        if(structure ==nullptr) {
+            stackedWidget->setCurrentWidget(ui->tableWidget_2);
+        } else {
+            pixMap=getPixMap(structure->getType());
+            ui->tableWidget_3->item(0,0)->setData(Qt::DecorationRole, pixMap);
+            ui->tableWidget_3->item(0,1)->setText("van");
+            stackedWidget->setCurrentWidget(ui->tableWidget_3);
+        }
         qDebug() << "Clicked: " << idx.row()<<","<<idx.column();
         qDebug() << "Saved: " << rowInd<<","<<columnInd;
     });
 
+    timer.start(1000);
+}
+
+QPixmap GamePage::getPixMap(qct::BuildingType type){
+    switch (type) {
+    case qct::BuildingType::Road: {
+        return QPixmap(":/images/road");
+    } break;
+    case qct::BuildingType::Store: {
+        return QPixmap(":/images/store");
+    } break;
+
+    case qct::BuildingType::Stadium: {
+        return QPixmap(":/images/stadium");
+    } break;
+
+    case qct::BuildingType::Forest: {
+        return QPixmap(":/images/forest");
+    } break;
+
+    case qct::BuildingType::Factory: {
+        return QPixmap(":/images/factory");
+    } break;
+
+    case qct::BuildingType::Residential: {
+        return QPixmap(":/images/house");
+    } break;
+
+    case qct::BuildingType::Police: {
+        return QPixmap(":/images/police");
+    } break;
+
+    default: {
+        return QPixmap(":/images/free");
+    } break;
+    }
 }
 
 void GamePage::onTableWidget2Clicked(int row, int column)
@@ -164,58 +224,61 @@ void GamePage::onTableWidget2Clicked(int row, int column)
         case 1:
             if (row == 0) {
                 chosenBuildingType=qct::BuildingType::Road;
-                changedBuilding=true;
+                placingBuilding=true;
+                ui->tableWidget_2->item(0,8)->setText("Price: \nCapacity: ");
             }
         break;
         case 2:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Residential;
+                auto building = ResidentialBuilding();
+                ui->tableWidget_2->item(0,8)->setText("Price: \nCapacity: "+ QString::number(building.getCapacity()));
             } else {
                 chosenZoneType=qct::ZoneType::Residential;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 3:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Factory;
             } else {
                 chosenZoneType=qct::ZoneType::Industrial;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 4:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Store;
             } else {
                 chosenZoneType=qct::ZoneType::Service;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 5:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Police;
             } else {
                 chosenZoneType=qct::ZoneType::Service;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 6:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Stadium;
             } else {
                 chosenZoneType=qct::ZoneType::Service;
-                changedZone=true;
+                placingBuilding=false;
             }
 
         break;
         case 7:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Forest;
             }
         break;
@@ -224,9 +287,9 @@ void GamePage::onTableWidget2Clicked(int row, int column)
                 //TODO
             } else {
                 try {
-                    if (changedBuilding) {
+                    if (placingBuilding) {
                         m_pGameModel->placeBuilding(chosenBuildingType, rowInd, columnInd);
-                    } else if (changedZone) {
+                    } else if (!placingBuilding) {
                         m_pGameModel->placeZone(chosenZoneType, rowInd, columnInd);
                     }
                     changedBuilding = false;
@@ -245,56 +308,28 @@ void GamePage::onRefreshboard() {
     // Viki TODO minden épülettípusra a megfelelő atribútumokat megjeleníteni.
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
+            switch (m_pGameModel->zoneAt(x,y)) {
+            case qct::ZoneType::Industrial:
+                ui->tableWidget->item(x,y)->setBackground(QColor(113, 10, 0));
+                break;
+            case qct::ZoneType::Service:
+                ui->tableWidget->item(x,y)->setBackground(QColor(30, 50, 50));
+                break;
+            case qct::ZoneType::Residential:
+                ui->tableWidget->item(x,y)->setBackground(QColor(200, 120, 0));
+                break;
+            case qct::ZoneType::None:
+                break;
+            }
             auto structure = m_pGameModel->structureAt(x, y);
             if (structure == nullptr)
                 continue;
 
-            switch (structure->getType()) {
-            case qct::BuildingType::Road: {
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/road"));
-            } break;
+            pixMap=getPixMap(structure->getType());
+            ui->tableWidget->item(x,y)->setData(Qt::DecorationRole,pixMap);
+            ui->tableWidget->item(x,y)->setTextAlignment(Qt::AlignRight);
 
-            case qct::BuildingType::Store: {
-                auto store = static_cast<const Store*>(structure);
-                int leve = store->getLevel();
-                // TODO level alapján elágazni
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/store"));
-            } break;
 
-            case qct::BuildingType::Stadium: {
-                auto stadium = static_cast<const Stadium*>(structure);
-                // TODO
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/stadium"));
-            } break;
-
-            case qct::BuildingType::Forest: {
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/forest"));
-            } break;
-
-            case qct::BuildingType::Factory: {
-                auto factory = static_cast<const Factory*>(structure);
-                // TODO
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/factory"));
-            } break;
-
-            case qct::BuildingType::Residential: {
-                auto residential = static_cast<const ResidentialBuilding*>(structure);
-                // TODO
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/house"));
-            } break;
-
-            case qct::BuildingType::Police: {
-                auto police = static_cast<const Police*>(structure);
-                // TODO
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/police"));
-            } break;
-
-            case qct::BuildingType::None: {
-                ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QPixmap(":/images/free"));
-            } break;
-
-            default: {} break;
-            }
         }
     }
 }

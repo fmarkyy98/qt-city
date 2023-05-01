@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QStackedWidget>
 #include "../model/IGameModel.h"
 #include "../model/export/Enums.h"
 
@@ -18,10 +19,11 @@ public:
     ~GamePage();
 
 public slots:
-    void onMoneyChanaged();
+    void onMoneyChanaged(int money);
     void onTimeElapsed();
     void onBoardChanged();
     void onZonesChanged();
+    void onDateChanged(const QDate& date);
 
 public:
     void newGame();
@@ -59,17 +61,21 @@ private:
     void placeBuilding(qct::BuildingType buildingType);
     void placeZone(qct::ZoneType zoneType);
     void saveClickedRow(int row, int column);
+    QPixmap getPixMap(qct::BuildingType type);
 
 private:
     Ui::GamePage *ui;
     std::shared_ptr<IGameModel> m_pGameModel;
     bool isGamePaused;
+    bool placingBuilding;
     bool changedBuilding, changedZone;
     int rowInd, columnInd;
     qct::BuildingType chosenBuildingType;
     qct::ZoneType chosenZoneType;
     std::vector<QString> images;
     QTimer timer;
+    QPixmap pixMap;
+    QStackedWidget *stackedWidget;
 
 };
 
