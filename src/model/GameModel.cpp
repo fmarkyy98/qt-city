@@ -34,17 +34,18 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
         throw std::invalid_argument("Not enough money left for Zone placement!");
 
     m_Board.placeZone(zoneType, {row,col});
-    emit meta()->onZonesChanged();
+    emit meta()->zonesChanged();
+    emit meta()->boardChanged();
     m_money -= m_costOfPlacingZone;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 void GameModel::breakDownZone(int row, int col)
 {
     m_Board.breakDownZone({row,col});
-    emit meta()->onZonesChanged();
+    emit meta()->zonesChanged();
     m_money += m_costOfBreakingZone / 3;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
@@ -53,9 +54,9 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
         throw std::invalid_argument("Not enough money left for Building construction!");
 
     m_Board.placeBuilding(buildingType, {row,col});
-    emit meta()->onBoardChanged();
+    emit meta()->boardChanged();
     m_money -= m_costOfBuildingBuilding;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 qct::ZoneType GameModel::zoneAt(int row, int col) const
@@ -72,7 +73,7 @@ void GameModel::newGame()
 {
     m_Board.reset();
     m_money = m_moneyAtStart;
-    emit meta()->onMoneyChanged(m_money);
+    emit meta()->moneyChanged(m_money);
 }
 
 void GameModel::advanceSimulation()
