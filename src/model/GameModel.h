@@ -27,19 +27,23 @@ public:
     const StructureBase* structureAt(int row, int col) const override;
     void newGame() override;
     void advanceSimulation() override;
+    void yearPassed(const std::vector<BuildingBase *> &buildings);
 
 private:
     bool canPlaceBuilding(); //TODO
     void advanceBuildingProcesses(const std::vector<BuildingBase *> &buildings);
     void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
     void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
+    void increaseMoney(const std::vector<BuildingBase *> &buildings);
 
 private:
     GameBoard m_Board;
     std::shared_ptr<IFileIOService> m_FileIOService;
     int m_money;
     int m_moneyAtStart = 500000;
-    int m_costOfPlacingZone = 500;
-    int m_costOfBreakingZone = 100;
-    int m_costOfBuildingBuilding= 750;
+    static constexpr int m_costOfPlacingZone = 500;
+    static constexpr int m_costOfBreakingZone = 100;
+    static constexpr int m_costOfBuildingBuilding = 750;
+    static constexpr int m_costOfMaintainingPolice = 1000;
+    static constexpr int m_costOfMaintainingStadium =2000 ;
 };

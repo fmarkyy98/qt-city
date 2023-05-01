@@ -81,11 +81,13 @@ void GameModel::advanceSimulation()
     advanceBuildingProcesses(buildings);
     increaseInhabitantAge(buildings);
     distributeInhabitantsToWorkplaces(buildings);
+    increaseMoney(buildings);
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
             //if(m_Board.at({row, col}).zoneType); //TODO
         }
     }
+    //TODO yearPassed
 }
 
 void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings)
@@ -125,4 +127,30 @@ void GameModel::distributeInhabitantsToWorkplaces(const std::vector<BuildingBase
             workplace->setWorkerCount(workplace->getWorkerCapacity() * workplaceLoadRatio);
         }
     }
+}
+
+void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings)
+{
+    for (auto building :buildings) {
+        if (auto house = dynamic_cast<WorkplaceBase*>(building); house != nullptr) {
+            m_money += house->calculateMoneyProduced();
+        }
+    }
+}
+
+void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings)
+{
+    int stadiumCount = 0;
+    int policeCount = 0;
+    for (auto building :buildings) {
+        switch (building->getType()) {
+        case qct::BuildingType::Stadium:
+            ++stadiumCount;
+            break;
+        case qct::BuildingType::Police:
+            ++policeCount;
+            break;
+        }
+    }
+    m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
 }
