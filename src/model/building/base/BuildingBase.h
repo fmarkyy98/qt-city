@@ -27,7 +27,7 @@ public:
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
 
-    int getLevel();
+    int getLevel() const;
 
     bool isBuildInProgress() const;
     void advanceBuildingProcess();

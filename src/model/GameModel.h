@@ -24,9 +24,15 @@ public:
     void breakDownZone(int row, int col);
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
     qct::ZoneType zoneAt(int row, int col) const override;
-    qct::BuildingType buildingAt(int row, int col) const override;
+    const StructureBase* structureAt(int row, int col) const override;
     void newGame() override;
     void advanceSimulation() override;
+
+private:
+    bool canPlaceBuilding(); //TODO
+    void advanceBuildingProcesses(const std::vector<BuildingBase *> &buildings);
+    void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
+    void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
 
 private:
     GameBoard m_Board;
@@ -36,7 +42,4 @@ private:
     int m_costOfPlacingZone = 500;
     int m_costOfBreakingZone = 100;
     int m_costOfBuildingBuilding= 750;
-
-private:
-    bool canPlaceBuilding(); //TODO
 };
