@@ -1,6 +1,0 @@
-/Users/nemesviko/Desktop/QtCity/qt-city/build/CMakeFiles/edit_cache.dir
-/Users/nemesviko/Desktop/QtCity/qt-city/build/CMakeFiles/rebuild_cache.dir
-/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/QtCity.dir
-/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/edit_cache.dir
-/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/rebuild_cache.dir
-/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/QtCity_autogen.dir
