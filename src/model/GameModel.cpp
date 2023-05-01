@@ -92,11 +92,13 @@ void GameModel::advanceSimulation()
     advanceBuildingProcesses(buildings);
     increaseInhabitantAge(buildings);
     distributeInhabitantsToWorkplaces(buildings);
+    increaseMoney(buildings);
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
             //if(m_Board.at({row, col}).zoneType); //TODO
         }
     }
+    //TODO yearPassed
 }
 
 void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings)
