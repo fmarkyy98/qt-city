@@ -7,7 +7,17 @@
 #include "building/Stadium.h"
 #include "building/Store.h"
 
-GameBoard::GameBoard(QObject* parent) : QObject(parent){}
+GameBoard::GameBoard(QObject* parent)
+    : QObject(parent)
+{}
+
+std::list<int> GameBoard::serialize() const {
+
+}
+
+void GameBoard::deserialize(std::list<int>& dataList) {
+
+}
 
 const Tile& GameBoard::at(std::pair<int, int> position) const
 {

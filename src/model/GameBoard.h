@@ -8,6 +8,8 @@ class GameBoard : public QObject
     Q_OBJECT
 public:
     explicit GameBoard(QObject* parent = nullptr);
+    std::list<int> serialize() const;
+    void deserialize(std::list<int>& dataList);
     const Tile& at(std::pair<int,int> position)const;
     Tile& at(std::pair<int,int> position);
     void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position);
