@@ -64,6 +64,7 @@ private:
     Ui::GamePage *ui;
     std::shared_ptr<IGameModel> m_pGameModel;
     bool isGamePaused;
+    bool changedBuilding, changedZone;
     int rowInd, columnInd;
     qct::BuildingType chosenBuildingType;
     qct::ZoneType chosenZoneType;
