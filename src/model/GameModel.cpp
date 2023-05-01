@@ -1,7 +1,6 @@
 #include "GameModel.h"
 #include "building/ResidentialBuilding.h"
 #include "building/base/WorkplaceBase.h"
-#include "QtCore/qdebug.h"
 
 GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
                      QObject *parent)
@@ -31,43 +30,32 @@ int GameModel::getWidth() const
 
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
 {
-    if(m_money >= m_costOfPlacingZone){
-        m_Board.placeZone(zoneType, {row,col});
-        emit meta()->zonesChanged();
-        emit meta()->boardChanged();
-        m_money -= m_costOfPlacingZone;
-        emit meta()->moneyChanged(m_money);
-    }
-    else
-    {
+    if(m_money < m_costOfPlacingZone)
         throw std::invalid_argument("Not enough money left for Zone placement!");
-    }
+
+    m_Board.placeZone(zoneType, {row,col});
+    emit meta()->onZonesChanged();
+    m_money -= m_costOfPlacingZone;
+    emit meta()->onMoneyChanged(m_money);
 }
 
 void GameModel::breakDownZone(int row, int col)
 {
-    if(m_money >= m_costOfBreakingZone){
-        m_Board.breakDownZone({row,col});
-        emit meta()->zonesChanged();
-        m_money -= m_costOfBreakingZone;
-        emit meta()->moneyChanged(m_money);
-    }
-    else
-    {
-        throw std::runtime_error("TODO");
-    }
+    m_Board.breakDownZone({row,col});
+    emit meta()->onZonesChanged();
+    m_money += m_costOfBreakingZone / 3;
+    emit meta()->onMoneyChanged(m_money);
 }
 
 void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
 {
-    if (m_money >= m_costOfBuildingBuilding) {
-        m_Board.placeBuilding(buildingType, {row,col});
-        emit meta()->boardChanged();
-        m_money -= m_costOfBuildingBuilding;
-        emit meta()->moneyChanged(m_money);
-    } else {
+    if (m_money < m_costOfBuildingBuilding)
         throw std::invalid_argument("Not enough money left for Building construction!");
-    }
+
+    m_Board.placeBuilding(buildingType, {row,col});
+    emit meta()->onBoardChanged();
+    m_money -= m_costOfBuildingBuilding;
+    emit meta()->onMoneyChanged(m_money);
 }
 
 qct::ZoneType GameModel::zoneAt(int row, int col) const
@@ -84,7 +72,7 @@ void GameModel::newGame()
 {
     m_Board.reset();
     m_money = m_moneyAtStart;
-    emit meta()->moneyChanged(m_money);
+    emit meta()->onMoneyChanged(m_money);
 }
 
 void GameModel::advanceSimulation()
@@ -93,11 +81,13 @@ void GameModel::advanceSimulation()
     advanceBuildingProcesses(buildings);
     increaseInhabitantAge(buildings);
     distributeInhabitantsToWorkplaces(buildings);
+    increaseMoney(buildings);
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
             //if(m_Board.at({row, col}).zoneType); //TODO
         }
     }
+    //TODO yearPassed
 }
 
 void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings)
@@ -137,4 +127,30 @@ void GameModel::distributeInhabitantsToWorkplaces(const std::vector<BuildingBase
             workplace->setWorkerCount(workplace->getWorkerCapacity() * workplaceLoadRatio);
         }
     }
+}
+
+void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings)
+{
+    for (auto building :buildings) {
+        if (auto house = dynamic_cast<WorkplaceBase*>(building); house != nullptr) {
+            m_money += house->calculateMoneyProduced();
+        }
+    }
+}
+
+void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings)
+{
+    int stadiumCount = 0;
+    int policeCount = 0;
+    for (auto building :buildings) {
+        switch (building->getType()) {
+        case qct::BuildingType::Stadium:
+            ++stadiumCount;
+            break;
+        case qct::BuildingType::Police:
+            ++policeCount;
+            break;
+        }
+    }
+    m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
 }
