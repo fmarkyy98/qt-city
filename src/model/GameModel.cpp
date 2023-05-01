@@ -1,7 +1,6 @@
 #include "GameModel.h"
 #include "building/ResidentialBuilding.h"
 #include "building/base/WorkplaceBase.h"
-#include "QtCore/qdebug.h"
 
 GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
                      QObject *parent)
@@ -31,42 +30,32 @@ int GameModel::getWidth() const
 
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
 {
-    if(m_money >= m_costOfPlacingZone){
-        m_Board.placeZone(zoneType, {row,col});
-        emit meta()->onZonesChanged();
-        m_money -= m_costOfPlacingZone;
-        emit meta()->onMoneyChanged(m_money);
-    }
-    else
-    {
+    if(m_money < m_costOfPlacingZone)
         throw std::invalid_argument("Not enough money left for Zone placement!");
-    }
+
+    m_Board.placeZone(zoneType, {row,col});
+    emit meta()->onZonesChanged();
+    m_money -= m_costOfPlacingZone;
+    emit meta()->onMoneyChanged(m_money);
 }
 
 void GameModel::breakDownZone(int row, int col)
 {
-    if(m_money >= m_costOfBreakingZone){
-        m_Board.breakDownZone({row,col});
-        emit meta()->onZonesChanged();
-        m_money -= m_costOfBreakingZone;
-        emit meta()->onMoneyChanged(m_money);
-    }
-    else
-    {
-        throw std::runtime_error("TODO");
-    }
+    m_Board.breakDownZone({row,col});
+    emit meta()->onZonesChanged();
+    m_money += m_costOfBreakingZone / 3;
+    emit meta()->onMoneyChanged(m_money);
 }
 
 void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
 {
-    if (m_money >= m_costOfBuildingBuilding) {
-        m_Board.placeBuilding(buildingType, {row,col});
-        emit meta()->onBoardChanged();
-        m_money -= m_costOfBuildingBuilding;
-        emit meta()->onMoneyChanged(m_money);
-    } else {
+    if (m_money < m_costOfBuildingBuilding)
         throw std::invalid_argument("Not enough money left for Building construction!");
-    }
+
+    m_Board.placeBuilding(buildingType, {row,col});
+    emit meta()->onBoardChanged();
+    m_money -= m_costOfBuildingBuilding;
+    emit meta()->onMoneyChanged(m_money);
 }
 
 qct::ZoneType GameModel::zoneAt(int row, int col) const
