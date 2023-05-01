@@ -79,25 +79,25 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
 void GameBoard::placeZone(qct::ZoneType zoneType, std::pair<int, int> position)
 {
     auto [row, col] = position;
-    if(m_TileMatrix[row][col].zoneType == qct::ZoneType::None){
-        m_TileMatrix[row][col].zoneType = zoneType;
-    }
-    else
-    {
-        throw std::runtime_error("TODO");
-    }
+    if (m_TileMatrix[row][col].zoneType != qct::ZoneType::None)
+        throw std::invalid_argument("Zone can only placed on empty field.");
+
+    if (m_TileMatrix[row][col].structure != nullptr)
+        throw std::invalid_argument("Zone can only placed on field with no building.");
+
+    m_TileMatrix[row][col].zoneType = zoneType;
 }
 
 void GameBoard::breakDownZone(std::pair<int, int> position)
 {
     auto [row, col] = position;
-    if(m_TileMatrix[row][col].structure == nullptr){
-        m_TileMatrix[row][col].zoneType = qct::ZoneType::None;
-    }
-    else
-    {
-        throw std::runtime_error("TODO");
-    }
+    if (m_TileMatrix[row][col].zoneType == qct::ZoneType::None)
+        throw std::invalid_argument("Empty zone can not be broken down.");
+
+    if (m_TileMatrix[row][col].structure != nullptr)
+        throw std::invalid_argument("Zone can not be broken down cause a building is on it.");
+
+    m_TileMatrix[row][col].zoneType = qct::ZoneType::None;
 }
 
 const std::vector<BuildingBase*> GameBoard::getBuildings() const
