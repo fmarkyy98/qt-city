@@ -9,16 +9,10 @@ class StructureBase;
 class IGameModelMeta : public details::IServiceMeta {
     Q_OBJECT
 signals:
-<<<<<<< HEAD
     void moneyChanged(int money);
     void boardChanged();
     void zonesChanged();
-=======
-    void onMoneyChanged(int money);
-    void onBoardChanged();
-    void onZonesChanged();
-    void dateChanged(QDate date);
->>>>>>> 66edef9a77416c4fdec5d5255220d9bcefce7f5a
+    void dateChanged(const QDate& date);
 };
 
 class IGameModel : public IService<IGameModelMeta>

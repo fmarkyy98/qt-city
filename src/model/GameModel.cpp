@@ -159,7 +159,7 @@ void GameModel::buildOnRandomZone()
 {
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
-            auto p = std::make_pair(i, j);
+            auto p = std::make_pair(j, i);
             if (static_cast<int>(m_Board.at(p).zoneType) & static_cast<int>(qct::ZoneType::NotNone) &&
                 checkForRoad(p))
             {
@@ -168,7 +168,7 @@ void GameModel::buildOnRandomZone()
                     auto buildings = getCompatibleBuildings(m_Board.at(p).zoneType);
                     int randomIndex = QRandomGenerator::global()->bounded(buildings.size());
                     auto randomElement = buildings[randomIndex];
-                    placeBuilding(randomElement, i, j);
+                    placeBuilding(randomElement, j, i);
                 }
             }
         }

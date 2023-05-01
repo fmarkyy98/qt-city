@@ -34,7 +34,6 @@ GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
     stackedWidget->addWidget(ui->tableWidget_3);
     stackedWidget->setCurrentWidget(ui->tableWidget_2);
     ui->verticalLayout->insertWidget(2,stackedWidget);
-    onTimeElapsed();
 }
 
 GamePage::~GamePage()
@@ -92,14 +91,16 @@ void GamePage::initConnections()
     connect(ui->slowerButton, &QPushButton::clicked, this, &GamePage::onSlowerButtonClicked);
     connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
     connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, &GamePage::onTableWidget2Clicked);
+    connect(&timer, &QTimer::timeout, this, &GamePage::onTimeElapsed);
     connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
     connect(m_pGameModel->meta(), &IGameModel::Meta::moneyChanged, this, &GamePage::onMoneyChanaged);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::dateChanged, this, &GamePage::onDateChanged);
+
 }
 
 void GamePage::onTimeElapsed()
 {
-
-    ui->label_2->setText("Time: 2023.05.01.");
+    m_pGameModel->advanceSimulation();
 }
 
 void GamePage::onBoardChanged()
@@ -115,6 +116,11 @@ void GamePage::onZonesChanged()
 void GamePage::onMoneyChanaged(int money)
 {
     ui->label_3->setText("Pemz: " + QString::number(money) + " csengőPengő");
+}
+
+void GamePage::onDateChanged(const QDate& date)
+{
+    ui->label_2->setText(date.toString("yyyy.MM.dd"));
 }
 
 void GamePage::newGame()

@@ -23,6 +23,7 @@ public slots:
     void onTimeElapsed();
     void onBoardChanged();
     void onZonesChanged();
+    void onDateChanged(const QDate& date);
 
 public:
     void newGame();
