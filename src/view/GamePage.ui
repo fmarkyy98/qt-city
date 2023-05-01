@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,15,2,1">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,12,2,2,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -177,6 +177,9 @@
       <bool>false</bool>
      </attribute>
     </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableWidget_3"/>
    </item>
    <item>
     <widget class="QTableWidget" name="tableWidget_2">

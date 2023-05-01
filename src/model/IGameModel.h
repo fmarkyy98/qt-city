@@ -8,9 +8,9 @@ class StructureBase;
 class IGameModelMeta : public details::IServiceMeta {
     Q_OBJECT
 signals:
-    void onMoneyChanged(int money);
-    void onBoardChanged();
-    void onZonesChanged();
+    void moneyChanged(int money);
+    void boardChanged();
+    void zonesChanged();
 };
 
 class IGameModel : public IService<IGameModelMeta>

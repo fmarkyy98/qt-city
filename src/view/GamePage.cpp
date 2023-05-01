@@ -29,6 +29,11 @@ GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
               ":/images/police",
               ":/images/stadium",
               ":/images/forest"};
+    stackedWidget = new QStackedWidget(this);
+    stackedWidget->addWidget(ui->tableWidget_2);
+    stackedWidget->addWidget(ui->tableWidget_3);
+    stackedWidget->setCurrentWidget(ui->tableWidget_2);
+    ui->verticalLayout->insertWidget(2,stackedWidget);
 }
 
 GamePage::~GamePage()
@@ -86,7 +91,8 @@ void GamePage::initConnections()
     connect(ui->slowerButton, &QPushButton::clicked, this, &GamePage::onSlowerButtonClicked);
     connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
     connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, &GamePage::onTableWidget2Clicked);
-    connect(m_pGameModel->meta(), &IGameModel::Meta::onBoardChanged, this, &GamePage::onRefreshboard);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::moneyChanged, this, &GamePage::onMoneyChanaged);
 }
 
 void GamePage::onTimeElapsed()
@@ -104,17 +110,16 @@ void GamePage::onZonesChanged()
     //TODO
 }
 
-void GamePage::onMoneyChanaged()
+void GamePage::onMoneyChanaged(int money)
 {
-    //TODO
+    ui->label_3->setText("Pemz: " + QString::number(money) + " csengőPengő");
 }
 
 void GamePage::newGame()
 {
     //m_pGameModel->newGame();
     //Ui::GamePage->setStyleSheet("background-image: url(:/images/background)");
-    changedBuilding=false;
-    changedZone=false;
+
     std::cerr<<m_pGameModel->getHeight();
     std::cerr<<m_pGameModel->getWidth();
     ui->tableWidget->setRowCount(m_pGameModel->getWidth());
@@ -142,9 +147,12 @@ void GamePage::newGame()
     ui->tableWidget_2->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 
+
     connect(ui->tableWidget,&QAbstractItemView::clicked,this,[this](const QModelIndex& idx)->void{
         rowInd=idx.row();
         columnInd=idx.column();
+        if(m_pGameModel->structureAt(rowInd, columnInd)==nullptr) stackedWidget->setCurrentWidget(ui->tableWidget_2);
+        else stackedWidget->setCurrentWidget(ui->tableWidget_3);
         qDebug() << "Clicked: " << idx.row()<<","<<idx.column();
         qDebug() << "Saved: " << rowInd<<","<<columnInd;
     });
@@ -164,58 +172,58 @@ void GamePage::onTableWidget2Clicked(int row, int column)
         case 1:
             if (row == 0) {
                 chosenBuildingType=qct::BuildingType::Road;
-                changedBuilding=true;
+                placingBuilding=true;
             }
         break;
         case 2:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Residential;
             } else {
                 chosenZoneType=qct::ZoneType::Residential;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 3:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Factory;
             } else {
                 chosenZoneType=qct::ZoneType::Industrial;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 4:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Store;
             } else {
                 chosenZoneType=qct::ZoneType::Service;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 5:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Police;
             } else {
                 chosenZoneType=qct::ZoneType::Service;
-                changedZone=true;
+                placingBuilding=false;
             }
         break;
         case 6:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Stadium;
             } else {
                 chosenZoneType=qct::ZoneType::Service;
-                changedZone=true;
+                placingBuilding=false;
             }
 
         break;
         case 7:
             if (row == 0) {
-                changedBuilding=true;
+                placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Forest;
             }
         break;
@@ -224,9 +232,9 @@ void GamePage::onTableWidget2Clicked(int row, int column)
                 //TODO
             } else {
                 try {
-                    if (changedBuilding) {
+                    if (placingBuilding) {
                         m_pGameModel->placeBuilding(chosenBuildingType, rowInd, columnInd);
-                    } else if (changedZone) {
+                    } else if (!placingBuilding) {
                         m_pGameModel->placeZone(chosenZoneType, rowInd, columnInd);
                     }
                     changedBuilding = false;
