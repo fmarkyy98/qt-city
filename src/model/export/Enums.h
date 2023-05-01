@@ -24,6 +24,7 @@ namespace qct {
         Residential = 2,
         Industrial = 4,
         Service = 8,
+        NotNone = 14,
         All = 15
     };
     Q_ENUM_NS(qct::ZoneType)

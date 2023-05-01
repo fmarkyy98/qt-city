@@ -93,12 +93,10 @@ void GameModel::advanceSimulation()
     increaseInhabitantAge(buildings);
     distributeInhabitantsToWorkplaces(buildings);
     increaseMoney(buildings);
-    for (int i = 0; i < getHeight(); ++i) {
-        for (int j = 0; j < getWidth(); ++j) {
-            //if(m_Board.at({row, col}).zoneType); //TODO
-        }
-    }
-    //TODO yearPassed
+    buildOnRandomZone();
+    m_date = m_date.addDays(1);
+    if(m_date.daysInYear() == 1)
+        yearPassed(buildings);
 }
 
 void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings)
@@ -164,4 +162,62 @@ void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
+}
+
+void GameModel::buildOnRandomZone()
+{
+    for (int i = 0; i < getHeight(); ++i) {
+        for (int j = 0; j < getWidth(); ++j) {
+            auto p = std::make_pair(i, j);
+            if (static_cast<int>(m_Board.at(p).zoneType) & static_cast<int>(qct::ZoneType::NotNone) &&
+                checkForRoad(p))
+            {
+                double randomValue= QRandomGenerator::global()->bounded(0, 100);
+                if (randomValue < 10) {
+                    auto buildings = getCompatibleBuildings(m_Board.at(p).zoneType);
+                    int randomIndex = QRandomGenerator::global()->bounded(buildings.size());
+                    auto randomElement = buildings[randomIndex];
+                    placeBuilding(randomElement, i, j);
+                }
+            }
+        }
+    }
+}
+
+bool GameModel::checkForRoad(std::pair<int, int> position)
+{
+    auto [row, col] = position;
+    bool hasNeighbouringRoad = false;
+
+    if (row > 0) {
+        auto above = m_Board.at(std::make_pair(row - 1, col)).structure;
+        hasNeighbouringRoad |= above != nullptr && above->getType() == qct::BuildingType::Road;
+    }
+    if (row < getHeight() - 1) {
+        auto below = m_Board.at(std::make_pair(row + 1, col)).structure;
+        hasNeighbouringRoad |= below != nullptr && below->getType() == qct::BuildingType::Road;
+    }
+    if (col > 0) {
+        auto left = m_Board.at(std::make_pair(row, col - 1)).structure;
+        hasNeighbouringRoad |= left != nullptr && left->getType() == qct::BuildingType::Road;
+    }
+    if (col < getWidth() - 1) {
+        auto right = m_Board.at(std::make_pair(row, col + 1)).structure;
+        hasNeighbouringRoad |= right != nullptr && right->getType() == qct::BuildingType::Road;
+    }
+
+    return hasNeighbouringRoad;
+}
+
+QList<qct::BuildingType> GameModel::getCompatibleBuildings(qct::ZoneType zoneType)
+{
+    switch (zoneType) {
+        case qct::ZoneType::Residential:
+            return {qct::BuildingType::Residential};
+        case qct::ZoneType::Service:
+            return {qct::BuildingType::Store};
+        case qct::ZoneType::Industrial:
+            return {qct::BuildingType::Factory};
+    }
+    return {};
 }
