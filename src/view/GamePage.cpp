@@ -246,6 +246,8 @@ void GamePage::onRefreshboard() {
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
             auto structure = m_pGameModel->structureAt(x, y);
+            if (structure == nullptr)
+                continue;
 
             switch (structure->getType()) {
             case qct::BuildingType::Road: {
