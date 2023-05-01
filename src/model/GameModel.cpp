@@ -95,6 +95,7 @@ void GameModel::advanceSimulation()
     increaseMoney(buildings);
     buildOnRandomZone();
     m_date = m_date.addDays(1);
+    emit meta()->dateChanged(m_date);
     if(m_date.daysInYear() == 1)
         yearPassed(buildings);
 }

@@ -2,6 +2,7 @@
 
 #include "export/IService.h"
 #include "export/Enums.h"
+#include <QDate>
 
 class StructureBase;
 
@@ -11,6 +12,7 @@ signals:
     void onMoneyChanged(int money);
     void onBoardChanged();
     void onZonesChanged();
+    void dateChanged(QDate date);
 };
 
 class IGameModel : public IService<IGameModelMeta>
