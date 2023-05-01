@@ -34,6 +34,7 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
     if(m_money >= m_costOfPlacingZone){
         m_Board.placeZone(zoneType, {row,col});
         emit meta()->zonesChanged();
+        emit meta()->boardChanged();
         m_money -= m_costOfPlacingZone;
         emit meta()->moneyChanged(m_money);
     }

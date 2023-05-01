@@ -60,6 +60,7 @@ private:
     void placeBuilding(qct::BuildingType buildingType);
     void placeZone(qct::ZoneType zoneType);
     void saveClickedRow(int row, int column);
+    QPixmap getPixMap(qct::BuildingType type);
 
 private:
     Ui::GamePage *ui;
@@ -72,6 +73,7 @@ private:
     qct::ZoneType chosenZoneType;
     std::vector<QString> images;
     QTimer timer;
+    QPixmap pixMap;
     QStackedWidget *stackedWidget;
 
 };
