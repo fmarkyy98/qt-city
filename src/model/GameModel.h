@@ -28,8 +28,6 @@ public:
     const StructureBase* structureAt(int row, int col) const override;
     void newGame() override;
     void advanceSimulation() override;
-    QDate getDate() {return m_date;}
-
 
 private:
     bool canPlaceBuilding(); //TODO
