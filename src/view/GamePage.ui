@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,15,3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,15,2,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -299,9 +299,19 @@
        <string>New Column</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>New Column</string>
+      </property>
+     </column>
      <item row="0" column="0">
       <property name="text">
-       <string/>
+       <string>Buildings:</string>
+      </property>
+     </item>
+     <item row="0" column="1">
+      <property name="text">
+       <string>Road</string>
       </property>
       <property name="background">
        <brush brushstyle="NoBrush">
@@ -322,9 +332,9 @@
        </brush>
       </property>
      </item>
-     <item row="0" column="1">
+     <item row="0" column="2">
       <property name="text">
-       <string/>
+       <string>House</string>
       </property>
       <property name="background">
        <brush brushstyle="NoBrush">
@@ -341,9 +351,9 @@
        </iconset>
       </property>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="3">
       <property name="text">
-       <string/>
+       <string>Factory</string>
       </property>
       <property name="icon">
        <iconset>
@@ -351,9 +361,9 @@
        </iconset>
       </property>
      </item>
-     <item row="0" column="3">
+     <item row="0" column="4">
       <property name="text">
-       <string/>
+       <string>Store</string>
       </property>
       <property name="icon">
        <iconset>
@@ -361,9 +371,9 @@
        </iconset>
       </property>
      </item>
-     <item row="0" column="4">
+     <item row="0" column="5">
       <property name="text">
-       <string/>
+       <string>Police</string>
       </property>
       <property name="icon">
        <iconset>
@@ -371,9 +381,9 @@
        </iconset>
       </property>
      </item>
-     <item row="0" column="5">
+     <item row="0" column="6">
       <property name="text">
-       <string/>
+       <string>Stadion</string>
       </property>
       <property name="icon">
        <iconset>
@@ -381,9 +391,9 @@
        </iconset>
       </property>
      </item>
-     <item row="0" column="6">
+     <item row="0" column="7">
       <property name="text">
-       <string/>
+       <string>Forest</string>
       </property>
       <property name="icon">
        <iconset>
@@ -391,47 +401,75 @@
        </iconset>
       </property>
      </item>
+     <item row="0" column="8">
+      <property name="text">
+       <string>Price: </string>
+      </property>
+     </item>
      <item row="1" column="0">
       <property name="text">
-       <string>Road</string>
+       <string>Zones:</string>
       </property>
      </item>
      <item row="1" column="1">
       <property name="text">
-       <string>Residential Zone</string>
+       <string/>
       </property>
      </item>
      <item row="1" column="2">
       <property name="text">
-       <string>Industrial Zone</string>
+       <string>Residential Zone</string>
       </property>
      </item>
      <item row="1" column="3">
       <property name="text">
-       <string>Service Zone</string>
+       <string>Industrial Zone</string>
       </property>
      </item>
      <item row="1" column="4">
       <property name="text">
-       <string>Police</string>
+       <string>Service Zone</string>
       </property>
      </item>
      <item row="1" column="5">
       <property name="text">
-       <string>Stadion</string>
+       <string>Service Zone</string>
       </property>
      </item>
      <item row="1" column="6">
       <property name="text">
-       <string>Forest</string>
+       <string>Service Zone</string>
       </property>
      </item>
      <item row="1" column="7">
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item row="1" column="8">
       <property name="text">
        <string>Buy</string>
       </property>
      </item>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Budget: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Time: </string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

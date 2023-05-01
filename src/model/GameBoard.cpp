@@ -56,7 +56,7 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
     // ha nem teljesul akkor early return
     //ciklusokkal
     if(!newBuilding->canBuildOnZone(m_TileMatrix[row][col].zoneType))
-        return;
+        throw std::invalid_argument("Incompatible Zone type with Building type!");
 
     m_TileMatrix[row][col].structure = newBuilding;
 

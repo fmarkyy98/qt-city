@@ -1,0 +1,293 @@
+{
+	"BUILD_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/QtCity_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/src",
+	"CMAKE_EXECUTABLE" : "/opt/homebrew/Cellar/cmake/3.26.3/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/Users/nemesviko/Desktop/QtCity/qt-city/src/CMakeLists.txt",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/images.qrc"
+	],
+	"CMAKE_SOURCE_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/GameBoard.h",
+			"MU",
+			"NLOY5YBGEN/moc_GameBoard.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/GameModel.h",
+			"MU",
+			"NLOY5YBGEN/moc_GameModel.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/IGameModel.h",
+			"MU",
+			"NLOY5YBGEN/moc_IGameModel.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/Tile.h",
+			"MU",
+			"NLOY5YBGEN/moc_Tile.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Factory.h",
+			"MU",
+			"HQD32P4BRJ/moc_Factory.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Forest.h",
+			"MU",
+			"HQD32P4BRJ/moc_Forest.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Police.h",
+			"MU",
+			"HQD32P4BRJ/moc_Police.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/ResidentialBuilding.h",
+			"MU",
+			"HQD32P4BRJ/moc_ResidentialBuilding.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Road.h",
+			"MU",
+			"HQD32P4BRJ/moc_Road.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Stadium.h",
+			"MU",
+			"HQD32P4BRJ/moc_Stadium.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Store.h",
+			"MU",
+			"HQD32P4BRJ/moc_Store.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/base/BuildingBase.h",
+			"MU",
+			"BSZ4BE7LVA/moc_BuildingBase.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/base/StructureBase.h",
+			"MU",
+			"BSZ4BE7LVA/moc_StructureBase.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/base/WorkplaceBase.h",
+			"MU",
+			"BSZ4BE7LVA/moc_WorkplaceBase.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/export/Enums.h",
+			"MU",
+			"LVEQ2VYCUL/moc_Enums.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/export/IService.h",
+			"MU",
+			"LVEQ2VYCUL/moc_IService.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/persistence/FileIOService.h",
+			"MU",
+			"7QTDBEOKRE/moc_FileIOService.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/persistence/export/IFileIOService.h",
+			"MU",
+			"34MDCHZ4YR/moc_IFileIOService.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/GamePage.h",
+			"MU",
+			"OTUN7GXZT4/moc_GamePage.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/MainWindow.h",
+			"MU",
+			"OTUN7GXZT4/moc_MainWindow.cpp",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/MenuPage.h",
+			"MU",
+			"OTUN7GXZT4/moc_MenuPage.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/QtCity_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/QtCity_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/nemesviko/Desktop/QtCity/qt-city/build/src",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/src",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/export",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/export",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/src/persistence/export",
+		"/Users/nemesviko/Qt/6.4.2/macos/lib/QtWidgets.framework/Headers",
+		"/Users/nemesviko/Qt/6.4.2/macos/lib/QtWidgets.framework",
+		"/Users/nemesviko/Qt/6.4.2/macos/lib/QtCore.framework/Headers",
+		"/Users/nemesviko/Qt/6.4.2/macos/lib/QtCore.framework",
+		"/Users/nemesviko/Qt/6.4.2/macos/mkspecs/macx-clang",
+		"/Users/nemesviko/Qt/6.4.2/macos/include",
+		"/Users/nemesviko/Qt/6.4.2/macos/lib/QtGui.framework/Headers",
+		"/Users/nemesviko/Qt/6.4.2/macos/lib/QtGui.framework",
+		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/usr/include/c++/v1",
+		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/14.0.0/include",
+		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk/usr/include",
+		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_GADGET_EXPORT",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/opt/homebrew/Cellar/cmake/3.26.3/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/QtCity_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 10,
+	"PARSE_CACHE_FILE" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/QtCity_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/Users/nemesviko/Qt/6.4.2/macos/./libexec/moc",
+	"QT_UIC_EXECUTABLE" : "/Users/nemesviko/Qt/6.4.2/macos/./libexec/uic",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 4,
+	"SETTINGS_FILE" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/QtCity_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/Users/nemesviko/Desktop/QtCity/qt-city/src/main.cpp", "MU", null ],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/GameBoard.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/GameModel.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Factory.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Forest.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Police.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/ResidentialBuilding.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Road.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Stadium.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/Store.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/base/BuildingBase.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/base/StructureBase.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/model/building/base/WorkplaceBase.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/persistence/FileIOService.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/GamePage.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/MainWindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/nemesviko/Desktop/QtCity/qt-city/src/view/MenuPage.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

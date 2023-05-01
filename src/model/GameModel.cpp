@@ -21,7 +21,7 @@ void GameModel::load(const QString &path)
 
 int GameModel::getHeight() const
 {
-    return 20;
+    return 25;
 }
 
 int GameModel::getWidth() const
@@ -39,7 +39,7 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col)
     }
     else
     {
-        throw std::runtime_error("TODO");
+        throw std::invalid_argument("Not enough money left for Zone placement!");
     }
 }
 
@@ -65,7 +65,7 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col)
         m_money -= m_costOfBuildingBuilding;
         emit meta()->onMoneyChanged(m_money);
     } else {
-        throw std::runtime_error("TODO");
+        throw std::invalid_argument("Not enough money left for Building construction!");
     }
 }
 

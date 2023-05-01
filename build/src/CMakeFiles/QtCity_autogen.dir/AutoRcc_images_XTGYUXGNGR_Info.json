@@ -1,0 +1,30 @@
+{
+	"BUILD_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/QtCity_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/src",
+	"CMAKE_SOURCE_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city",
+	"INCLUDE_DIR" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/QtCity_autogen/include",
+	"INPUTS" : 
+	[
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/police-station.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/background.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/icons8-house-100.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/store.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/road_16.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/stadium.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/free.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/factory_318-936853.png",
+		"/Users/nemesviko/Desktop/QtCity/qt-city/resource/forest.png"
+	],
+	"LOCK_FILE" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/QtCity_autogen.dir/AutoRcc_images_XTGYUXGNGR_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "images" ],
+	"OUTPUT_CHECKSUM" : "XTGYUXGNGR",
+	"OUTPUT_NAME" : "qrc_images.cpp",
+	"RCC_EXECUTABLE" : "/Users/nemesviko/Qt/6.4.2/macos/./libexec/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/Users/nemesviko/Desktop/QtCity/qt-city/build/src/CMakeFiles/QtCity_autogen.dir/AutoRcc_images_XTGYUXGNGR_Used.txt",
+	"SOURCE" : "/Users/nemesviko/Desktop/QtCity/qt-city/resource/images.qrc",
+	"VERBOSITY" : 0
+}
