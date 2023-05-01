@@ -233,8 +233,8 @@ void GamePage::onTableWidget2Clicked(int row, int column)
                     changedZone = false;
                     chosenBuildingType=qct::BuildingType::None;
                     chosenZoneType=qct::ZoneType::None;
-                } catch (...) {
-                    messageBox.critical(0,"Error","The field is not empty!");
+                } catch (const std::invalid_argument& e) {
+                    messageBox.critical(0,"Error",e.what());
                 }
             }
         break;
