@@ -37,6 +37,7 @@ public:
     virtual std::pair<int, int> getSize() const = 0;
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
+    virtual std::list<int> serialize() const;
 
     bool canBuildOnZone(const qct::ZoneType& zoneType) const;
 

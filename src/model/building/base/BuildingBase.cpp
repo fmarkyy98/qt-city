@@ -4,6 +4,16 @@ BuildingBase::BuildingBase(QObject *parent)
     : StructureBase(parent)
 {}
 
+std::list<int> BuildingBase::serialize() const {
+    std::list<int> dataList;
+    dataList.push_back(m_BuildingProgress);
+    dataList.push_back(m_BuildingLevel);
+
+    dataList.merge(StructureBase::serialize());
+
+    return dataList;
+}
+
 int BuildingBase::getLevel() const {
     return m_BuildingLevel;
 }

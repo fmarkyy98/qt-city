@@ -9,6 +9,7 @@ public:
 
     DECLARE_STRUCTURE_BASE_MEMBERS
     DECLARE_BUILDING_BASE_MEMBERS
+    std::list<int> serialize() const final;
 
     int getCapacity() const;
     int getCapacity(int level) const;

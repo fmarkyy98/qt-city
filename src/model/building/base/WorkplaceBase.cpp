@@ -4,6 +4,15 @@ WorkplaceBase::WorkplaceBase(QObject* parent)
     : BuildingBase(parent)
 {}
 
+std::list<int> WorkplaceBase::serialize() const {
+    std::list<int> dataList;
+    dataList.push_back(m_WorkerCount);
+
+    dataList.merge(BuildingBase::serialize());
+
+    return dataList;
+}
+
 int WorkplaceBase::getWorkerCount() const {
     return m_WorkerCount;
 }

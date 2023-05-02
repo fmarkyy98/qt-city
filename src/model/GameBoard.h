@@ -10,7 +10,7 @@ public:
     explicit GameBoard(QObject* parent = nullptr);
     std::list<int> serialize() const;
     void deserialize(std::list<int>& dataList);
-    const Tile& at(std::pair<int,int> position)const;
+    const Tile& at(std::pair<int,int> position) const;
     Tile& at(std::pair<int,int> position);
     void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position);
     void placeZone(qct::ZoneType zoneType, std::pair<int, int> position);
@@ -18,6 +18,9 @@ public:
     const std::vector<BuildingBase*> getBuildings() const;
     void catastrophe();//TODO
     void reset();
+
+private:
+    std::pair<int, int> indexOfStructure(StructureBase* structure) const;
 
 private:
     std::array<std::array<Tile, 25>, 15> m_TileMatrix;

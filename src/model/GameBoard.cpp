@@ -12,7 +12,33 @@ GameBoard::GameBoard(QObject* parent)
 {}
 
 std::list<int> GameBoard::serialize() const {
+    std::list<int> dataList;
+    for (int i = 0; i < m_TileMatrix.size(); ++i) {
+        for (int j = 0; j < m_TileMatrix[i].size(); ++j) {
+            dataList.push_back(static_cast<int>(m_TileMatrix[j][i].zoneType));
+        }
+    }
 
+    auto serializeStructureContainer = [this, &dataList](const auto& container) {
+        dataList.push_back(container.size());
+        for (auto&& structure : container) {
+            dataList.push_back(static_cast<int>(structure->getType()));
+            auto [topLeftX, topLeftY] = indexOfStructure(structure.get());
+            auto [heigth, width] = structure->getSize();
+            auto bottomRightX = topLeftX + heigth - 1;
+            auto bottomRightY = topLeftY + width - 1;
+            dataList.push_back(topLeftX);
+            dataList.push_back(topLeftY);
+            dataList.push_back(bottomRightX);
+            dataList.push_back(bottomRightY);
+
+            dataList.merge(structure->serialize());
+        }
+    };
+    serializeStructureContainer(m_Buildings);
+    serializeStructureContainer(m_Structures);
+
+    return dataList;
 }
 
 void GameBoard::deserialize(std::list<int>& dataList) {
@@ -138,4 +164,9 @@ void GameBoard::reset()
     }
 }
 
-
+std::pair<int, int> GameBoard::indexOfStructure(StructureBase* structure) const {
+    for (int i = 0; i < m_TileMatrix.size(); ++i)
+        for (int j = 0; j < m_TileMatrix[i].size(); ++j)
+            if (m_TileMatrix[j][i].structure == structure)
+                return {j, i};
+}
