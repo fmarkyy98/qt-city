@@ -2,7 +2,7 @@
 #include "IFileIOService.h"
 #include "IService.h"
 #include "persistence/FileIOService.h"
-#include "model/GameModel.h"
+#include "GameModelFactory.h"
 
 namespace internal {
 	MainWindow *pMainWindow = nullptr;
@@ -12,8 +12,7 @@ namespace internal {
 		if (!pMainWindow)
 		{
 			//TODO Factory to GameModel and FIleIOService
-			std::shared_ptr<IFileIOService> pFileIOService = std::make_shared<FileIOService>();
-			std::shared_ptr<IGameModel> pModel = std::make_shared<GameModel>(pFileIOService);
+			std::shared_ptr<IGameModel> pModel = GameModelFactory::getGameModel();
 			pMainWindow = new MainWindow(pModel);
 		}
 	}

@@ -10,5 +10,5 @@ public:
 	static MainWindow* getMainWindow();
 private:
 	ViewFactory() = default;
-	virtual ~ViewFactory() = default;
+	~ViewFactory() = default;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include "../model/IGameModel.h"
+#include "IGameModel.h"
 #include "GamePage.h"
 
 namespace Ui {

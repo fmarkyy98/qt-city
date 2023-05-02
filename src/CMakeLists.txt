@@ -50,8 +50,10 @@ set(SOURCES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameBoard.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModelFactory.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/persistence/FileIOService.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/persistence/FileIOServiceFactory.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/view/GamePage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/MainWindow.cpp
