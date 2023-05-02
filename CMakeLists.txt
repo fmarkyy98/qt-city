@@ -25,3 +25,7 @@ file(GLOB_RECURSE RECOURSES
 )
 
 add_subdirectory(src)
+
+if(USE_TEST)
+        add_subdirectory(test)
+endif()
