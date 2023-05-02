@@ -62,13 +62,8 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
     } break;
     }
 
-    //TODO epulet teljes alapteruletere meg kell nezni hogy kompatibilis zona van e ott,
-    //ha ez mindegyikre teljesul, akkor az osszes tile-ra fel kell helyezni a raw pointert(newBuilding.get())
-    // ha nem teljesul akkor early return
-    //ciklusokkal
-
-    for (int y = col; y < col + static_cast<BuildingBase*>(newBuilding)->getHeight(); ++y) {
-        for (int x = row; x < row + static_cast<BuildingBase*>(newBuilding)->getWidth(); ++x) {
+    for (int y = col; y < col + newBuilding->getHeight(); ++y) {
+        for (int x = row; x < row + newBuilding->getWidth(); ++x) {
             if(!newBuilding->canBuildOnZone(m_TileMatrix[x][y].zoneType)) {
                 throw std::invalid_argument("Incompatible Zone type with Building type!");
                 return;
@@ -76,10 +71,11 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
         }
     }
 
-    /*if(!newBuilding->canBuildOnZone(m_TileMatrix[row][col].zoneType))
-        throw std::invalid_argument("Incompatible Zone type with Building type!");
-    */
-    m_TileMatrix[row][col].structure = newBuilding;
+    for (int y = col; y < col + newBuilding->getHeight(); ++y) {
+        for (int x = row; x < row + newBuilding->getWidth(); ++x) {
+            m_TileMatrix[x][y].structure = newBuilding;
+        }
+    }
 
     switch(newBuilding->getType()) {
     case qct::BuildingType::Road:

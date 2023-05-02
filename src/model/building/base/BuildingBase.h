@@ -2,31 +2,13 @@
 
 #include "StructureBase.h"
 
-#define DECLARE_BUILDING_BASE_MEMBERS              \
-std::pair<int, int> getSize() const override;      \
-int getWidth() const override;                     \
-int getHeight() const override;
-
-#define DEFINE_BUILDING_BASE_MEMBERS(CLASS)       \
-std::pair<int, int> CLASS::getSize() const {      \
-    return {s_Width, s_Height};                   \
-}                                                 \
-int CLASS::getWidth() const {                     \
-    return s_Width;                               \
-}                                                 \
-int CLASS::getHeight() const {                    \
-    return s_Height;                              \
-}
+#define DECLARE_BUILDING_BASE_MEMBERS
+#define DEFINE_BUILDING_BASE_MEMBERS(CLASS)
 
 class BuildingBase : public StructureBase {
     Q_OBJECT
 public:
     explicit BuildingBase(QObject* parent = nullptr);
-
-    virtual std::pair<int, int> getSize() const = 0;
-    virtual int getWidth() const = 0;
-    virtual int getHeight() const = 0;
-
     int getLevel() const;
 
     bool isBuildInProgress() const;
