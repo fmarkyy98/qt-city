@@ -32,6 +32,14 @@ int GameModel::getWidth() const {
     return 15;
 }
 
+int GameModel::getCostOfPlacingZone() const {
+    return m_costOfPlacingZone;
+}
+
+int GameModel::getCostOfBuildingBuilding() const {
+    return m_costOfBuildingBuilding;
+}
+
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
     if(m_money < m_costOfPlacingZone)
         throw std::invalid_argument("Not enough money left for Zone placement!");
@@ -46,7 +54,7 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
 void GameModel::breakDownZone(int row, int col) {
     m_Board.breakDownZone({row,col});
     emit meta()->zonesChanged();
-    m_money += m_costOfBreakingZone / 3;
+    m_money += m_costOfPlacingZone / 3;
     emit meta()->moneyChanged(m_money);
 }
 

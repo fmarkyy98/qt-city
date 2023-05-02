@@ -61,13 +61,24 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
         throw std::invalid_argument("Invalid BuildingType");
     } break;
     }
+
     //TODO epulet teljes alapteruletere meg kell nezni hogy kompatibilis zona van e ott,
     //ha ez mindegyikre teljesul, akkor az osszes tile-ra fel kell helyezni a raw pointert(newBuilding.get())
     // ha nem teljesul akkor early return
     //ciklusokkal
-    if(!newBuilding->canBuildOnZone(m_TileMatrix[row][col].zoneType))
-        throw std::invalid_argument("Incompatible Zone type with Building type!");
 
+    for (int y = col; y < col + static_cast<BuildingBase*>(newBuilding)->getHeight(); ++y) {
+        for (int x = row; x < row + static_cast<BuildingBase*>(newBuilding)->getWidth(); ++x) {
+            if(!newBuilding->canBuildOnZone(m_TileMatrix[x][y].zoneType)) {
+                throw std::invalid_argument("Incompatible Zone type with Building type!");
+                return;
+            }
+        }
+    }
+
+    /*if(!newBuilding->canBuildOnZone(m_TileMatrix[row][col].zoneType))
+        throw std::invalid_argument("Incompatible Zone type with Building type!");
+    */
     m_TileMatrix[row][col].structure = newBuilding;
 
     switch(newBuilding->getType()) {
