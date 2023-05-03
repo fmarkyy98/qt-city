@@ -7,9 +7,11 @@
 #include "building/Stadium.h"
 #include "building/Store.h"
 
-GameBoard::GameBoard(QObject* parent)
+GameBoard::GameBoard(QDate date, QObject* parent)
     : QObject(parent)
-{}
+{
+    randomForestPlacement(date);
+}
 
 std::list<int> GameBoard::serialize() const {
 
@@ -31,7 +33,7 @@ Tile &GameBoard::at(std::pair<int, int> position)
     return m_TileMatrix[row][col];
 }
 
-void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position)
+void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position, QDate date)
 {
     StructureBase* newBuilding;
     auto [row, col] = position;
@@ -46,7 +48,7 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
         newBuilding = new Police();
     } break;
     case qct::BuildingType::Forest: {
-        newBuilding = new Forest();
+        newBuilding = new Forest(date);
     } break;
     case qct::BuildingType::Road: {
         newBuilding = new Road();
@@ -127,13 +129,38 @@ const std::vector<BuildingBase*> GameBoard::getBuildings() const
     return buildings;
 }
 
+const std::vector<StructureBase *> GameBoard::getStructures() const
+{
+    std::vector<StructureBase*> structures;
+    structures.reserve(m_Structures.size());
+    for (auto&& structure : m_Structures)
+        structures.push_back(structure.get());
 
-void GameBoard::reset()
+    return structures;
+}
+
+
+void GameBoard::reset(QDate date)
 {
     for (auto& col : m_TileMatrix) {
         for (auto& tile : col) {
             tile.structure = nullptr;
             tile.zoneType = qct::ZoneType::None;
+        }
+    }
+    m_Buildings.clear();
+    m_Structures.clear();
+    randomForestPlacement(date);
+}
+
+void GameBoard::randomForestPlacement(QDate date)
+{
+    for (int i = 0; i < m_TileMatrix.size(); ++i) {
+        for (int j = 0; j < m_TileMatrix[i].size(); ++j) {
+            double randomValue= QRandomGenerator::global()->bounded(0, 100);
+            if (randomValue < 2) {
+                placeBuilding(qct::BuildingType::Forest, {j, i}, date);
+            }
         }
     }
 }

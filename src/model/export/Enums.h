@@ -20,6 +20,7 @@ namespace qct {
     Q_ENUM_NS(qct::BuildingType)
 
     enum class ZoneType {
+        Radioactive = 0,
         None = 1,
         Residential = 2,
         Industrial = 4,

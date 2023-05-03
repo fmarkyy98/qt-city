@@ -13,6 +13,7 @@ signals:
     void boardChanged();
     void zonesChanged();
     void dateChanged(const QDate& date);
+    void releasedCatastrophe();
 };
 
 class IGameModel : public IService<IGameModelMeta>

@@ -2,10 +2,13 @@
 #include "building/ResidentialBuilding.h"
 #include "building/base/WorkplaceBase.h"
 
+const QDate GameModel::m_dateAtStart = {1970, 1, 1};
+
 GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
                      QObject *parent)
     : QObject(parent)
     , m_FileIOService(fileIOService)
+    , m_Board(m_dateAtStart)
 {}
 
 void GameModel::save(const QString &path) const {
@@ -62,7 +65,7 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) 
     if (m_money < m_costOfBuildingBuilding)
         throw std::invalid_argument("Not enough money left for Building construction!");
 
-    m_Board.placeBuilding(buildingType, {row,col});
+    m_Board.placeBuilding(buildingType, {row,col}, m_date);
     emit meta()->boardChanged();
     m_money -= m_costOfBuildingBuilding;
     emit meta()->moneyChanged(m_money);
@@ -77,36 +80,34 @@ const StructureBase* GameModel::structureAt(int row, int col) const {
 }
 
 void GameModel::newGame() {
-    m_Board.reset();
+    m_Board.reset(m_dateAtStart);
+    emit meta()->boardChanged();
     m_money = m_moneyAtStart;
     emit meta()->moneyChanged(m_money);
+    m_date = m_dateAtStart;
+    emit meta()->dateChanged(m_date);
 }
 
 void GameModel::advanceSimulation() {
     auto buildings = m_Board.getBuildings();
+    auto structures = m_Board.getStructures();
+
     advanceBuildingProcesses(buildings);
-    increaseInhabitantAge(buildings);
     distributeInhabitantsToWorkplaces(buildings);
     increaseMoney(buildings);
     buildOnRandomZone();
     m_date = m_date.addDays(1);
     emit meta()->dateChanged(m_date);
-    if(m_date.daysInYear() == 1)
+    if(m_date.daysInYear() == 1) {
         yearPassed(buildings);
+        //forest bonus
+    }
 }
 
 void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings) {
     for (auto building : m_Board.getBuildings()) {
         if (building->isBuildInProgress()) {
             building->advanceBuildingProcess();
-        }
-    }
-}
-
-void GameModel::increaseInhabitantAge(const std::vector<BuildingBase *> &buildings) {
-    for (auto building :buildings) {
-        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
-            house->increseInhabitantAge();
         }
     }
 }
@@ -139,22 +140,6 @@ void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings) {
     }
 }
 
-void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings) {
-    int stadiumCount = 0;
-    int policeCount = 0;
-    for (auto building :buildings) {
-        switch (building->getType()) {
-        case qct::BuildingType::Stadium:
-            ++stadiumCount;
-            break;
-        case qct::BuildingType::Police:
-            ++policeCount;
-            break;
-        }
-    }
-    m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
-}
-
 void GameModel::buildOnRandomZone()
 {
     for (int i = 0; i < getHeight(); ++i) {
@@ -171,6 +156,48 @@ void GameModel::buildOnRandomZone()
                     placeBuilding(randomElement, j, i);
                 }
             }
+        }
+    }
+}
+
+void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings,
+                           const std::vector<StructureBase *> &structures)
+{
+    maintainCity(buildings);
+    maintainRoads(structures);
+    increaseInhabitantAge(buildings);
+}
+
+void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
+{
+    int stadiumCount = 0;
+    int policeCount = 0;
+    for (auto building :buildings) {
+        switch (building->getType()) {
+        case qct::BuildingType::Stadium:
+            ++stadiumCount;
+            break;
+        case qct::BuildingType::Police:
+            ++policeCount;
+            break;
+        }
+    }
+    m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
+}
+
+void GameModel::maintainRoads(const std::vector<StructureBase *> &structures)
+{
+    int roadCount = 0;
+    for (auto structure :structures) {
+        ++roadCount;
+    }
+    m_money -= (roadCount * m_costOfMaintainingRoad);
+}
+
+void GameModel::increaseInhabitantAge(const std::vector<BuildingBase *> &buildings) {
+    for (auto building :buildings) {
+        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
+            house->increseInhabitantAge();
         }
     }
 }
@@ -198,6 +225,28 @@ bool GameModel::checkForRoad(std::pair<int, int> position)
     }
 
     return hasNeighbouringRoad;
+}
+
+bool GameModel::checkForForest(std::pair<int, int> position)
+{
+    auto [row, col] = position;
+    bool hasForestNearThis = false;
+
+    for (int i = std::max(0, col - 3); i <= std::min(getHeight(), col + 3); i++) {
+            for (int j = std::max(0, row - 3); j <= std::min(getWidth(), row + 3); j++) {
+                if (m_Board.at(std::make_pair(j, i)).structure->getType() == qct::BuildingType::Forest) {
+                    if (std::abs(i - col) + std::abs(j - row) <= 3)
+                        hasForestNearThis = true;
+                }
+            }
+    }
+
+    return hasForestNearThis;
+}
+
+int GameModel::calculateTax(std::pair<int, int> position)
+{
+    return 1;
 }
 
 QList<qct::BuildingType> GameModel::getCompatibleBuildings(qct::ZoneType zoneType)
