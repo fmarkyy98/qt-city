@@ -256,6 +256,8 @@ void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
         case qct::BuildingType::Police:
             ++policeCount;
             break;
+        default:
+            break;
         }
     }
     m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
