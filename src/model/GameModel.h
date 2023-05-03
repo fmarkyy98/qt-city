@@ -23,6 +23,10 @@ public:
     int getWidth() const override;
     int getCostOfPlacingZone() const override;
     int getCostOfBuildingBuilding() const override;
+    int getGlobalInhabitantCount() const override;
+    int getGlobalInhabitantCapacity() const override;
+    int getGlobalWorkerCount() const override;
+    int getGlobalWorkerCapacity() const override;
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
     void breakDownZone(int row, int col) override;
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;

@@ -26,6 +26,8 @@ public:
     virtual int getWorkerCapacity() const = 0;
     virtual int getWorkerCapacity(int level) const = 0;
     virtual double getProfitAfterWorker() const = 0;
+    std::list<int> serialize() const override;
+    void deserialize(std::list<int>& dataList) override;
 
     int getWorkerCount() const;
 

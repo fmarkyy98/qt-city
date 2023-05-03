@@ -21,6 +21,9 @@ void GameModel::save(const QString &path) const {
 
     dataList.merge(m_Board.serialize());
     dataList.push_back(m_money);
+    dataList.push_back(m_date.year());
+    dataList.push_back(m_date.month());
+    dataList.push_back(m_date.day());
 
     m_FileIOService->save(path, dataList);
 }
@@ -30,6 +33,12 @@ void GameModel::load(const QString &path) {
 
     m_Board.deserialize(dataList);
     m_money = dataList.front(); dataList.pop_front();
+    int y = dataList.front(); dataList.pop_front();
+    int m = dataList.front(); dataList.pop_front();
+    int d = dataList.front(); dataList.pop_front();
+    m_date = {y, m, d};
+
+    assert(dataList.empty() && "Deserialization item number missmatch.");
 }
 
 int GameModel::getHeight() const {
@@ -46,6 +55,58 @@ int GameModel::getCostOfPlacingZone() const {
 
 int GameModel::getCostOfBuildingBuilding() const {
     return m_costOfBuildingBuilding;
+}
+
+int GameModel::getGlobalInhabitantCount() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto house = dynamic_cast<ResidentialBuilding*>(building);
+                               if (house == nullptr)
+                                   return accumulated;
+
+                               return accumulated + house->getInhabitantCount();
+                           });
+}
+
+int GameModel::getGlobalInhabitantCapacity() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto house = dynamic_cast<ResidentialBuilding*>(building);
+                               if (house == nullptr)
+                                   return accumulated;
+
+                               return accumulated + house->getCapacity();
+                           });
+}
+
+int GameModel::getGlobalWorkerCount() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto workplace = dynamic_cast<WorkplaceBase*>(building);
+                               if (workplace == nullptr)
+                                   return accumulated;
+
+                               return accumulated + workplace->getWorkerCount();
+                           });
+}
+
+int GameModel::getGlobalWorkerCapacity() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto workplace = dynamic_cast<WorkplaceBase*>(building);
+                               if (workplace == nullptr)
+                                   return accumulated;
+
+                               return accumulated + workplace->getWorkerCapacity();
+                           });
 }
 
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
@@ -195,6 +256,8 @@ void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
         case qct::BuildingType::Police:
             ++policeCount;
             break;
+        default:
+            break;
         }
     }
     m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
@@ -273,12 +336,13 @@ void GameModel::catastrophe()
 QList<qct::BuildingType> GameModel::getCompatibleBuildings(qct::ZoneType zoneType)
 {
     switch (zoneType) {
-        case qct::ZoneType::Residential:
-            return {qct::BuildingType::Residential};
-        case qct::ZoneType::Service:
-            return {qct::BuildingType::Store};
-        case qct::ZoneType::Industrial:
-            return {qct::BuildingType::Factory};
+    case qct::ZoneType::Residential:
+        return {qct::BuildingType::Residential};
+    case qct::ZoneType::Service:
+        return {qct::BuildingType::Store};
+    case qct::ZoneType::Industrial:
+        return {qct::BuildingType::Factory};
+    default:
+        return {};
     }
-    return {};
 }

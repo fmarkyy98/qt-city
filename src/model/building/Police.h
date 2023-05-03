@@ -18,4 +18,7 @@ private:
     static constexpr int s_Height = 1;
     static constexpr int s_WorkerCapacityByLevel[] = {0, 20, 40, 80};
     static constexpr double s_ProfitByLevel[] = {0, -5, -6, -7};
+
+public:
+    static constexpr int workerCapacity = s_WorkerCapacityByLevel[1];
 };

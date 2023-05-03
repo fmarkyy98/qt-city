@@ -9,6 +9,8 @@ public:
 
     DECLARE_STRUCTURE_BASE_MEMBERS
     DECLARE_BUILDING_BASE_MEMBERS
+    std::list<int> serialize() const final;
+    void deserialize(std::list<int>& dataList) final;
 
     int getCapacity() const;
     int getCapacity(int level) const;
@@ -40,5 +42,8 @@ private:
     static constexpr int s_Width = 1;
     static constexpr int s_Height = 1;
     static constexpr int s_CapacityByLevel[] = {0, 100, 200, 400};
+
+public:
+    static constexpr int capacity = s_CapacityByLevel[1];
 };
 

@@ -11,7 +11,7 @@ public:
     explicit GameBoard(QDate date, QObject* parent = nullptr);
     std::list<int> serialize() const;
     void deserialize(std::list<int>& dataList);
-    const Tile& at(std::pair<int,int> position)const;
+    const Tile& at(std::pair<int,int> position) const;
     Tile& at(std::pair<int,int> position);
     void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position, QDate date);
     void demolishBuilding(std::pair<int, int> position);
@@ -25,6 +25,9 @@ public:
 
 signals:
     void buildingProcessFinished();
+
+private:
+    std::pair<int, int> indexOfStructure(StructureBase* structure) const;
 
 private:
     std::array<std::array<Tile, 25>, 15> m_TileMatrix;

@@ -23,6 +23,10 @@ public:
     virtual int getWidth() const = 0;
     virtual int getCostOfPlacingZone() const = 0;
     virtual int getCostOfBuildingBuilding() const = 0;
+    virtual int getGlobalInhabitantCount() const = 0;
+    virtual int getGlobalInhabitantCapacity() const = 0;
+    virtual int getGlobalWorkerCount() const = 0;
+    virtual int getGlobalWorkerCapacity() const = 0;
     virtual qct::ZoneType zoneAt(int row, int col) const = 0;
     virtual const StructureBase* structureAt(int row, int col) const = 0;
     virtual void placeZone(qct::ZoneType zoneType, int row, int col) = 0;

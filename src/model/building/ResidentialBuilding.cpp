@@ -7,6 +7,25 @@ ResidentialBuilding::ResidentialBuilding(QObject* parent)
 DEFINE_STRUCTURE_BASE_MEMBERS(ResidentialBuilding)
 DEFINE_BUILDING_BASE_MEMBERS(ResidentialBuilding)
 
+std::list<int> ResidentialBuilding::serialize() const {
+    std::list<int> dataList;
+    dataList.push_back(m_ChildInhabitantCount);
+    dataList.push_back(m_AdultInhabitantCount);
+    dataList.push_back(m_RetiredInhabitantCount);
+
+    dataList.merge(BuildingBase::serialize());
+
+    return dataList;
+}
+
+void ResidentialBuilding::deserialize(std::list<int>& dataList) {
+    m_ChildInhabitantCount = dataList.front(); dataList.pop_front();
+    m_AdultInhabitantCount = dataList.front(); dataList.pop_front();
+    m_RetiredInhabitantCount = dataList.front(); dataList.pop_front();
+
+    BuildingBase::deserialize(dataList);
+}
+
 int ResidentialBuilding::getCapacity() const {
     return s_CapacityByLevel[m_BuildingLevel];
 }
