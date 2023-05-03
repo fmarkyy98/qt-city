@@ -9,7 +9,12 @@ GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
     : QObject(parent)
     , m_FileIOService(fileIOService)
     , m_Board(m_dateAtStart)
-{}
+{
+    connect(&m_Board,
+            &GameBoard::buildingProcessFinished,
+            meta(),
+            &GameModel::Meta::boardChanged);
+}
 
 void GameModel::save(const QString &path) const {
     std::list<int> dataList;
@@ -71,6 +76,11 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) 
     emit meta()->moneyChanged(m_money);
 }
 
+void GameModel::demolishBuilding(int row, int col)
+{
+    m_Board.demolishBuilding({row,col});
+}
+
 qct::ZoneType GameModel::zoneAt(int row, int col) const {
     return m_Board.at({row, col}).zoneType;
 }
@@ -98,8 +108,13 @@ void GameModel::advanceSimulation() {
     buildOnRandomZone();
     m_date = m_date.addDays(1);
     emit meta()->dateChanged(m_date);
+
+    double randomValue = QRandomGenerator::global()->bounded(0, 100);
+    if (randomValue < 2)
+        catastrophe();
+
     if(m_date.daysInYear() == 1) {
-        yearPassed(buildings);
+        yearPassed(buildings, structures);
         //forest bonus
     }
 }
@@ -208,19 +223,19 @@ bool GameModel::checkForRoad(std::pair<int, int> position)
     bool hasNeighbouringRoad = false;
 
     if (row > 0) {
-        auto above = m_Board.at(std::make_pair(row - 1, col)).structure;
+        auto above = m_Board.at({row - 1, col}).structure;
         hasNeighbouringRoad |= above != nullptr && above->getType() == qct::BuildingType::Road;
     }
     if (row < getHeight() - 1) {
-        auto below = m_Board.at(std::make_pair(row + 1, col)).structure;
+        auto below = m_Board.at({row + 1, col}).structure;
         hasNeighbouringRoad |= below != nullptr && below->getType() == qct::BuildingType::Road;
     }
     if (col > 0) {
-        auto left = m_Board.at(std::make_pair(row, col - 1)).structure;
+        auto left = m_Board.at({row, col - 1}).structure;
         hasNeighbouringRoad |= left != nullptr && left->getType() == qct::BuildingType::Road;
     }
     if (col < getWidth() - 1) {
-        auto right = m_Board.at(std::make_pair(row, col + 1)).structure;
+        auto right = m_Board.at({row, col + 1}).structure;
         hasNeighbouringRoad |= right != nullptr && right->getType() == qct::BuildingType::Road;
     }
 
@@ -247,6 +262,12 @@ bool GameModel::checkForForest(std::pair<int, int> position)
 int GameModel::calculateTax(std::pair<int, int> position)
 {
     return 1;
+}
+
+void GameModel::catastrophe()
+{
+    m_Board.catastrophe();
+    emit meta()->releasedCatastrophe();
 }
 
 QList<qct::BuildingType> GameModel::getCompatibleBuildings(qct::ZoneType zoneType)

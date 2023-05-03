@@ -24,8 +24,9 @@ public:
     int getCostOfPlacingZone() const override;
     int getCostOfBuildingBuilding() const override;
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
-    void breakDownZone(int row, int col);
+    void breakDownZone(int row, int col) override;
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
+    void demolishBuilding(int row, int col) override;
     qct::ZoneType zoneAt(int row, int col) const override;
     const StructureBase* structureAt(int row, int col) const override;
     void newGame() override;
@@ -37,13 +38,15 @@ private:
     void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
     void increaseMoney(const std::vector<BuildingBase *> &buildings);
     void buildOnRandomZone();
-    void yearPassed(const std::vector<BuildingBase *> &buildings);
+    void yearPassed(const std::vector<BuildingBase *> &buildings,
+                    const std::vector<StructureBase *> &structures);
     void maintainCity(const std::vector<BuildingBase *> &buildings);
     void maintainRoads(const std::vector<StructureBase *> &structures);
     void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
     bool checkForRoad(std::pair<int, int> position);
     bool checkForForest(std::pair<int, int> position);
     int calculateTax(std::pair<int, int> position);
+    void catastrophe();
 
 private:
     static QList<qct::BuildingType> getCompatibleBuildings(qct::ZoneType);
