@@ -3,12 +3,17 @@
 #include "StructureBase.h"
 
 #define DECLARE_BUILDING_BASE_MEMBERS
+
 #define DEFINE_BUILDING_BASE_MEMBERS(CLASS)
 
 class BuildingBase : public StructureBase {
     Q_OBJECT
 public:
     explicit BuildingBase(QObject* parent = nullptr);
+
+    std::list<int> serialize() const override;
+    void deserialize(std::list<int>& dataList) override;
+
     int getLevel() const;
 
     bool isBuildInProgress() const;
