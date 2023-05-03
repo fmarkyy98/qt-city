@@ -265,9 +265,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             else
                 return QPixmap(":/images/house3_construct");
         } else {
-            if(house->getLevel()==0)
+            if(house->getLevel()==1)
                 return QPixmap(":/images/house");
-            else if (house->getLevel()==1)
+            else if (house->getLevel()==2)
                 return QPixmap(":/images/house2");
             else
                 return QPixmap(":/images/house3");
