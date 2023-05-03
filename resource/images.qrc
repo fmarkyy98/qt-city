@@ -15,8 +15,8 @@
         <file alias="stadium3">stadium-3.png</file>
         <file alias="stadium4">stadium-4.png</file>
         <file>factory_construction.png</file>
-        <file alias="house3_construction">icons8-skyscraper-60 másolat.png</file>
-        <file alias="house2_construction">icons8-villa-96 másolat.png</file>
+        <file alias="house3_construction">skyscraper.png</file>
+        <file alias="house2_construction">villa.png</file>
         <file>police_construction.png</file>
         <file>stadium-3 másolat.png</file>
         <file>stadium-4 másolat.png</file>

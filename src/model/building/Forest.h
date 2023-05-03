@@ -6,7 +6,7 @@
 class Forest : public StructureBase {
     Q_OBJECT
 public:
-    explicit Forest(QDate builtYear, QObject* parent = nullptr);
+    explicit Forest(QDate builtYear = QDate(), QObject* parent = nullptr);
 
     DECLARE_STRUCTURE_BASE_MEMBERS
 
