@@ -60,7 +60,7 @@ void GamePage::onSlowerButtonClicked()
             break;
         case 500:
             timer.start(1000);
-            speedLevel=1;
+            speedLevel=1000;
             ui->fasterButton->setEnabled(true);
             break;
         }
@@ -428,7 +428,6 @@ void GamePage::onTableWidget2Clicked(int row, int column)
 }
 
 void GamePage::onRefreshboard() {
-    // Viki TODO minden épülettípusra a megfelelő atribútumokat megjeleníteni.
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
             switch (m_pGameModel->zoneAt(x,y)) {
