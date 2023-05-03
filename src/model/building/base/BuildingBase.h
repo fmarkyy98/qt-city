@@ -12,6 +12,7 @@ public:
     explicit BuildingBase(QObject* parent = nullptr);
 
     std::list<int> serialize() const override;
+    void deserialize(std::list<int>& dataList) override;
 
     int getLevel() const;
 

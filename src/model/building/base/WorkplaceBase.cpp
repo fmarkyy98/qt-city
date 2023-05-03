@@ -13,6 +13,12 @@ std::list<int> WorkplaceBase::serialize() const {
     return dataList;
 }
 
+void WorkplaceBase::deserialize(std::list<int>& dataList) {
+    m_WorkerCount = dataList.front(); dataList.pop_front();
+
+    BuildingBase::deserialize(dataList);
+}
+
 int WorkplaceBase::getWorkerCount() const {
     return m_WorkerCount;
 }

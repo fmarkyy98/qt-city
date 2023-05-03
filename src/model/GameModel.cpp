@@ -13,6 +13,9 @@ void GameModel::save(const QString &path) const {
 
     dataList.merge(m_Board.serialize());
     dataList.push_back(m_money);
+    dataList.push_back(m_date.year());
+    dataList.push_back(m_date.month());
+    dataList.push_back(m_date.day());
 
     m_FileIOService->save(path, dataList);
 }
@@ -22,6 +25,12 @@ void GameModel::load(const QString &path) {
 
     m_Board.deserialize(dataList);
     m_money = dataList.front(); dataList.pop_front();
+    int y = dataList.front(); dataList.pop_front();
+    int m = dataList.front(); dataList.pop_front();
+    int d = dataList.front(); dataList.pop_front();
+    m_date = {y, m, d};
+
+    assert(dataList.empty() && "Deserialization item number missmatch.");
 }
 
 int GameModel::getHeight() const {
@@ -202,6 +211,8 @@ void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings) {
         case qct::BuildingType::Police:
             ++policeCount;
             break;
+        default:
+            break;
         }
     }
     m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
@@ -255,12 +266,13 @@ bool GameModel::checkForRoad(std::pair<int, int> position)
 QList<qct::BuildingType> GameModel::getCompatibleBuildings(qct::ZoneType zoneType)
 {
     switch (zoneType) {
-        case qct::ZoneType::Residential:
-            return {qct::BuildingType::Residential};
-        case qct::ZoneType::Service:
-            return {qct::BuildingType::Store};
-        case qct::ZoneType::Industrial:
-            return {qct::BuildingType::Factory};
+    case qct::ZoneType::Residential:
+        return {qct::BuildingType::Residential};
+    case qct::ZoneType::Service:
+        return {qct::BuildingType::Store};
+    case qct::ZoneType::Industrial:
+        return {qct::BuildingType::Factory};
+    default:
+        return {};
     }
-    return {};
 }
