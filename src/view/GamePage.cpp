@@ -47,33 +47,65 @@ void GamePage::onSaveButtonClicked()
 }
 
 
-void GamePage::onSettingsButtonClicked()
-{
-    //TODO
-}
-
-
 void GamePage::onSlowerButtonClicked()
 {
-    //TODO
+    if(!isGamePaused){
+        switch(speedLevel){
+        case 2000:
+            break;
+        case 1000:
+            speedLevel=2000;
+            timer.start(2000);
+            ui->slowerButton->setEnabled(false);
+            break;
+        case 500:
+            timer.start(1000);
+            speedLevel=1;
+            ui->fasterButton->setEnabled(true);
+            break;
+        }
+    }
 }
 
 
 void GamePage::onPauseButtonClicked()
 {
-    //TODO
+    if (isGamePaused) {
+        timer.start(speedLevel);
+        isGamePaused=false;
+        ui->pauseButton->setText("⏸");
+    } else {
+        timer.stop();
+        isGamePaused=true;
+        ui->pauseButton->setText("►");
+    }
 }
 
 
 void GamePage::onFasterButtonClicked()
 {
-    //TODO
+    if(!isGamePaused){
+        switch(speedLevel){
+        case 2000:
+            speedLevel=1000;
+            ui->slowerButton->setEnabled(true);
+            timer.start(1000);
+            break;
+        case 1000:
+            speedLevel=500;
+            timer.start(500);
+            ui->fasterButton->setEnabled(false);
+            break;
+        case 500:
+            break;
+        }
+    }
 }
 
 
 void GamePage::onExitButtonClicked()
 {
-    //TODO
+    QApplication::quit();
 }
 
 void GamePage::onMenuButtonClicked()
@@ -89,7 +121,7 @@ void GamePage::initConnections()
     connect(ui->fasterButton, &QPushButton::clicked, this, &GamePage::onFasterButtonClicked);
     connect(ui->pauseButton, &QPushButton::clicked, this, &GamePage::onPauseButtonClicked);
     connect(ui->slowerButton, &QPushButton::clicked, this, &GamePage::onSlowerButtonClicked);
-    connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
+    //connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
     connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, &GamePage::onTableWidget2Clicked);
     connect(&timer, &QTimer::timeout, this, &GamePage::onTimeElapsed);
     connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
@@ -103,10 +135,10 @@ void GamePage::onTimeElapsed()
     m_pGameModel->advanceSimulation();
 }
 
-void GamePage::onBoardChanged()
+/*void GamePage::onBoardChanged()
 {
     //TODO
-}
+}*/
 
 void GamePage::onZonesChanged()
 {
@@ -120,14 +152,13 @@ void GamePage::onMoneyChanaged(int money)
 
 void GamePage::onDateChanged(const QDate& date)
 {
-    ui->label_2->setText(date.toString("yyyy.MM.dd"));
+    ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
 }
 
 void GamePage::newGame()
 {
-    //m_pGameModel->newGame();
-    //Ui::GamePage->setStyleSheet("background-image: url(:/images/background)");
-
+    isGamePaused = false;
+    speedLevel=1000;
     std::cerr<<m_pGameModel->getHeight();
     std::cerr<<m_pGameModel->getWidth();
     ui->tableWidget->setRowCount(m_pGameModel->getWidth());
@@ -164,7 +195,8 @@ void GamePage::newGame()
         if(structure ==nullptr) {
             stackedWidget->setCurrentWidget(ui->tableWidget_2);
         } else {
-            pixMap=getPixMap(structure->getType());
+            pixMap=getPixMap(structure);
+
             ui->tableWidget_3->item(0,0)->setData(Qt::DecorationRole, pixMap);
             ui->tableWidget_3->item(0,1)->setText("van");
             stackedWidget->setCurrentWidget(ui->tableWidget_3);
@@ -176,19 +208,25 @@ void GamePage::newGame()
     timer.start(1000);
 }
 
-QPixmap GamePage::getPixMap(qct::BuildingType type){
+QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::pair<int,int>> coordinates){
+    auto type = structure->getType();
+    auto workPlace = dynamic_cast<const WorkplaceBase*>(structure);
     switch (type) {
     case qct::BuildingType::Road: {
         return QPixmap(":/images/road");
     } break;
     case qct::BuildingType::Store: {
+        workPlace->getWorkerCapacity();
+        workPlace->getWorkerCount();
         return QPixmap(":/images/store");
     } break;
 
     case qct::BuildingType::Stadium: {
-        return QPixmap(":/images/stadium");
-    } break;
+        if(coordinates==std::nullopt)
+            return QPixmap(":/images/stadium");
 
+        //TODO melyik sarok -> kep azalapjan
+    } break;
     case qct::BuildingType::Forest: {
         return QPixmap(":/images/forest");
     } break;
@@ -196,11 +234,13 @@ QPixmap GamePage::getPixMap(qct::BuildingType type){
     case qct::BuildingType::Factory: {
         return QPixmap(":/images/factory");
     } break;
-
     case qct::BuildingType::Residential: {
+        auto house = dynamic_cast<const ResidentialBuilding*>(structure);
+        house->getCapacity();
+        house->getInhabitantCount();
+        house->getLevel();
         return QPixmap(":/images/house");
     } break;
-
     case qct::BuildingType::Police: {
         return QPixmap(":/images/police");
     } break;
@@ -309,27 +349,43 @@ void GamePage::onRefreshboard() {
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
             switch (m_pGameModel->zoneAt(x,y)) {
-            case qct::ZoneType::Industrial:
-                ui->tableWidget->item(x,y)->setBackground(QColor(113, 10, 0));
-                break;
-            case qct::ZoneType::Service:
-                ui->tableWidget->item(x,y)->setBackground(QColor(30, 50, 50));
-                break;
-            case qct::ZoneType::Residential:
-                ui->tableWidget->item(x,y)->setBackground(QColor(200, 120, 0));
-                break;
-            case qct::ZoneType::None:
-                break;
+                case qct::ZoneType::Industrial:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(113, 10, 0));
+                    break;
+                case qct::ZoneType::Service:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(30, 50, 50));
+                    break;
+                case qct::ZoneType::Residential:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(200, 120, 0));
+                    break;
+                case qct::ZoneType::None:
+                    break;
             }
             auto structure = m_pGameModel->structureAt(x, y);
             if (structure == nullptr)
                 continue;
 
-            pixMap=getPixMap(structure->getType());
-            ui->tableWidget->item(x,y)->setData(Qt::DecorationRole,pixMap);
-            ui->tableWidget->item(x,y)->setTextAlignment(Qt::AlignRight);
+            pixMap=getPixMap(structure/*x,y koordinata*/);
+            /*QRect viewportRect = ui->tableWidget->viewport()->rect();
+            int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
+            int cellHeight = viewportRect.height() / ui->tableWidget->rowCount();
+            pixMap = pixMap.scaled(cellWidth, cellHeight, Qt::IgnoreAspectRatio);
+            ui->tableWidget->item(x,y)->setSizeHint(pixMap.size());
+            //ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QBrush(pixMap));
+            ui->tableWidget->item(x,y)->setForeground(QBrush(pixMap));
+            //ui->tableWidget->item(x,y)->
+            //ui->tableWidget->item(x,y)->setBackground(QBrush(pixMap));*/
 
-
+            QLabel* label = new QLabel();
+            QRect viewportRect = ui->tableWidget->viewport()->rect();
+            int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
+            int cellHeight = viewportRect.height() / ui->tableWidget->rowCount();
+            pixMap = pixMap.scaled(cellWidth, cellHeight, Qt::IgnoreAspectRatio);
+            label->setPixmap(pixMap);
+            label->setFixedSize(pixMap.size());
+            ui->tableWidget->setCellWidget(x, y, label);
+            ui->tableWidget->item(x, y)->setSizeHint(pixMap.size());
+            ui->tableWidget->item(x, y)->setFlags(ui->tableWidget->item(x, y)->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         }
     }
 }
