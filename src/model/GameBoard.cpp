@@ -293,7 +293,7 @@ void GameBoard::randomForestPlacement(QDate date)
         for (int j = 0; j < m_TileMatrix[i].size(); ++j) {
             double randomValue= QRandomGenerator::global()->bounded(0, 100);
             if (randomValue < 2) {
-                placeBuilding(qct::BuildingType::Forest, {j, i}, date);
+                placeBuilding(qct::BuildingType::Forest, {i, j}, date);
             }
         }
     }
