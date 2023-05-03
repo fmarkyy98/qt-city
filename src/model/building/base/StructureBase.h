@@ -4,8 +4,8 @@
 
 #include "../../export/Enums.h"
 
-#define DECLARE_STRUCTURE_BASE_MEMBERS       \
-qct::BuildingType getType() const override;  \
+#define DECLARE_STRUCTURE_BASE_MEMBERS             \
+qct::BuildingType getType() const override;        \
 qct::ZoneType getCompatibleZone() const override;  \
 std::pair<int, int> getSize() const override;      \
 int getWidth() const override;                     \

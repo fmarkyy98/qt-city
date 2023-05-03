@@ -40,6 +40,58 @@ int GameModel::getCostOfBuildingBuilding() const {
     return m_costOfBuildingBuilding;
 }
 
+int GameModel::getGlobalInhabitantCount() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto house = dynamic_cast<ResidentialBuilding*>(building);
+                               if (house == nullptr)
+                                   return accumulated;
+
+                               return accumulated + house->getInhabitantCount();
+                           });
+}
+
+int GameModel::getGlobalInhabitantCapacity() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto house = dynamic_cast<ResidentialBuilding*>(building);
+                               if (house == nullptr)
+                                   return accumulated;
+
+                               return accumulated + house->getCapacity();
+                           });
+}
+
+int GameModel::getGlobalWorkerCount() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto workplace = dynamic_cast<WorkplaceBase*>(building);
+                               if (workplace == nullptr)
+                                   return accumulated;
+
+                               return accumulated + workplace->getWorkerCount();
+                           });
+}
+
+int GameModel::getGlobalWorkerCapacity() const {
+    auto buildings = m_Board.getBuildings();
+    return std::accumulate(buildings.begin(), buildings.end(),
+                           0,
+                           [](int accumulated, BuildingBase* building) {
+                               auto workplace = dynamic_cast<WorkplaceBase*>(building);
+                               if (workplace == nullptr)
+                                   return accumulated;
+
+                               return accumulated + workplace->getWorkerCapacity();
+                           });
+}
+
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
     if(m_money < m_costOfPlacingZone)
         throw std::invalid_argument("Not enough money left for Zone placement!");
