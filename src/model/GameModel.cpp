@@ -265,10 +265,12 @@ void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
 
 void GameModel::maintainRoads(const std::vector<StructureBase *> &structures)
 {
-    int roadCount = 0;
-    for (auto structure :structures) {
-        ++roadCount;
-    }
+    int roadCount =
+        std::accumulate(structures.begin(), structures.end(), 0,
+                        [](int accumulated, StructureBase* structure) {
+                            return accumulated + (structure->getType() == qct::BuildingType::Road);
+                        });
+
     m_money -= (roadCount * m_costOfMaintainingRoad);
 }
 
