@@ -21,7 +21,7 @@ public:
 public slots:
     void onMoneyChanaged(int money);
     void onTimeElapsed();
-    void onBoardChanged();
+    //void onBoardChanged();
     void onZonesChanged();
     void onDateChanged(const QDate& date);
 
@@ -34,7 +34,7 @@ signals:
 private slots:
     void onSaveButtonClicked();
 
-    void onSettingsButtonClicked();
+    //void onSettingsButtonClicked();
 
     void onSlowerButtonClicked();
 
@@ -50,6 +50,7 @@ private slots:
 
     void onTableWidget2Clicked(int row, int column);
 
+    void onTableWidget3Clicked(int row, int column);
 private:
     void initConnections();
     void changeState();
@@ -61,15 +62,19 @@ private:
     void placeBuilding(qct::BuildingType buildingType);
     void placeZone(qct::ZoneType zoneType);
     void saveClickedRow(int row, int column);
-    QPixmap getPixMap(qct::BuildingType type);
+    QPixmap getPixMap(const StructureBase* type, std::optional<std::pair<int,int>> coordinates=std::nullopt);
 
 private:
     Ui::GamePage *ui;
     std::shared_ptr<IGameModel> m_pGameModel;
     bool isGamePaused;
+    int speedLevel;
     bool placingBuilding;
     bool changedBuilding, changedZone;
     int rowInd, columnInd;
+    int capacity, peopleCount;
+    QString info;
+    QString priceInfo;
     qct::BuildingType chosenBuildingType;
     qct::ZoneType chosenZoneType;
     std::vector<QString> images;

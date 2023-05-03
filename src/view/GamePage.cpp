@@ -47,33 +47,65 @@ void GamePage::onSaveButtonClicked()
 }
 
 
-void GamePage::onSettingsButtonClicked()
-{
-    //TODO
-}
-
-
 void GamePage::onSlowerButtonClicked()
 {
-    //TODO
+    if(!isGamePaused){
+        switch(speedLevel){
+        case 2000:
+            break;
+        case 1000:
+            speedLevel=2000;
+            timer.start(2000);
+            ui->slowerButton->setEnabled(false);
+            break;
+        case 500:
+            timer.start(1000);
+            speedLevel=1000;
+            ui->fasterButton->setEnabled(true);
+            break;
+        }
+    }
 }
 
 
 void GamePage::onPauseButtonClicked()
 {
-    //TODO
+    if (isGamePaused) {
+        timer.start(speedLevel);
+        isGamePaused=false;
+        ui->pauseButton->setText("⏸");
+    } else {
+        timer.stop();
+        isGamePaused=true;
+        ui->pauseButton->setText("►");
+    }
 }
 
 
 void GamePage::onFasterButtonClicked()
 {
-    //TODO
+    if(!isGamePaused){
+        switch(speedLevel){
+        case 2000:
+            speedLevel=1000;
+            ui->slowerButton->setEnabled(true);
+            timer.start(1000);
+            break;
+        case 1000:
+            speedLevel=500;
+            timer.start(500);
+            ui->fasterButton->setEnabled(false);
+            break;
+        case 500:
+            break;
+        }
+    }
 }
 
 
 void GamePage::onExitButtonClicked()
 {
-    //TODO
+    QApplication::quit();
 }
 
 void GamePage::onMenuButtonClicked()
@@ -89,8 +121,9 @@ void GamePage::initConnections()
     connect(ui->fasterButton, &QPushButton::clicked, this, &GamePage::onFasterButtonClicked);
     connect(ui->pauseButton, &QPushButton::clicked, this, &GamePage::onPauseButtonClicked);
     connect(ui->slowerButton, &QPushButton::clicked, this, &GamePage::onSlowerButtonClicked);
-    connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
+    //connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
     connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, &GamePage::onTableWidget2Clicked);
+    connect(ui->tableWidget_3, &QTableWidget::cellClicked, this, &GamePage::onTableWidget3Clicked);
     connect(&timer, &QTimer::timeout, this, &GamePage::onTimeElapsed);
     connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
     connect(m_pGameModel->meta(), &IGameModel::Meta::moneyChanged, this, &GamePage::onMoneyChanaged);
@@ -103,10 +136,10 @@ void GamePage::onTimeElapsed()
     m_pGameModel->advanceSimulation();
 }
 
-void GamePage::onBoardChanged()
+/*void GamePage::onBoardChanged()
 {
     //TODO
-}
+}*/
 
 void GamePage::onZonesChanged()
 {
@@ -120,16 +153,16 @@ void GamePage::onMoneyChanaged(int money)
 
 void GamePage::onDateChanged(const QDate& date)
 {
-    ui->label_2->setText(date.toString("yyyy.MM.dd"));
+    ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
 }
 
 void GamePage::newGame()
 {
-    //m_pGameModel->newGame();
-    //Ui::GamePage->setStyleSheet("background-image: url(:/images/background)");
-
+    isGamePaused = false;
+    speedLevel=1000;
     std::cerr<<m_pGameModel->getHeight();
     std::cerr<<m_pGameModel->getWidth();
+    ui->tableWidget->clear();
     ui->tableWidget->setRowCount(m_pGameModel->getWidth());
     ui->tableWidget->setColumnCount(m_pGameModel->getHeight());
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -144,7 +177,6 @@ void GamePage::newGame()
 
         }
     }
-
 
     for(int i=1; i<8; i++)
     {
@@ -164,9 +196,10 @@ void GamePage::newGame()
         if(structure ==nullptr) {
             stackedWidget->setCurrentWidget(ui->tableWidget_2);
         } else {
-            pixMap=getPixMap(structure->getType());
+            pixMap=getPixMap(structure);
+
             ui->tableWidget_3->item(0,0)->setData(Qt::DecorationRole, pixMap);
-            ui->tableWidget_3->item(0,1)->setText("van");
+            ui->tableWidget_3->item(0,1)->setText(info);
             stackedWidget->setCurrentWidget(ui->tableWidget_3);
         }
         qDebug() << "Clicked: " << idx.row()<<","<<idx.column();
@@ -176,32 +209,78 @@ void GamePage::newGame()
     timer.start(1000);
 }
 
-QPixmap GamePage::getPixMap(qct::BuildingType type){
+QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::pair<int,int>> coordinates){
+    if (structure == nullptr)
+        return QPixmap();
+
+    auto type = structure->getType();
+    auto workPlace = dynamic_cast<const WorkplaceBase*>(structure);
     switch (type) {
     case qct::BuildingType::Road: {
+        info="Road";
+        priceInfo="Road\nPrice:"+QString::number(m_pGameModel->getCostOfBuildingBuilding());
+
         return QPixmap(":/images/road");
     } break;
     case qct::BuildingType::Store: {
+        capacity=workPlace->getWorkerCapacity();
+        peopleCount=workPlace->getWorkerCount();
+        info="Store\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
         return QPixmap(":/images/store");
     } break;
-
     case qct::BuildingType::Stadium: {
-        return QPixmap(":/images/stadium");
+        capacity=workPlace->getWorkerCapacity();
+        peopleCount=workPlace->getWorkerCount();
+        info="Stadium\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
+        if(coordinates==std::nullopt)
+            return QPixmap(":/images/stadium");
+        if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
+            return QPixmap(":/images/stadium1");
+        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
+            return QPixmap(":/images/stadium3");
+        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
+            return QPixmap(":/images/stadium2");
+        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
+            return QPixmap(":/images/stadium4");
     } break;
-
     case qct::BuildingType::Forest: {
+        info="Forest";
         return QPixmap(":/images/forest");
     } break;
 
     case qct::BuildingType::Factory: {
+        capacity=workPlace->getWorkerCapacity();
+        peopleCount=workPlace->getWorkerCount();
+        info="Factory\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
         return QPixmap(":/images/factory");
     } break;
-
     case qct::BuildingType::Residential: {
-        return QPixmap(":/images/house");
-    } break;
+        auto house = dynamic_cast<const ResidentialBuilding*>(structure);
+        capacity=house->getCapacity();
+        peopleCount=house->getInhabitantCount();
+        house->getLevel();
+        info="Residential Building\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
+        if(house->isBuildInProgress()) {
+            if(house->getLevel()==0)
+                return QPixmap(":/images/house_construct");
+            else if (house->getLevel()==1)
+                return QPixmap(":/images/house2_construct");
+            else
+                return QPixmap(":/images/house3_construct");
+        } else {
+            if(house->getLevel()==1)
+                return QPixmap(":/images/house");
+            else if (house->getLevel()==2)
+                return QPixmap(":/images/house2");
+            else
+                return QPixmap(":/images/house3");
+        }
 
+    } break;
     case qct::BuildingType::Police: {
+        capacity=workPlace->getWorkerCapacity();
+        peopleCount=workPlace->getWorkerCount();
+        info="Police\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
         return QPixmap(":/images/police");
     } break;
 
@@ -213,7 +292,6 @@ QPixmap GamePage::getPixMap(qct::BuildingType type){
 
 void GamePage::onTableWidget2Clicked(int row, int column)
 {
-    //TODO: epuletet nonetypera le lehet rakni akkor is ha pl road van mar ott
     QMessageBox messageBox;
     qDebug() << "Column:: " << column;
     switch(column)
@@ -225,26 +303,43 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             if (row == 0) {
                 chosenBuildingType=qct::BuildingType::Road;
                 placingBuilding=true;
-                ui->tableWidget_2->item(0,8)->setText("Price: \nCapacity: ");
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Road\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())
+                            );
             }
         break;
         case 2:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Residential;
-                auto building = ResidentialBuilding();
-                ui->tableWidget_2->item(0,8)->setText("Price: \nCapacity: "+ QString::number(building.getCapacity()));
+                ui->tableWidget_2->item(0,8)->setText(
+                            "House\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                             "\nCapacity: "+
+                             QString::number(ResidentialBuilding::capacity));
             } else {
                 chosenZoneType=qct::ZoneType::Residential;
                 placingBuilding=false;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Residential Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
             }
         break;
         case 3:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Factory;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Factory\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                             "\nCapacity: "+
+                             QString::number(Factory::workerCapacity));
             } else {
                 chosenZoneType=qct::ZoneType::Industrial;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Industrial Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
                 placingBuilding=false;
             }
         break;
@@ -252,8 +347,16 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Store;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Store\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                            "\nCapacity: "+
+                            QString::number(Store::workerCapacity));
             } else {
                 chosenZoneType=qct::ZoneType::Service;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Service Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
                 placingBuilding=false;
             }
         break;
@@ -261,25 +364,45 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Police;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Police\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                            "\nCapacity: "+
+                            QString::number(Police::workerCapacity));
+
             } else {
                 chosenZoneType=qct::ZoneType::Service;
                 placingBuilding=false;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Service Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
             }
         break;
         case 6:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Stadium;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Stadion\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                            "\nCapacity: "+
+                            QString::number(Stadium::workerCapacity));
             } else {
                 chosenZoneType=qct::ZoneType::Service;
                 placingBuilding=false;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Service Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
             }
-
         break;
         case 7:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Forest;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Forest\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())
+                            );
             }
         break;
         case 8:
@@ -305,32 +428,53 @@ void GamePage::onTableWidget2Clicked(int row, int column)
 }
 
 void GamePage::onRefreshboard() {
-    // Viki TODO minden épülettípusra a megfelelő atribútumokat megjeleníteni.
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
             switch (m_pGameModel->zoneAt(x,y)) {
-            case qct::ZoneType::Industrial:
-                ui->tableWidget->item(x,y)->setBackground(QColor(113, 10, 0));
-                break;
-            case qct::ZoneType::Service:
-                ui->tableWidget->item(x,y)->setBackground(QColor(30, 50, 50));
-                break;
-            case qct::ZoneType::Residential:
-                ui->tableWidget->item(x,y)->setBackground(QColor(200, 120, 0));
-                break;
-            case qct::ZoneType::None:
-                break;
+                case qct::ZoneType::Industrial:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(113, 10, 0));
+                    break;
+                case qct::ZoneType::Service:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(30, 50, 50));
+                    break;
+                case qct::ZoneType::Residential:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(200, 120, 0));
+                    break;
+                case qct::ZoneType::None:
+                    break;
             }
             auto structure = m_pGameModel->structureAt(x, y);
-            if (structure == nullptr)
-                continue;
-
-            pixMap=getPixMap(structure->getType());
-            ui->tableWidget->item(x,y)->setData(Qt::DecorationRole,pixMap);
-            ui->tableWidget->item(x,y)->setTextAlignment(Qt::AlignRight);
-
-
+            pixMap=getPixMap(structure, {{x, y}});
+            QLabel* label = new QLabel();
+            QRect viewportRect = ui->tableWidget->viewport()->rect();
+            int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
+            int cellHeight = viewportRect.height() / ui->tableWidget->rowCount();
+            pixMap = pixMap.scaled(cellWidth, cellHeight, Qt::IgnoreAspectRatio);
+            label->setPixmap(pixMap);
+            label->setFixedSize(pixMap.size());
+            ui->tableWidget->setCellWidget(x, y, label);
+            ui->tableWidget->item(x, y)->setSizeHint(pixMap.size());
+            ui->tableWidget->item(x, y)->setFlags(ui->tableWidget->item(x, y)->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         }
+    }
+}
+
+void GamePage::onTableWidget3Clicked(int row, int column)
+{
+    QMessageBox messageBox;
+    qDebug() << "Column:: " << column;
+    switch(column)
+    {
+        case 0:
+        break;
+        case 1:
+        break;
+        case 2:
+            //TODO
+        break;
+        case 3:
+            //m_pGameModel->evolveBuilding(m_pGameModel->structureAt(rowInd, columnInd));
+        break;
     }
 }
 

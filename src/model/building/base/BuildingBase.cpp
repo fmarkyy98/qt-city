@@ -32,7 +32,7 @@ bool BuildingBase::isBuildInProgress() const {
 void BuildingBase::advanceBuildingProcess() {
     m_BuildingProgress += 16 / (getWidth() * getHeight());
 
-    if (m_BuildingProgress > s_FinishedBuildingValue) {
+    if (m_BuildingProgress >= s_FinishedBuildingValue) {
         ++m_BuildingLevel;
         evolveSpecificBuildingImpl();
         emit buildingProcessFinished();
