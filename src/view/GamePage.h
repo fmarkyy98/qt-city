@@ -71,6 +71,9 @@ private:
     bool placingBuilding;
     bool changedBuilding, changedZone;
     int rowInd, columnInd;
+    int capacity, peopleCount;
+    QString info;
+    QString priceInfo;
     qct::BuildingType chosenBuildingType;
     qct::ZoneType chosenZoneType;
     std::vector<QString> images;
