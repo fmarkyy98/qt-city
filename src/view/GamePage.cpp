@@ -162,6 +162,7 @@ void GamePage::newGame()
     speedLevel=1000;
     std::cerr<<m_pGameModel->getHeight();
     std::cerr<<m_pGameModel->getWidth();
+    ui->tableWidget->clear();
     ui->tableWidget->setRowCount(m_pGameModel->getWidth());
     ui->tableWidget->setColumnCount(m_pGameModel->getHeight());
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -176,7 +177,6 @@ void GamePage::newGame()
 
         }
     }
-
 
     for(int i=1; i<8; i++)
     {
@@ -210,6 +210,9 @@ void GamePage::newGame()
 }
 
 QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::pair<int,int>> coordinates){
+    if (structure == nullptr)
+        return QPixmap();
+
     auto type = structure->getType();
     auto workPlace = dynamic_cast<const WorkplaceBase*>(structure);
     switch (type) {
@@ -442,10 +445,7 @@ void GamePage::onRefreshboard() {
                     break;
             }
             auto structure = m_pGameModel->structureAt(x, y);
-            if (structure == nullptr)
-                continue;
-
-            pixMap=getPixMap(structure, std::make_pair( x, y ));
+            pixMap=getPixMap(structure, {{x, y}});
             QLabel* label = new QLabel();
             QRect viewportRect = ui->tableWidget->viewport()->rect();
             int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
