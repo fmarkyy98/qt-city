@@ -41,5 +41,8 @@ private:
     static constexpr int s_Width = 1;
     static constexpr int s_Height = 1;
     static constexpr int s_CapacityByLevel[] = {0, 100, 200, 400};
+
+public:
+    static constexpr int capacity = s_CapacityByLevel[1];
 };
 
