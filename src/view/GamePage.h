@@ -50,6 +50,7 @@ private slots:
 
     void onTableWidget2Clicked(int row, int column);
 
+    void onTableWidget3Clicked(int row, int column);
 private:
     void initConnections();
     void changeState();

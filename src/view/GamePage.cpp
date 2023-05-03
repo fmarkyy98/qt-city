@@ -123,6 +123,7 @@ void GamePage::initConnections()
     connect(ui->slowerButton, &QPushButton::clicked, this, &GamePage::onSlowerButtonClicked);
     //connect(ui->settingsButton, &QPushButton::clicked, this, &GamePage::onSettingsButtonClicked);
     connect(ui->tableWidget_2, &QTableWidget::cellClicked, this, &GamePage::onTableWidget2Clicked);
+    connect(ui->tableWidget_3, &QTableWidget::cellClicked, this, &GamePage::onTableWidget3Clicked);
     connect(&timer, &QTimer::timeout, this, &GamePage::onTimeElapsed);
     connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
     connect(m_pGameModel->meta(), &IGameModel::Meta::moneyChanged, this, &GamePage::onMoneyChanaged);
@@ -230,7 +231,14 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         info="Stadium\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
         if(coordinates==std::nullopt)
             return QPixmap(":/images/stadium");
-        //TODO melyik sarok -> kep azalapjan
+        if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
+            return QPixmap(":/images/stadium1");
+        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
+            return QPixmap(":/images/stadium3");
+        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
+            return QPixmap(":/images/stadium2");
+        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
+            return QPixmap(":/images/stadium4");
     } break;
     case qct::BuildingType::Forest: {
         info="Forest";
@@ -249,7 +257,22 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         peopleCount=house->getInhabitantCount();
         house->getLevel();
         info="Residential Building\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
-        return QPixmap(":/images/house");
+        if(house->isBuildInProgress()) {
+            if(house->getLevel()==0)
+                return QPixmap(":/images/house_construct");
+            else if (house->getLevel()==1)
+                return QPixmap(":/images/house2_construct");
+            else
+                return QPixmap(":/images/house3_construct");
+        } else {
+            if(house->getLevel()==0)
+                return QPixmap(":/images/house");
+            else if (house->getLevel()==1)
+                return QPixmap(":/images/house2");
+            else
+                return QPixmap(":/images/house3");
+        }
+
     } break;
     case qct::BuildingType::Police: {
         capacity=workPlace->getWorkerCapacity();
@@ -266,7 +289,6 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
 
 void GamePage::onTableWidget2Clicked(int row, int column)
 {
-    //TODO: epuletet nonetypera le lehet rakni akkor is ha pl road van mar ott
     QMessageBox messageBox;
     qDebug() << "Column:: " << column;
     switch(column)
@@ -278,26 +300,43 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             if (row == 0) {
                 chosenBuildingType=qct::BuildingType::Road;
                 placingBuilding=true;
-                ui->tableWidget_2->item(0,8)->setText("Road\nPrice:"+QString::number(m_pGameModel->getCostOfBuildingBuilding()));
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Road\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())
+                            );
             }
         break;
         case 2:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Residential;
-                auto building = ResidentialBuilding();
-                ui->tableWidget_2->item(0,8)->setText("Residential Building\nPrice: "+QString::number(m_pGameModel->getCostOfBuildingBuilding())+"\nCapacity: "+ QString::number(building.getCapacity()));
+                ui->tableWidget_2->item(0,8)->setText(
+                            "House\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                             "\nCapacity: "+
+                             QString::number(ResidentialBuilding::capacity));
             } else {
                 chosenZoneType=qct::ZoneType::Residential;
                 placingBuilding=false;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Residential Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
             }
         break;
         case 3:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Factory;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Factory\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                             "\nCapacity: "+
+                             QString::number(Factory::workerCapacity));
             } else {
                 chosenZoneType=qct::ZoneType::Industrial;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Industrial Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
                 placingBuilding=false;
             }
         break;
@@ -305,9 +344,16 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Store;
-                ui->tableWidget_2->item(0,8)->setText("Store\nPrice:"+QString::number(m_pGameModel->getCostOfBuildingBuilding()));
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Store\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                            "\nCapacity: "+
+                            QString::number(Store::workerCapacity));
             } else {
                 chosenZoneType=qct::ZoneType::Service;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Service Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
                 placingBuilding=false;
             }
         break;
@@ -315,25 +361,45 @@ void GamePage::onTableWidget2Clicked(int row, int column)
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Police;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Police\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                            "\nCapacity: "+
+                            QString::number(Police::workerCapacity));
+
             } else {
                 chosenZoneType=qct::ZoneType::Service;
                 placingBuilding=false;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Service Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
             }
         break;
         case 6:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Stadium;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Stadion\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())+
+                            "\nCapacity: "+
+                            QString::number(Stadium::workerCapacity));
             } else {
                 chosenZoneType=qct::ZoneType::Service;
                 placingBuilding=false;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Service Zone\nPrice: "+
+                             QString::number(m_pGameModel->getCostOfPlacingZone()));
             }
-
         break;
         case 7:
             if (row == 0) {
                 placingBuilding=true;
                 chosenBuildingType=qct::BuildingType::Forest;
+                ui->tableWidget_2->item(0,8)->setText(
+                            "Forest\nPrice:"+
+                            QString::number(m_pGameModel->getCostOfBuildingBuilding())
+                            );
             }
         break;
         case 8:
@@ -379,17 +445,7 @@ void GamePage::onRefreshboard() {
             if (structure == nullptr)
                 continue;
 
-            pixMap=getPixMap(structure/*x,y koordinata*/);
-            /*QRect viewportRect = ui->tableWidget->viewport()->rect();
-            int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
-            int cellHeight = viewportRect.height() / ui->tableWidget->rowCount();
-            pixMap = pixMap.scaled(cellWidth, cellHeight, Qt::IgnoreAspectRatio);
-            ui->tableWidget->item(x,y)->setSizeHint(pixMap.size());
-            //ui->tableWidget->item(x,y)->setData(Qt::DecorationRole, QBrush(pixMap));
-            ui->tableWidget->item(x,y)->setForeground(QBrush(pixMap));
-            //ui->tableWidget->item(x,y)->
-            //ui->tableWidget->item(x,y)->setBackground(QBrush(pixMap));*/
-
+            pixMap=getPixMap(structure, std::make_pair( x, y ));
             QLabel* label = new QLabel();
             QRect viewportRect = ui->tableWidget->viewport()->rect();
             int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
@@ -401,6 +457,25 @@ void GamePage::onRefreshboard() {
             ui->tableWidget->item(x, y)->setSizeHint(pixMap.size());
             ui->tableWidget->item(x, y)->setFlags(ui->tableWidget->item(x, y)->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         }
+    }
+}
+
+void GamePage::onTableWidget3Clicked(int row, int column)
+{
+    QMessageBox messageBox;
+    qDebug() << "Column:: " << column;
+    switch(column)
+    {
+        case 0:
+        break;
+        case 1:
+        break;
+        case 2:
+            //TODO
+        break;
+        case 3:
+            //m_pGameModel->evolveBuilding(m_pGameModel->structureAt(rowInd, columnInd));
+        break;
     }
 }
 

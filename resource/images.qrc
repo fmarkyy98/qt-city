@@ -9,10 +9,19 @@
         <file alias="road">road_16.png</file>
         <file alias="background">background.png</file>
         <file alias="house">house.png</file>
-        <file>house_construction.png</file>
+        <file alias="house_construct">house_construction.png</file>
         <file alias="stadium1">stadium-1.png</file>
         <file alias="stadium2">stadium-2.png</file>
         <file alias="stadium3">stadium-3.png</file>
         <file alias="stadium4">stadium-4.png</file>
+        <file>factory_construction.png</file>
+        <file alias="house3_construction">icons8-skyscraper-60 másolat.png</file>
+        <file alias="house2_construction">icons8-villa-96 másolat.png</file>
+        <file>police_construction.png</file>
+        <file>stadium-3 másolat.png</file>
+        <file>stadium-4 másolat.png</file>
+        <file>store_construction.png</file>
+        <file alias="house3">icons8-skyscraper-60.png</file>
+        <file alias="house2">icons8-villa-96.png</file>
     </qresource>
 </RCC>
