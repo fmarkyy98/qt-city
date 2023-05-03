@@ -14,13 +14,13 @@
         <file alias="stadium2">stadium-2.png</file>
         <file alias="stadium3">stadium-3.png</file>
         <file alias="stadium4">stadium-4.png</file>
-        <file>factory_construction.png</file>
+        <file alias="factory_construction">factory_construction.png</file>
         <file alias="house3_construction">skyscraper.png</file>
         <file alias="house2_construction">villa.png</file>
-        <file>police_construction.png</file>
-        <file>stadium-3-construct.png</file>
-        <file>stadium-4-construct.png</file>
-        <file>store_construction.png</file>
+        <file alias="police_construction">police_construction.png</file>
+        <file alias="stadium-construction1">stadium-3-construct.png</file>
+        <file alias="stadium-construction2">stadium-4-construct.png</file>
+        <file alias="store_construction">store_construction.png</file>
         <file alias="house3">icons8-skyscraper-60.png</file>
         <file alias="house2">icons8-villa-96.png</file>
     </qresource>
