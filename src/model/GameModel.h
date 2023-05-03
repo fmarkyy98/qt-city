@@ -21,6 +21,8 @@ public:
     void load(const QString& path) override;
     int getHeight() const override;
     int getWidth() const override;
+    int getCostOfPlacingZone() const override;
+    int getCostOfBuildingBuilding() const override;
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
     void breakDownZone(int row, int col);
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
@@ -30,7 +32,7 @@ public:
     void advanceSimulation() override;
 
 private:
-    bool canPlaceBuilding(); //TODO
+    bool canPlaceBuilding(); //TODO kell ez egyaltalan?
     void advanceBuildingProcesses(const std::vector<BuildingBase *> &buildings);
     void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
     void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
@@ -49,7 +51,6 @@ private:
     int m_moneyAtStart = 500000;
     QDate m_date = QDate::fromString("1970.01.01", "yyyy.MM.dd");
     static constexpr int m_costOfPlacingZone = 500;
-    static constexpr int m_costOfBreakingZone = 100;
     static constexpr int m_costOfBuildingBuilding = 750;
     static constexpr int m_costOfMaintainingPolice = 1000;
     static constexpr int m_costOfMaintainingStadium =2000 ;
