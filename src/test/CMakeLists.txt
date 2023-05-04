@@ -9,7 +9,9 @@ find_package(Qt6 REQUIRED COMPONENTS
 )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 message(INCLUDES="${INCLUDES}")
 
@@ -18,6 +20,7 @@ enable_testing(true)
 set(TEST_LIBRARIES
     Qt6::Core
     Qt6::Test
+    Qt6::Widgets
 )
 
 set(TEST_INCLUDES
@@ -35,7 +38,10 @@ file(GLOB TEST_INTERNAL_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
 )
 
-add_executable(test_QtCity ${TEST_SOURCES} ${TEST_INTERNAL_HEADERS} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
+string(REPLACE "main.cpp" "" CPPFILES "${SOURCES}")
+message(CPPFILES="${CPPFILES}")
+
+add_executable(test_QtCity ${TEST_SOURCES} ${CPPFILES} ${TEST_INTERNAL_HEADERS} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
 add_test(NAME test_QtCity COMMAND test_QtCity)
 
 target_include_directories(test_QtCity PRIVATE ${TEST_INCLUDES} ${INCLUDES})
