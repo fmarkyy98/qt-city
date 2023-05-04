@@ -154,6 +154,8 @@ void GamePage::onMoneyChanaged(int money)
 void GamePage::onDateChanged(const QDate& date)
 {
     ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
+    ui->label_4->setText("People: "+ QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
+    //+ " / " + QString::number(m_pGameModel->getGlobalInhabitantCount())  telítettséghez majd
 }
 
 void GamePage::newGame()

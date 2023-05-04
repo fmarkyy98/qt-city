@@ -6646,6 +6646,23 @@ color: black;</string>
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 white, stop: 1 grey);
+border-style: solid;
+border-color: black;
+border-width: 1px;
+margin: 5px;
+padding: 10px;
+border-radius: 10px;
+color: black;</string>
+       </property>
+       <property name="text">
+        <string>People: 0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
