@@ -8,7 +8,7 @@ void QtCityGameModelTest::init()
 void QtCityGameModelTest::test_getHeightReturnValue()
 {
     int val = m_pGameModel->getHeight();
-    QCOMPARE(val, 25)
+    QCOMPARE(val, 25);
 }
 
 void QtCityGameModelTest::cleanup()

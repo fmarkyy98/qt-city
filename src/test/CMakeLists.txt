@@ -11,6 +11,8 @@ find_package(Qt6 REQUIRED COMPONENTS
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC)
 
+message(INCLUDES="${INCLUDES}")
+
 enable_testing(true)
 
 set(TEST_LIBRARIES
@@ -19,9 +21,9 @@ set(TEST_LIBRARIES
 )
 
 set(TEST_INCLUDES
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/model
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/model/export
+    ${CMAKE_CURRENT_SOURCE_DIR}/../
+    ${CMAKE_CURRENT_SOURCE_DIR}/../model
+    ${CMAKE_CURRENT_SOURCE_DIR}/../model/export
 )
 
 set(TEST_SOURCES
@@ -33,14 +35,14 @@ file(GLOB TEST_INTERNAL_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
 )
 
-add_executable(test_QtCity ${TEST_SOURCES} ${TEST_INTERNAL_HEADERS} ${SOURCES} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
+add_executable(test_QtCity ${TEST_SOURCES} ${TEST_INTERNAL_HEADERS} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
 add_test(NAME test_QtCity COMMAND test_QtCity)
 
 target_include_directories(test_QtCity PRIVATE ${TEST_INCLUDES} ${INCLUDES})
 target_link_libraries(test_QtCity PRIVATE ${TEST_LIBRARIES})
 
 if(WIN32)
-    add_custom_command(TARGET ${TARGET} POST_BUILD
+    add_custom_command(TARGET test_QtCity POST_BUILD
         COMMAND ${QT_WINDEPLOY} $<TARGET_FILE:test_QtCity>
         COMMENT "Deploying Qt..."
     )

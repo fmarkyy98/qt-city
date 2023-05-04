@@ -71,3 +71,7 @@ if(WIN32)
     COMMAND ${QT_WINDEPLOY} $<TARGET_FILE:${TARGET}>
 	)
 endif()
+
+if(USE_TEST)
+        add_subdirectory(test)
+endif()
