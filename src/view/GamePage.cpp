@@ -154,6 +154,8 @@ void GamePage::onMoneyChanaged(int money)
 void GamePage::onDateChanged(const QDate& date)
 {
     ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
+    ui->label_4->setText("People: "+ QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
+    //+ " / " + QString::number(m_pGameModel->getGlobalInhabitantCount())  telítettséghez majd
 }
 
 void GamePage::newGame()
@@ -226,6 +228,21 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         capacity=workPlace->getWorkerCapacity();
         peopleCount=workPlace->getWorkerCount();
         info="Store\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
+        if(workPlace->isBuildInProgress()) {
+            if(workPlace->getLevel()==0)
+                return QPixmap(":/images/store_construction");
+            else if (workPlace->getLevel()==1)
+                return QPixmap(":/images/store_construction");
+            else
+                return QPixmap(":/images/store_construction");
+        } else {
+            if(workPlace->getLevel()==1)
+                return QPixmap(":/images/store");
+            else if (workPlace->getLevel()==2)
+                return QPixmap(":/images/store");
+            else
+                return QPixmap(":/images/store");
+        }
         return QPixmap(":/images/store");
     } break;
     case qct::BuildingType::Stadium: {
@@ -237,11 +254,15 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
             return QPixmap(":/images/stadium1");
         else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
-            return QPixmap(":/images/stadium3");
+            if(workPlace->isBuildInProgress()) {
+                return QPixmap(":/images/stadium-construction1");
+            } else return QPixmap(":/images/stadium3");
         else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
             return QPixmap(":/images/stadium2");
         else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
-            return QPixmap(":/images/stadium4");
+            if(workPlace->isBuildInProgress()) {
+                return QPixmap(":/images/stadium-construction2");
+            } else return QPixmap(":/images/stadium4");
     } break;
     case qct::BuildingType::Forest: {
         info="Forest";
@@ -252,6 +273,21 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         capacity=workPlace->getWorkerCapacity();
         peopleCount=workPlace->getWorkerCount();
         info="Factory\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
+        if(workPlace->isBuildInProgress()) {
+            if(workPlace->getLevel()==0)
+                return QPixmap(":/images/factory_construction");
+            else if (workPlace->getLevel()==1)
+                return QPixmap(":/images/factory_construction");
+            else
+                return QPixmap(":/images/factory_construction");
+        } else {
+            if(workPlace->getLevel()==1)
+                return QPixmap(":/images/factory");
+            else if (workPlace->getLevel()==2)
+                return QPixmap(":/images/factory");
+            else
+                return QPixmap(":/images/factory");
+        }
         return QPixmap(":/images/factory");
     } break;
     case qct::BuildingType::Residential: {
@@ -281,7 +317,21 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         capacity=workPlace->getWorkerCapacity();
         peopleCount=workPlace->getWorkerCount();
         info="Police\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
-        return QPixmap(":/images/police");
+        if(workPlace->isBuildInProgress()) {
+            if(workPlace->getLevel()==0)
+                return QPixmap(":/images/police_construction");
+            else if (workPlace->getLevel()==1)
+                return QPixmap(":/images/police_construction");
+            else
+                return QPixmap(":/images/police_construction");
+        } else {
+            if(workPlace->getLevel()==1)
+                return QPixmap(":/images/police");
+            else if (workPlace->getLevel()==2)
+                return QPixmap(":/images/police");
+            else
+                return QPixmap(":/images/police");
+        }
     } break;
 
     default: {
