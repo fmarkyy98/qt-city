@@ -1,7 +1,7 @@
 #pragma once
 
-#include "export/IService.h"
-#include "export/Enums.h"
+#include "IService.h"
+#include "Enums.h"
 #include <QDate>
 
 class StructureBase;

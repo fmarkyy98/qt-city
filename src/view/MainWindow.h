@@ -20,5 +20,4 @@ private:
     QStackedWidget *m_pStackedWidget;
     GamePage *m_pGamePage;
     MenuPage *m_pMenuPage;
-
 };
