@@ -127,6 +127,8 @@ void GameModel::breakDownZone(int row, int col) {
     emit meta()->moneyChanged(m_money);
 }
 
+
+
 void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) {
     if (m_money < m_costOfBuildingBuilding)
         throw std::invalid_argument("Not enough money left for Building construction!");
@@ -220,16 +222,17 @@ void GameModel::buildOnRandomZone()
 {
     for (int i = 0; i < getHeight(); ++i) {
         for (int j = 0; j < getWidth(); ++j) {
-            auto p = std::make_pair(j, i);
-            if (static_cast<int>(m_Board.at(p).zoneType) & static_cast<int>(qct::ZoneType::NotNone) &&
-                checkForRoad(p))
+            std::pair pair(j, i);
+            if (m_Board.at(pair).structure == nullptr &&
+                static_cast<int>(m_Board.at(pair).zoneType) & static_cast<int>(qct::ZoneType::NotNone) &&
+                checkForRoad(pair))
             {
                 double randomValue= QRandomGenerator::global()->bounded(0, 100);
                 if (randomValue < 10) {
-                    auto buildings = getCompatibleBuildings(m_Board.at(p).zoneType);
+                    auto buildings = getCompatibleBuildings(m_Board.at(pair).zoneType);
                     int randomIndex = QRandomGenerator::global()->bounded(buildings.size());
-                    auto randomElement = buildings[randomIndex];
-                    placeBuilding(randomElement, j, i);
+                    m_Board.placeBuilding(buildings[randomIndex], {j, i}, m_date);
+                    emit meta()->boardChanged();
                 }
             }
         }
