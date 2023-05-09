@@ -23,5 +23,17 @@
         <file alias="store_construction">store_construction.png</file>
         <file alias="house3">icons8-skyscraper-60.png</file>
         <file alias="house2">icons8-villa-96.png</file>
+        <file alias="store2_construction">shop-construct.png</file>
+        <file alias="store2">shop.png</file>
+        <file alias="store3_construction">shopping-center-construction.png</file>
+        <file alias="store3">shopping-center.png</file>
+        <file alias="factory3_construction">factory-2-construct.png</file>
+        <file alias="factory3">factory-2.png</file>
+        <file alias="factory2_construction">industry-2 -construct.png</file>
+        <file alias="factory2">industry-2.png</file>
+        <file alias="police2_construction">police-station-2-construct.png</file>
+        <file alias="police2">police-station-2.png</file>
+        <file alias="police3_construction">police-station-3-consttruct.png</file>
+        <file alias="police3">police-station-3.png</file>
     </qresource>
 </RCC>

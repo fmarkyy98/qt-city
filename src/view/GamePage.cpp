@@ -232,16 +232,16 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(workPlace->getLevel()==0)
                 return QPixmap(":/images/store_construction");
             else if (workPlace->getLevel()==1)
-                return QPixmap(":/images/store_construction");
+                return QPixmap(":/images/store2_construction");
             else
-                return QPixmap(":/images/store_construction");
+                return QPixmap(":/images/store3_construction");
         } else {
             if(workPlace->getLevel()==1)
                 return QPixmap(":/images/store");
             else if (workPlace->getLevel()==2)
-                return QPixmap(":/images/store");
+                return QPixmap(":/images/store2");
             else
-                return QPixmap(":/images/store");
+                return QPixmap(":/images/store3");
         }
         return QPixmap(":/images/store");
     } break;
@@ -251,6 +251,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         info="Stadium\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
         if(coordinates==std::nullopt)
             return QPixmap(":/images/stadium");
+        if(workPlace->getLevel()==1){
+            //TODO
+        }
         if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
             return QPixmap(":/images/stadium1");
         else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
@@ -277,16 +280,16 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(workPlace->getLevel()==0)
                 return QPixmap(":/images/factory_construction");
             else if (workPlace->getLevel()==1)
-                return QPixmap(":/images/factory_construction");
+                return QPixmap(":/images/factory2_construction");
             else
-                return QPixmap(":/images/factory_construction");
+                return QPixmap(":/images/factory3_construction");
         } else {
             if(workPlace->getLevel()==1)
                 return QPixmap(":/images/factory");
             else if (workPlace->getLevel()==2)
-                return QPixmap(":/images/factory");
+                return QPixmap(":/images/factory2");
             else
-                return QPixmap(":/images/factory");
+                return QPixmap(":/images/factory3");
         }
         return QPixmap(":/images/factory");
     } break;
@@ -321,16 +324,16 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(workPlace->getLevel()==0)
                 return QPixmap(":/images/police_construction");
             else if (workPlace->getLevel()==1)
-                return QPixmap(":/images/police_construction");
+                return QPixmap(":/images/police2_construction");
             else
-                return QPixmap(":/images/police_construction");
+                return QPixmap(":/images/police3_construction");
         } else {
             if(workPlace->getLevel()==1)
                 return QPixmap(":/images/police");
             else if (workPlace->getLevel()==2)
-                return QPixmap(":/images/police");
+                return QPixmap(":/images/police2");
             else
-                return QPixmap(":/images/police");
+                return QPixmap(":/images/police3");
         }
     } break;
 
