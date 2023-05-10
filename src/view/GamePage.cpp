@@ -274,7 +274,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
             if(workPlace->isBuildInProgress()) {
                 return QPixmap(":/images/stadium-construction2");
-            } else return QPixmap(":/images/stadium4");
+            } else {
+                return QPixmap(":/images/stadium4");
+            }
     } break;
     case qct::BuildingType::Forest: {
         info="Forest";
@@ -350,6 +352,8 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         return QPixmap(":/images/free");
     } break;
     }
+
+    return QPixmap();
 }
 
 void GamePage::onTableWidget2Clicked(int row, int column)
@@ -502,7 +506,7 @@ void GamePage::onRefreshboard() {
                 case qct::ZoneType::Residential:
                     ui->tableWidget->item(x,y)->setBackground(QColor(200, 120, 0));
                     break;
-                case qct::ZoneType::None:
+                default:
                     break;
             }
             auto structure = m_pGameModel->structureAt(x, y);

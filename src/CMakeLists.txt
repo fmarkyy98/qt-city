@@ -35,7 +35,6 @@ file(GLOB_RECURSE UIS
 
 set(SOURCES
     main.cpp
-    ../resource/images.qrc
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/BuildingBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/building/base/StructureBase.cpp
@@ -51,15 +50,18 @@ set(SOURCES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameBoard.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/model/GameModelFactory.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/persistence/FileIOService.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/persistence/FileIOServiceFactory.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/view/GamePage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/MainWindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/view/MenuPage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/view/ViewFactory.cpp
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS})
+add_executable(${PROJECT_NAME} ${SOURCES} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
 
 target_link_libraries(${TARGET} ${LIBRARIES})
 target_include_directories(${TARGET} PRIVATE ${INCLUDES})
@@ -68,4 +70,8 @@ if(WIN32)
 	add_custom_command(TARGET ${TARGET} POST_BUILD
     COMMAND ${QT_WINDEPLOY} $<TARGET_FILE:${TARGET}>
 	)
+endif()
+
+if(USE_TEST)
+        add_subdirectory(test)
 endif()

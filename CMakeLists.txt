@@ -19,4 +19,11 @@ find_package(Qt6 REQUIRED COMPONENTS
         Core
 )
 
+# recourse files are out of src
+file(GLOB_RECURSE RECOURSES
+	${CMAKE_CURRENT_SOURCE_DIR}/*.qrc
+)
+
 add_subdirectory(src)
+
+
