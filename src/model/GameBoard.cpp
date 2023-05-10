@@ -284,7 +284,6 @@ void GameBoard::reset(QDate date)
     }
     m_Buildings.clear();
     m_Structures.clear();
-    randomForestPlacement(date);
 }
 
 void GameBoard::randomForestPlacement(QDate date)
@@ -301,9 +300,10 @@ void GameBoard::randomForestPlacement(QDate date)
 
 std::pair<int, int> GameBoard::indexOfStructure(StructureBase* structure) const {
     for (int i = 0; i < m_TileMatrix.size(); ++i)
-        for (int j = 0; j < m_TileMatrix[i].size(); ++j)
-            if (m_TileMatrix[j][i].structure == structure)
-                return {j, i};
+        for (int j = 0; j < m_TileMatrix[i].size(); ++j) {
+            if (m_TileMatrix[i][j].structure == structure)
+                return {i, j};
+        }
 
     throw std::runtime_error("Atleast one tile should point to this object");
 }
