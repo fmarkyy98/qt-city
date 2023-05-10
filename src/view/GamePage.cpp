@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QtGui>
+#include <QFileDialog>
 #include <iostream>
 
 #include "../model/building/ResidentialBuilding.h"
@@ -43,7 +44,9 @@ GamePage::~GamePage()
 
 void GamePage::onSaveButtonClicked()
 {
-    //TODO
+    QString filename = QFileDialog::getSaveFileName();
+    qDebug() << filename;
+    m_pGameModel->save(filename);
 }
 
 
@@ -154,8 +157,14 @@ void GamePage::onMoneyChanaged(int money)
 void GamePage::onDateChanged(const QDate& date)
 {
     ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
-    ui->label_4->setText("People: "+ QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
-    //+ " / " + QString::number(m_pGameModel->getGlobalInhabitantCount())  telítettséghez majd
+    ui->label_4->setText("People: "+
+                         QString::number(m_pGameModel->getGlobalInhabitantCount()) +
+                         " / " +
+                         QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
+    ui->label_5->setText("Work places: "+
+                         QString::number(m_pGameModel->getGlobalWorkerCount()) +
+                         " / " +
+                         QString::number(m_pGameModel->getGlobalWorkerCapacity()));
 }
 
 void GamePage::newGame()
@@ -232,16 +241,16 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(workPlace->getLevel()==0)
                 return QPixmap(":/images/store_construction");
             else if (workPlace->getLevel()==1)
-                return QPixmap(":/images/store_construction");
+                return QPixmap(":/images/store2_construction");
             else
-                return QPixmap(":/images/store_construction");
+                return QPixmap(":/images/store3_construction");
         } else {
             if(workPlace->getLevel()==1)
                 return QPixmap(":/images/store");
             else if (workPlace->getLevel()==2)
-                return QPixmap(":/images/store");
+                return QPixmap(":/images/store2");
             else
-                return QPixmap(":/images/store");
+                return QPixmap(":/images/store3");
         }
         return QPixmap(":/images/store");
     } break;
@@ -251,6 +260,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         info="Stadium\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
         if(coordinates==std::nullopt)
             return QPixmap(":/images/stadium");
+        if(workPlace->getLevel()==1){
+            //TODO
+        }
         if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
             return QPixmap(":/images/stadium1");
         else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
@@ -279,16 +291,16 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(workPlace->getLevel()==0)
                 return QPixmap(":/images/factory_construction");
             else if (workPlace->getLevel()==1)
-                return QPixmap(":/images/factory_construction");
+                return QPixmap(":/images/factory2_construction");
             else
-                return QPixmap(":/images/factory_construction");
+                return QPixmap(":/images/factory3_construction");
         } else {
             if(workPlace->getLevel()==1)
                 return QPixmap(":/images/factory");
             else if (workPlace->getLevel()==2)
-                return QPixmap(":/images/factory");
+                return QPixmap(":/images/factory2");
             else
-                return QPixmap(":/images/factory");
+                return QPixmap(":/images/factory3");
         }
         return QPixmap(":/images/factory");
     } break;
@@ -323,16 +335,16 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(workPlace->getLevel()==0)
                 return QPixmap(":/images/police_construction");
             else if (workPlace->getLevel()==1)
-                return QPixmap(":/images/police_construction");
+                return QPixmap(":/images/police2_construction");
             else
-                return QPixmap(":/images/police_construction");
+                return QPixmap(":/images/police3_construction");
         } else {
             if(workPlace->getLevel()==1)
                 return QPixmap(":/images/police");
             else if (workPlace->getLevel()==2)
-                return QPixmap(":/images/police");
+                return QPixmap(":/images/police2");
             else
-                return QPixmap(":/images/police");
+                return QPixmap(":/images/police3");
         }
     } break;
 
