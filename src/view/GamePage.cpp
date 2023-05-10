@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QtGui>
+#include <QFileDialog>
 #include <iostream>
 
 #include "../model/building/ResidentialBuilding.h"
@@ -43,7 +44,9 @@ GamePage::~GamePage()
 
 void GamePage::onSaveButtonClicked()
 {
-    //TODO
+    QString filename = QFileDialog::getSaveFileName();
+    qDebug() << filename;
+    m_pGameModel->save(filename);
 }
 
 
@@ -154,8 +157,14 @@ void GamePage::onMoneyChanaged(int money)
 void GamePage::onDateChanged(const QDate& date)
 {
     ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
-    ui->label_4->setText("People: "+ QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
-    //+ " / " + QString::number(m_pGameModel->getGlobalInhabitantCount())  telítettséghez majd
+    ui->label_4->setText("People: "+
+                         QString::number(m_pGameModel->getGlobalInhabitantCount()) +
+                         " / " +
+                         QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
+    ui->label_5->setText("Work places: "+
+                         QString::number(m_pGameModel->getGlobalWorkerCount()) +
+                         " / " +
+                         QString::number(m_pGameModel->getGlobalWorkerCapacity()));
 }
 
 void GamePage::newGame()
