@@ -1,4 +1,5 @@
 #include "MenuPage.h"
+#include <QFileDialog>
 #include "ui_MenuPage.h"
 #include <QScreen>
 
@@ -23,8 +24,18 @@ void MenuPage::onNewGameButtonClicked()
     m_pGameModel->newGame();
 }
 
+void MenuPage::onLoadGameButtonClicked()
+{
+    emit showGamePage();
+    QString filename = QFileDialog::getOpenFileName();
+    qDebug() << filename;
+    m_pGameModel->load(filename);
+
+}
+
 void MenuPage::initConnections()
 {
     connect(ui->newGameButton, &QPushButton::clicked, this, &MenuPage::onNewGameButtonClicked);
+    connect(ui->loadGameButton, &QPushButton::clicked, this, &MenuPage::onLoadGameButtonClicked);
 }
 
