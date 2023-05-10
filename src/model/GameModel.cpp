@@ -19,11 +19,12 @@ GameModel::GameModel(std::shared_ptr<IFileIOService> fileIOService,
 void GameModel::save(const QString &path) const {
     std::list<int> dataList;
 
-    dataList.merge(m_Board.serialize());
     dataList.push_back(m_money);
     dataList.push_back(m_date.year());
     dataList.push_back(m_date.month());
     dataList.push_back(m_date.day());
+
+    dataList.merge(m_Board.serialize());
 
     m_FileIOService->save(path, dataList);
 }
@@ -31,12 +32,14 @@ void GameModel::save(const QString &path) const {
 void GameModel::load(const QString &path) {
     std::list<int> dataList = m_FileIOService->load(path);
 
-    m_Board.deserialize(dataList);
     m_money = dataList.front(); dataList.pop_front();
     int y = dataList.front(); dataList.pop_front();
     int m = dataList.front(); dataList.pop_front();
     int d = dataList.front(); dataList.pop_front();
     m_date = {y, m, d};
+
+    m_Board.reset(m_date);
+    m_Board.deserialize(dataList);
 
     assert(dataList.empty() && "Deserialization item number missmatch.");
 }
@@ -154,6 +157,7 @@ const StructureBase* GameModel::structureAt(int row, int col) const {
 
 void GameModel::newGame() {
     m_Board.reset(m_dateAtStart);
+    m_Board.randomForestPlacement(m_dateAtStart);
     emit meta()->boardChanged();
     m_money = m_moneyAtStart;
     emit meta()->moneyChanged(m_money);
