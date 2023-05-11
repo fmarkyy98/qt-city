@@ -536,7 +536,7 @@ void GamePage::onTableWidget3Clicked(int row, int column)
         case 1:
         break;
         case 2:
-            //TODO
+            m_pGameModel->demolishBuilding(rowInd, columnInd);
         break;
         case 3:
             //m_pGameModel->evolveBuilding(m_pGameModel->structureAt(rowInd, columnInd));
