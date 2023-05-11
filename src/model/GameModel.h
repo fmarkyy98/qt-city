@@ -30,6 +30,7 @@ public:
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
     void breakDownZone(int row, int col) override;
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
+    void evolveBuilding(int row, int col) override;
     void demolishBuilding(int row, int col) override;
     qct::ZoneType zoneAt(int row, int col) const override;
     const StructureBase* structureAt(int row, int col) const override;
