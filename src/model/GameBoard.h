@@ -14,6 +14,7 @@ public:
     const Tile& at(std::pair<int,int> position) const;
     Tile& at(std::pair<int,int> position);
     void placeBuilding(qct::BuildingType buildingType, std::pair<int, int> position, QDate date);
+    void evolveBuilding(std::pair<int, int> position);
     void demolishBuilding(std::pair<int, int> position);
     void placeZone(qct::ZoneType zoneType, std::pair<int, int> position);
     void breakDownZone(std::pair<int, int> position);

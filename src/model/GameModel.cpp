@@ -145,6 +145,11 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) 
     emit meta()->moneyChanged(m_money);
 }
 
+void GameModel::evolveBuilding(int row, int col)
+{
+    m_Board.evolveBuilding({row,col});
+}
+
 void GameModel::demolishBuilding(int row, int col)
 {
     m_Board.demolishBuilding({row,col});

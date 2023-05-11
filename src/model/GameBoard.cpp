@@ -196,10 +196,28 @@ void GameBoard::placeBuilding(qct::BuildingType buildingType, std::pair<int, int
     }
 }
 
+void GameBoard::evolveBuilding(std::pair<int, int> position)
+{
+    auto [row, col] = position;
+    auto ptr = dynamic_cast<BuildingBase*>(m_TileMatrix[row][col].structure);
+    if (ptr == nullptr)
+        throw std::invalid_argument("No bulding to evolve.");
+
+    ptr->startEvolveBuilding();
+}
+
 void GameBoard::demolishBuilding(std::pair<int, int> position)
 {
     auto [row, col] = position;
+    auto ptr = m_TileMatrix[row][col].structure;
+    if (ptr == nullptr)
+        throw std::invalid_argument("No bulding to demolish.");
 
+    m_TileMatrix[row][col].structure = nullptr;
+    std::erase_if(m_Buildings,
+                  [ptr](auto&& building) {return building.get() == ptr;});
+    std::erase_if(m_Structures,
+                  [ptr](auto&& structure) {return structure.get() == ptr;});
 }
 
 void GameBoard::placeZone(qct::ZoneType zoneType, std::pair<int, int> position)
