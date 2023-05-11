@@ -161,7 +161,7 @@ void GamePage::onDateChanged(const QDate& date)
                          QString::number(m_pGameModel->getGlobalInhabitantCount()) +
                          " / " +
                          QString::number(m_pGameModel->getGlobalInhabitantCapacity()));
-    ui->label_5->setText("Work places: "+
+    ui->label_6->setText("Work places: "+
                          QString::number(m_pGameModel->getGlobalWorkerCount()) +
                          " / " +
                          QString::number(m_pGameModel->getGlobalWorkerCapacity()));

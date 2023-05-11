@@ -22,6 +22,8 @@ signals:
 private slots:
     void onNewGameButtonClicked();
     void onLoadGameButtonClicked();
+    void onExitButtonClicked();
+    void onHelpButtonClicked();
 
 private:
     void initConnections();
