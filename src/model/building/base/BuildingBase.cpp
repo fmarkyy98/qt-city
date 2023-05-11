@@ -9,7 +9,8 @@ std::list<int> BuildingBase::serialize() const {
     dataList.push_back(m_BuildingProgress);
     dataList.push_back(m_BuildingLevel);
 
-    dataList.merge(StructureBase::serialize());
+    auto serial = StructureBase::serialize();
+    dataList.insert(dataList.end(), serial.begin(), serial.end());
 
     return dataList;
 }
