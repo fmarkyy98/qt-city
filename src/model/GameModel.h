@@ -47,10 +47,13 @@ private:
                     const std::vector<StructureBase *> &structures);
     void maintainCity(const std::vector<BuildingBase *> &buildings);
     void maintainRoads(const std::vector<StructureBase *> &structures);
+    void maintainForests(const std::vector<StructureBase *> &structures);
     void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
     bool checkForRoad(std::pair<int, int> position);
     bool checkForForest(std::pair<int, int> position);
-    int calculateTax(std::pair<int, int> position);
+    void calculateTax(const std::vector<BuildingBase *> &buildings);
+    void calculatePension(const std::vector<BuildingBase *> &buildings);
+    void calculateForestBonus(const std::vector<StructureBase *> &structures);
     void catastrophe();
 
 private:
@@ -70,5 +73,8 @@ private:
     static constexpr int m_costOfMaintainingPolice = 1000;
     static constexpr int m_costOfMaintainingStadium = 2000;
     static constexpr int m_costOfMaintainingRoad = 50;
-    static constexpr int m_ForestBonus = 100;
+    static constexpr int m_costOfMaintainingForest = 25;
+    static constexpr int m_ForestBonus = 50;
+    static constexpr int m_Tax = 2;
+    static constexpr int m_Pension = 1;
 };

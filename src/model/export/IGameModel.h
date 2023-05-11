@@ -38,5 +38,4 @@ public:
     virtual void load(const QString& path) = 0;
     virtual void newGame() = 0;
     virtual void advanceSimulation() = 0;
-    //virtual void evolveBuilding(const StructureBase* structure) = 0;
 };
