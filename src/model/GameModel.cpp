@@ -148,11 +148,13 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) 
 void GameModel::evolveBuilding(int row, int col)
 {
     m_Board.evolveBuilding({row,col});
+    emit meta()->boardChanged();
 }
 
 void GameModel::demolishBuilding(int row, int col)
 {
     m_Board.demolishBuilding({row,col});
+    emit meta()->boardChanged();
 }
 
 qct::ZoneType GameModel::zoneAt(int row, int col) const {
