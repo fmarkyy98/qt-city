@@ -207,9 +207,28 @@ void GamePage::newGame()
         if(structure ==nullptr) {
             stackedWidget->setCurrentWidget(ui->tableWidget_2);
         } else {
-            pixMap=getPixMap(structure);
+            pixMap = getPixMap(structure);
 
-            ui->tableWidget_3->item(0,0)->setData(Qt::DecorationRole, pixMap);
+            QLabel* label = new QLabel();
+            pixMap = pixMap.scaled(100, 100, Qt::KeepAspectRatio);
+            label->setPixmap(pixMap);
+            label->setFixedSize(pixMap.size());
+
+            QTableWidgetItem* item = new QTableWidgetItem();
+            item->setFlags(item->flags() ^ Qt::ItemIsEditable); // make the item read-only
+            ui->tableWidget_3->setItem(0, 0, item);
+
+            QHBoxLayout* layout = new QHBoxLayout();
+            layout->addWidget(label);
+            layout->setAlignment(Qt::AlignCenter);
+            layout->setContentsMargins(0, 0, 0, 0); // set margins to zero to remove any extra padding
+
+            QWidget* widget = new QWidget();
+            widget->setLayout(layout);
+
+            ui->tableWidget_3->setCellWidget(0, 0, widget);
+            ui->tableWidget_3->item(0, 0)->setFlags(ui->tableWidget_3->item(0, 0)->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+            ui->tableWidget_3->item(0, 0)->setTextAlignment(Qt::AlignCenter);
             ui->tableWidget_3->item(0,1)->setText(info);
             stackedWidget->setCurrentWidget(ui->tableWidget_3);
         }
@@ -314,9 +333,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
             if(house->getLevel()==0)
                 return QPixmap(":/images/house_construct");
             else if (house->getLevel()==1)
-                return QPixmap(":/images/house2_construct");
+                return QPixmap(":/images/house2_construction");
             else
-                return QPixmap(":/images/house3_construct");
+                return QPixmap(":/images/house3_construction");
         } else {
             if(house->getLevel()==1)
                 return QPixmap(":/images/house");
@@ -537,9 +556,14 @@ void GamePage::onTableWidget3Clicked(int row, int column)
         break;
         case 2:
             m_pGameModel->demolishBuilding(rowInd, columnInd);
+            stackedWidget->setCurrentWidget(ui->tableWidget_2);
         break;
         case 3:
-            m_pGameModel->evolveBuilding(rowInd, columnInd);
+            try {
+                m_pGameModel->evolveBuilding(rowInd, columnInd);
+            } catch (const std::invalid_argument& e) {
+                messageBox.critical(0,"Error",e.what());
+            }
         break;
     }
 }
