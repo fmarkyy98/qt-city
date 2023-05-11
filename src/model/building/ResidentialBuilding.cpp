@@ -13,7 +13,8 @@ std::list<int> ResidentialBuilding::serialize() const {
     dataList.push_back(m_AdultInhabitantCount);
     dataList.push_back(m_RetiredInhabitantCount);
 
-    dataList.merge(BuildingBase::serialize());
+    auto serial = BuildingBase::serialize();
+    dataList.insert(dataList.end(), serial.begin(), serial.end());
 
     return dataList;
 }

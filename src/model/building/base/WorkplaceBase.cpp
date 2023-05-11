@@ -8,7 +8,8 @@ std::list<int> WorkplaceBase::serialize() const {
     std::list<int> dataList;
     dataList.push_back(m_WorkerCount);
 
-    dataList.merge(BuildingBase::serialize());
+    auto serial = BuildingBase::serialize();
+    dataList.insert(dataList.end(), serial.begin(), serial.end());
 
     return dataList;
 }

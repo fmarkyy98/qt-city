@@ -24,7 +24,8 @@ void GameModel::save(const QString &path) const {
     dataList.push_back(m_date.month());
     dataList.push_back(m_date.day());
 
-    dataList.merge(m_Board.serialize());
+    auto serial = m_Board.serialize();
+    dataList.insert(dataList.end(), serial.begin(), serial.end());
 
     m_FileIOService->save(path, dataList);
 }
@@ -41,6 +42,8 @@ void GameModel::load(const QString &path) {
     m_Board.reset(m_date);
     m_Board.deserialize(dataList);
 
+    qDebug() << "[SIZE]" << dataList.size();
+    qDebug() << "[SIZE]" << dataList.empty();
     assert(dataList.empty() && "Deserialization item number missmatch.");
 }
 

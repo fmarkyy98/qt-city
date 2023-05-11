@@ -17,7 +17,7 @@ std::list<int> GameBoard::serialize() const {
     std::list<int> dataList;
     for (int i = 0; i < m_TileMatrix.size(); ++i) {
         for (int j = 0; j < m_TileMatrix[i].size(); ++j) {
-            dataList.push_back(static_cast<int>(m_TileMatrix[j][i].zoneType));
+            dataList.push_back(static_cast<int>(m_TileMatrix[i][j].zoneType));
         }
     }
 
@@ -34,7 +34,8 @@ std::list<int> GameBoard::serialize() const {
             dataList.push_back(bottomRightX);
             dataList.push_back(bottomRightY);
 
-            dataList.merge(structure->serialize());
+            auto serial = structure->serialize();
+            dataList.insert(dataList.end(), serial.begin(), serial.end());
         }
     };
     serializeStructureContainer(m_Buildings);
@@ -46,7 +47,7 @@ std::list<int> GameBoard::serialize() const {
 void GameBoard::deserialize(std::list<int>& dataList) {
     for (int i = 0; i < m_TileMatrix.size(); ++i) {
         for (int j = 0; j < m_TileMatrix[i].size(); ++j) {
-            m_TileMatrix[j][i].zoneType = static_cast<qct::ZoneType>(dataList.front());
+            m_TileMatrix[i][j].zoneType = static_cast<qct::ZoneType>(dataList.front());
             dataList.pop_front();
         }
     }
@@ -83,13 +84,16 @@ void GameBoard::deserialize(std::list<int>& dataList) {
             } break;
             }
 
+            if (structure == nullptr)
+                throw std::runtime_error("Deserialization failed");
+
             int topLeftX = dataList.front(); dataList.pop_front();
             int topLeftY =  dataList.front(); dataList.pop_front();
             int bottomRightX =  dataList.front(); dataList.pop_front();
             int bottomRightY =  dataList.front(); dataList.pop_front();
             for (int i = topLeftX; i <= bottomRightX; ++i) {
                 for (int j = topLeftY; j <= bottomRightY; ++j) {
-                    m_TileMatrix[j][i].structure = structure;
+                    m_TileMatrix[i][j].structure = structure;
                 }
             }
 
