@@ -84,6 +84,9 @@ void GameBoard::deserialize(std::list<int>& dataList) {
             } break;
             }
 
+            if (structure == nullptr)
+                throw std::runtime_error("Deserialization failed");
+
             int topLeftX = dataList.front(); dataList.pop_front();
             int topLeftY =  dataList.front(); dataList.pop_front();
             int bottomRightX =  dataList.front(); dataList.pop_front();
