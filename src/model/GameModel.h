@@ -28,6 +28,7 @@ public:
     int getGlobalWorkerCount() const override;
     int getGlobalWorkerCapacity() const override;
     int getGlobalHappyness() const override;
+    QDate getCurrentDate() const override;
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
     void breakDownZone(int row, int col) override;
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;

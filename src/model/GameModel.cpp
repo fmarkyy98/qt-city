@@ -134,6 +134,10 @@ int GameModel::getGlobalHappyness() const {
     return sumHappyness / std::max(houseCount, 1);
 }
 
+QDate GameModel::getCurrentDate() const {
+    return m_date;
+}
+
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
     if(m_money < m_costOfPlacingZone)
         throw std::invalid_argument("Not enough money left for Zone placement!");
