@@ -4125,6 +4125,11 @@ color: black;</string>
            <string>Statistics:</string>
           </property>
          </item>
+         <item row="1" column="0">
+          <property name="text">
+           <string> text</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
