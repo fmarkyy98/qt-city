@@ -107,14 +107,7 @@ void GamePage::onFasterButtonClicked()
 
 void GamePage::onLogChanged(const QString& newLog)
 {
-    logList.append(newLog);
-    QString logMessage="Statistics:\n";
-    for (auto log : logList)
-    {
-        logMessage+=log;
-        logMessage+="\n";
-    }
-    ui->textEdit->setText(logMessage);
+    ui->textEdit->setText(newLog + '\n' + ui->textEdit->toPlainText());
 }
 
 
@@ -149,6 +142,10 @@ void GamePage::initConnections()
 
 void GamePage::onTimeElapsed()
 {
+    ui->textEdit->setText("--" +
+                          m_pGameModel->getCurrentDate().toString("yyyy.MM.dd") +
+                          "--\n" +
+                          ui->textEdit->toPlainText());
     m_pGameModel->advanceSimulation();
 }
 
