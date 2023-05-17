@@ -269,6 +269,7 @@ void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings) {
             m_money += house->calculateMoneyProduced();
         }
     }
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Increasing the city's money");
 }
 
@@ -357,7 +358,7 @@ void GameModel::settleInPeople(const std::vector<BuildingBase*>& buildings) {
     for (auto building : buildings) {
         if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
             int amount = house->getHappyness();
-            house->settleIn(amount / 50, amount / 30, amount / 200);
+            house->settleIn(amount / 30, amount / 20, amount / 80);
         }
     }
 }
@@ -379,6 +380,7 @@ void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Calculating the cost of maintaining service establishments");
 }
 
@@ -391,6 +393,7 @@ void GameModel::maintainRoads(const std::vector<StructureBase *> &structures)
                         });
 
     m_money -= (roadCount * m_costOfMaintainingRoad);
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Calculating the cost of maintaining roads");
 }
 
@@ -405,6 +408,7 @@ void GameModel::maintainForests(const std::vector<StructureBase *> &structures)
         }
     }
     m_money -= forestCount * m_costOfMaintainingForest;
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Calculating the cost of maintaining forests");
 }
 
@@ -426,7 +430,7 @@ bool GameModel::checkForRoad(std::pair<int, int> position)
         auto above = m_Board.at({row - 1, col}).structure;
         hasNeighbouringRoad |= above != nullptr && above->getType() == qct::BuildingType::Road;
     }
-    if (row < getHeight() - 1) {
+    if (row < getHeight() - 1) { // TODO szerintem cserés 1/2
         auto below = m_Board.at({row + 1, col}).structure;
         hasNeighbouringRoad |= below != nullptr && below->getType() == qct::BuildingType::Road;
     }
@@ -434,7 +438,7 @@ bool GameModel::checkForRoad(std::pair<int, int> position)
         auto left = m_Board.at({row, col - 1}).structure;
         hasNeighbouringRoad |= left != nullptr && left->getType() == qct::BuildingType::Road;
     }
-    if (col < getWidth() - 1) {
+    if (col < getWidth() - 1) { // TODO szerintem cserés 2/2
         auto right = m_Board.at({row, col + 1}).structure;
         hasNeighbouringRoad |= right != nullptr && right->getType() == qct::BuildingType::Road;
     }
@@ -468,6 +472,7 @@ void GameModel::calculateTax(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money += (taxedInhabitants * m_Tax);
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Calculating taxes");
 }
 
@@ -480,6 +485,7 @@ void GameModel::calculatePension(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money -= (pensionerInhabitants * m_Pension);
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Calculating pension");
 
 }
@@ -496,6 +502,7 @@ void GameModel::calculateForestBonus(const std::vector<StructureBase *> &structu
         }
     }
     m_money += forestBonus;
+    emit meta()->moneyChanged(m_money);
     emit meta()->log("Calculating forest bonuses");
 
 }

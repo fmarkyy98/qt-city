@@ -109,7 +109,7 @@ void GamePage::onLogChanged(const QString& newLog)
 {
     logList.append(newLog);
     QString logMessage="";
-    for (auto log : logList)
+    for (const auto& log : logList)
     {
         logMessage+=log;
         logMessage+="\n ";
