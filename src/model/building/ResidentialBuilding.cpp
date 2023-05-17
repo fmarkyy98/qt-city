@@ -47,6 +47,11 @@ int ResidentialBuilding::getRetiredInhabitantCount() const {
     return m_RetiredInhabitantCount;
 }
 
+int ResidentialBuilding::getHappyness() const
+{
+    return _happyness;
+}
+
 int ResidentialBuilding::getInhabitantCount() const {
     return m_ChildInhabitantCount + m_AdultInhabitantCount + m_RetiredInhabitantCount;
 }
@@ -78,19 +83,34 @@ ResidentialBuilding& ResidentialBuilding::setRetiredInhabitantCount(int retiredC
     return *this;
 }
 
-void ResidentialBuilding::settleIn(int childCount, int adultCount, int retiredCount) {
-    if (getInhabitantCount() + childCount + adultCount + retiredCount > getCapacity())
-        throw std::invalid_argument("Inhabitant limit exceeded :(");
+ResidentialBuilding &ResidentialBuilding::setHappyness(int happyness)
+{
+    _happyness = happyness;
 
-    m_ChildInhabitantCount += childCount;
-    m_AdultInhabitantCount += adultCount;
-    m_RetiredInhabitantCount += retiredCount;
+    return *this;
+}
+
+void ResidentialBuilding::settleIn(int childCount, int adultCount, int retiredCount) {
+    int allToCome = childCount + adultCount + retiredCount;
+    if (getInhabitantCount() + allToCome > getCapacity()) {
+        double childRatio   = childCount   / static_cast<double>(allToCome);
+        double adultRatio   = adultCount   / static_cast<double>(allToCome);
+        double retiredRatio = retiredCount / static_cast<double>(allToCome);
+
+        int freePlaces = getCapacity() - getInhabitantCount();
+        childCount = freePlaces * childRatio;
+        adultCount = freePlaces * adultRatio;
+        retiredCount = freePlaces * retiredRatio;
+    }
+
+
+    m_ChildInhabitantCount += std::max(-m_ChildInhabitantCount, childCount);
+    m_AdultInhabitantCount += std::max(-m_AdultInhabitantCount, adultCount);
+    m_RetiredInhabitantCount += std::max(-m_RetiredInhabitantCount, retiredCount);
 }
 
 void ResidentialBuilding::removeInhabitant(int childCount, int adultCount, int retiredCount) {
-    m_ChildInhabitantCount -= std::min(m_ChildInhabitantCount, childCount);
-    m_AdultInhabitantCount -= std::min(m_AdultInhabitantCount, adultCount);
-    m_RetiredInhabitantCount -= std::min(m_RetiredInhabitantCount, retiredCount);
+    settleIn(-childCount, -adultCount, -retiredCount);
 }
 
 void ResidentialBuilding::increseInhabitantAge() {

@@ -14,15 +14,17 @@ public:
 
     int getCapacity() const;
     int getCapacity(int level) const;
-
     int getChildInhabitantCount() const;
     int getAdultInhabitantCount() const;
     int getRetiredInhabitantCount() const;
+    int getHappyness() const;
+
     int getInhabitantCount() const;
 
     ResidentialBuilding& setChildInhabitantCount(int childCount);
     ResidentialBuilding& setAdultInhabitantCount(int adultCount);
     ResidentialBuilding& setRetiredInhabitantCount(int retiredCount);
+    ResidentialBuilding& setHappyness(int happyness);
 
     void settleIn(int childCount, int adultCount, int retiredCount);
     void removeInhabitant(int childCount, int adultCount, int retiredCount);
@@ -35,6 +37,7 @@ private:
     int m_ChildInhabitantCount = 0;
     int m_AdultInhabitantCount = 0;
     int m_RetiredInhabitantCount = 0;
+    int _happyness = 10;
 
 private:
     static constexpr qct::BuildingType s_Type = qct::BuildingType::Residential;
@@ -42,6 +45,7 @@ private:
     static constexpr int s_Width = 1;
     static constexpr int s_Height = 1;
     static constexpr int s_CapacityByLevel[] = {0, 100, 200, 400};
+    static constexpr double s_HappynessFactor = 0;
 
 public:
     static constexpr int capacity = s_CapacityByLevel[1];

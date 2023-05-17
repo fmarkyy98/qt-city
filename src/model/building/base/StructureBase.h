@@ -9,7 +9,8 @@ qct::BuildingType getType() const override;        \
 qct::ZoneType getCompatibleZone() const override;  \
 std::pair<int, int> getSize() const override;      \
 int getWidth() const override;                     \
-int getHeight() const override;
+int getHeight() const override;                    \
+int getHappynessFactor() const override;
 
 #define DEFINE_STRUCTURE_BASE_MEMBERS(CLASS)      \
 qct::BuildingType CLASS::getType() const {        \
@@ -26,6 +27,9 @@ int CLASS::getWidth() const {                     \
 }                                                 \
 int CLASS::getHeight() const {                    \
     return s_Height;                              \
+}                                                 \
+int CLASS::getHappynessFactor() const {           \
+        return s_HappynessFactor;                 \
 }
 
 class StructureBase : public QObject {
@@ -37,6 +41,7 @@ public:
     virtual std::pair<int, int> getSize() const = 0;
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
+    virtual int getHappynessFactor() const = 0;
     virtual std::list<int> serialize() const;
     virtual void deserialize(std::list<int>& dataList);
 
