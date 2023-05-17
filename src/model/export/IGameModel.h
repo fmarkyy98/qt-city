@@ -14,6 +14,7 @@ signals:
     void zonesChanged();
     void dateChanged(const QDate& date);
     void releasedCatastrophe();
+    void log(const QString& log);
 };
 
 class IGameModel : public IService<IGameModelMeta>
