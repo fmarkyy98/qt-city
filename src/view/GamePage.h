@@ -24,6 +24,7 @@ public slots:
     //void onBoardChanged();
     void onZonesChanged();
     void onDateChanged(const QDate& date);
+    void onLogChanged(const QString& log);
 
 public:
     void newGame();
@@ -33,8 +34,6 @@ signals:
 
 private slots:
     void onSaveButtonClicked();
-
-    //void onSettingsButtonClicked();
 
     void onSlowerButtonClicked();
 
@@ -51,6 +50,7 @@ private slots:
     void onTableWidget2Clicked(int row, int column);
 
     void onTableWidget3Clicked(int row, int column);
+
 private:
     void initConnections();
     void changeState();
@@ -73,6 +73,8 @@ private:
     bool changedBuilding, changedZone;
     int rowInd, columnInd;
     int capacity, peopleCount;
+    int peopleHappiness;
+    QStringList logList;
     QString info;
     QString priceInfo;
     qct::BuildingType chosenBuildingType;

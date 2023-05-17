@@ -105,6 +105,18 @@ void GamePage::onFasterButtonClicked()
     }
 }
 
+void GamePage::onLogChanged(const QString& newLog)
+{
+    logList.append(newLog);
+    QString logMessage="";
+    for (auto log : logList)
+    {
+        logMessage+=log;
+        logMessage+="\n ";
+    }
+    ui->tableWidget_4->item(1,0)->setText(logMessage);
+}
+
 
 void GamePage::onExitButtonClicked()
 {
@@ -131,6 +143,7 @@ void GamePage::initConnections()
     connect(m_pGameModel->meta(), &IGameModel::Meta::boardChanged, this, &GamePage::onRefreshboard);
     connect(m_pGameModel->meta(), &IGameModel::Meta::moneyChanged, this, &GamePage::onMoneyChanaged);
     connect(m_pGameModel->meta(), &IGameModel::Meta::dateChanged, this, &GamePage::onDateChanged);
+    connect(m_pGameModel->meta(), &IGameModel::Meta::log, this, &GamePage::onLogChanged);
 
 }
 
@@ -165,6 +178,8 @@ void GamePage::onDateChanged(const QDate& date)
                          QString::number(m_pGameModel->getGlobalWorkerCount()) +
                          " / " +
                          QString::number(m_pGameModel->getGlobalWorkerCapacity()));
+    ui->label_5->setText("Happyness: "+
+                         QString::number(m_pGameModel->getGlobalHappyness()));
 }
 
 void GamePage::newGame()
@@ -327,8 +342,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         auto house = dynamic_cast<const ResidentialBuilding*>(structure);
         capacity=house->getCapacity();
         peopleCount=house->getInhabitantCount();
+        peopleHappiness=house->getHappyness();
         house->getLevel();
-        info="Residential Building\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
+        info="Residential Building\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity)+"\nHappiness: "+QString::number(peopleHappiness);
         if(house->isBuildInProgress()) {
             if(house->getLevel()==0)
                 return QPixmap(":/images/house_construct");

@@ -4115,11 +4115,6 @@ color: black;</string>
            <string>New Row</string>
           </property>
          </row>
-         <row>
-          <property name="text">
-           <string>New Row</string>
-          </property>
-         </row>
          <column>
           <property name="text">
            <string>New Column</string>
@@ -6730,6 +6725,23 @@ color: black;</string>
          </property>
          <property name="text">
           <string>Work places: 0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 white, stop: 1 grey);
+border-style: solid;
+border-color: black;
+border-width: 1px;
+margin: 5px;
+padding: 10px;
+border-radius: 10px;
+color: black;</string>
+         </property>
+         <property name="text">
+          <string>Happiness: </string>
          </property>
         </widget>
        </item>
