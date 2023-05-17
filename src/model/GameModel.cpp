@@ -131,7 +131,7 @@ int GameModel::getGlobalHappyness() const {
                               return accumulated;
                           });
 
-    return sumHappyness / houseCount;
+    return sumHappyness / std::max(houseCount, 1);
 }
 
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
