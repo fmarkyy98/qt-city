@@ -39,25 +39,25 @@ public:
     void advanceSimulation() override;
 
 private:
-    void yearPassed(const std::vector<BuildingBase *> &buildings,
-                    const std::vector<StructureBase *> &structures);
-    void advanceBuildingProcesses(const std::vector<BuildingBase *> &buildings);
-    void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
-    void increaseMoney(const std::vector<BuildingBase *> &buildings);
+    void yearPassed(const std::vector<BuildingBase*>& buildings,
+                    const std::vector<StructureBase*>& structures);
+    void advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings);
+    void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase*>& buildings);
+    void increaseMoney(const std::vector<BuildingBase*>& buildings);
     void buildOnRandomZone();
     void calculateHappyness();
     int calculateGlobalHappyness();
     int calculateEnviromentalHappyness(std::pair<int, int> position, int radius);
-    void settleInPeople();
-    void maintainCity(const std::vector<BuildingBase *> &buildings);
-    void maintainRoads(const std::vector<StructureBase *> &structures);
-    void maintainForests(const std::vector<StructureBase *> &structures);
-    void increaseInhabitantAge(const std::vector<BuildingBase *> &buildings);
+    void settleInPeople(const std::vector<BuildingBase*>& buildings);
+    void maintainCity(const std::vector<BuildingBase*>& buildings);
+    void maintainRoads(const std::vector<StructureBase*>& structures);
+    void maintainForests(const std::vector<StructureBase*>& structures);
+    void increaseInhabitantAge(const std::vector<BuildingBase*>& buildings);
     bool checkForRoad(std::pair<int, int> position);
     bool checkForForest(std::pair<int, int> position);
-    void calculateTax(const std::vector<BuildingBase *> &buildings);
-    void calculatePension(const std::vector<BuildingBase *> &buildings);
-    void calculateForestBonus(const std::vector<StructureBase *> &structures);
+    void calculateTax(const std::vector<BuildingBase*>& buildings);
+    void calculatePension(const std::vector<BuildingBase*>& buildings);
+    void calculateForestBonus(const std::vector<StructureBase*>& structures);
     void catastrophe();
 
 private:

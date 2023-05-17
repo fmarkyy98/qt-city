@@ -203,7 +203,7 @@ void GameModel::advanceSimulation() {
     increaseMoney(buildings);
     buildOnRandomZone();
     calculateHappyness();
-    settleInPeople();
+    settleInPeople(buildings);
 
     m_date = m_date.addDays(1);
     emit meta()->dateChanged(m_date);
@@ -330,12 +330,28 @@ int GameModel::calculateGlobalHappyness() {
 }
 
 int GameModel::calculateEnviromentalHappyness(std::pair<int, int> position, int radius) {
-    // TODO
-    return 0;
+    int happyness = 0;
+    auto [x, y] = position;
+    for (int i = y - radius; i <= y + radius; ++i) {
+        for (int j = x - radius; j <= x + radius; ++j) {
+            if (i < 0 || i >= getHeight() || j < 0 || j >= getWidth())
+                continue;
+
+            if (auto structure = m_Board.at({j, i}).structure; structure != nullptr)
+                happyness += structure->getHappynessFactor();
+        }
+    }
+
+    return happyness;
 }
 
-void GameModel::settleInPeople() {
-
+void GameModel::settleInPeople(const std::vector<BuildingBase*>& buildings) {
+    for (auto building : buildings) {
+        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
+            int amount = house->getHappyness();
+            house->settleIn(amount / 50, amount / 30, amount / 200);
+        }
+    }
 }
 
 void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
@@ -420,12 +436,12 @@ bool GameModel::checkForForest(std::pair<int, int> position)
     bool hasForestNearThis = false;
 
     for (int i = std::max(0, col - 3); i <= std::min(getHeight(), col + 3); i++) {
-            for (int j = std::max(0, row - 3); j <= std::min(getWidth(), row + 3); j++) {
-                if (m_Board.at(std::make_pair(j, i)).structure->getType() == qct::BuildingType::Forest) {
-                    if (std::abs(i - col) + std::abs(j - row) <= 3)
-                        hasForestNearThis = true;
-                }
+        for (int j = std::max(0, row - 3); j <= std::min(getWidth(), row + 3); j++) {
+            if (m_Board.at(std::make_pair(j, i)).structure->getType() == qct::BuildingType::Forest) {
+                if (std::abs(i - col) + std::abs(j - row) <= 3)
+                    hasForestNearThis = true;
             }
+        }
     }
 
     return hasForestNearThis;
@@ -460,7 +476,7 @@ void GameModel::calculateForestBonus(const std::vector<StructureBase *> &structu
         if (auto forest = dynamic_cast<Forest*>(structure); forest != nullptr) {
             int years;
             years = forest->getBuiltYear().daysTo(m_date) / 365;
-            if(years < 11)
+            if (years < 11)
                 forestBonus += years * forestBonus;
         }
     }
