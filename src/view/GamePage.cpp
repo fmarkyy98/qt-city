@@ -165,6 +165,8 @@ void GamePage::onDateChanged(const QDate& date)
                          QString::number(m_pGameModel->getGlobalWorkerCount()) +
                          " / " +
                          QString::number(m_pGameModel->getGlobalWorkerCapacity()));
+    ui->label_5->setText("Happyness: "+
+                         QString::number(m_pGameModel->getGlobalHappyness()));
 }
 
 void GamePage::newGame()
@@ -327,8 +329,9 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         auto house = dynamic_cast<const ResidentialBuilding*>(structure);
         capacity=house->getCapacity();
         peopleCount=house->getInhabitantCount();
+        peopleHappiness=house->getHappyness();
         house->getLevel();
-        info="Residential Building\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
+        info="Residential Building\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity)+"\nHappiness: "+QString::number(peopleHappiness);
         if(house->isBuildInProgress()) {
             if(house->getLevel()==0)
                 return QPixmap(":/images/house_construct");

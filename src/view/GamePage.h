@@ -73,6 +73,7 @@ private:
     bool changedBuilding, changedZone;
     int rowInd, columnInd;
     int capacity, peopleCount;
+    int peopleHappiness;
     QString info;
     QString priceInfo;
     qct::BuildingType chosenBuildingType;
