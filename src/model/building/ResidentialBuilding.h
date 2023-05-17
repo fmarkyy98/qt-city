@@ -14,7 +14,6 @@ public:
 
     int getCapacity() const;
     int getCapacity(int level) const;
-
     int getChildInhabitantCount() const;
     int getAdultInhabitantCount() const;
     int getRetiredInhabitantCount() const;
@@ -38,7 +37,7 @@ private:
     int m_ChildInhabitantCount = 0;
     int m_AdultInhabitantCount = 0;
     int m_RetiredInhabitantCount = 0;
-    int _happyness = 0;
+    int _happyness = 10;
 
 private:
     static constexpr qct::BuildingType s_Type = qct::BuildingType::Residential;
