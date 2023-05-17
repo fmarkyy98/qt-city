@@ -1,5 +1,6 @@
 #include "GameModel.h"
 #include "building/ResidentialBuilding.h"
+#include "building/Forest.h"
 #include "building/base/WorkplaceBase.h"
 
 const QDate GameModel::m_dateAtStart = {1970, 1, 1};
@@ -192,7 +193,6 @@ void GameModel::advanceSimulation() {
 
     if(m_date.daysInYear() == 1) {
         yearPassed(buildings, structures);
-        //forest bonus
     }
 }
 
@@ -258,7 +258,11 @@ void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings,
 {
     maintainCity(buildings);
     maintainRoads(structures);
+    maintainForests(structures);
     increaseInhabitantAge(buildings);
+    calculateTax(buildings);
+    calculatePension(buildings);
+    calculateForestBonus(structures);
 }
 
 void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
@@ -289,6 +293,19 @@ void GameModel::maintainRoads(const std::vector<StructureBase *> &structures)
                         });
 
     m_money -= (roadCount * m_costOfMaintainingRoad);
+}
+
+void GameModel::maintainForests(const std::vector<StructureBase *> &structures)
+{
+    int forestCount;
+    for (auto structure :structures) {
+        if (auto forest = dynamic_cast<Forest*>(structure); forest != nullptr) {
+            int years = forest->getBuiltYear().daysTo(m_date) / 365;
+            if(years < 11)
+                ++forestCount;
+        }
+    }
+    m_money -= forestCount * m_costOfMaintainingForest;
 }
 
 void GameModel::increaseInhabitantAge(const std::vector<BuildingBase *> &buildings) {
@@ -341,9 +358,40 @@ bool GameModel::checkForForest(std::pair<int, int> position)
     return hasForestNearThis;
 }
 
-int GameModel::calculateTax(std::pair<int, int> position)
+void GameModel::calculateTax(const std::vector<BuildingBase *> &buildings)
 {
-    return 1;
+    int taxedInhabitants;
+    for (auto building :buildings) {
+        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
+            taxedInhabitants += house->getAdultInhabitantCount();
+        }
+    }
+    m_money += (taxedInhabitants * m_Tax);
+}
+
+void GameModel::calculatePension(const std::vector<BuildingBase *> &buildings)
+{
+    int pensionerInhabitants;
+    for (auto building :buildings) {
+        if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
+            pensionerInhabitants += house->getRetiredInhabitantCount();
+        }
+    }
+    m_money -= (pensionerInhabitants * m_Pension);
+}
+
+void GameModel::calculateForestBonus(const std::vector<StructureBase *> &structures)
+{
+    int forestBonus;
+    for (auto structure :structures) {
+        if (auto forest = dynamic_cast<Forest*>(structure); forest != nullptr) {
+            int years;
+            years = forest->getBuiltYear().daysTo(m_date) / 365;
+            if(years < 11)
+                forestBonus += years * forestBonus;
+        }
+    }
+    m_money += forestBonus;
 }
 
 void GameModel::catastrophe()
