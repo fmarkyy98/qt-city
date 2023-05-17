@@ -108,13 +108,13 @@ void GamePage::onFasterButtonClicked()
 void GamePage::onLogChanged(const QString& newLog)
 {
     logList.append(newLog);
-    QString logMessage="";
+    QString logMessage="Statistics:\n";
     for (auto log : logList)
     {
         logMessage+=log;
-        logMessage+="\n ";
+        logMessage+="\n";
     }
-    ui->tableWidget_4->item(1,0)->setText(logMessage);
+    ui->textEdit->setText(logMessage);
 }
 
 
@@ -297,20 +297,21 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         if(workPlace->getLevel()==1){
             //TODO
         }
-        if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
+        if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
             return QPixmap(":/images/stadium1");
-        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure)
+        } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
             if(workPlace->isBuildInProgress()) {
                 return QPixmap(":/images/stadium-construction1");
             } else return QPixmap(":/images/stadium3");
-        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
+        } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
             return QPixmap(":/images/stadium2");
-        else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure)
+        } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
             if(workPlace->isBuildInProgress()) {
                 return QPixmap(":/images/stadium-construction2");
             } else {
                 return QPixmap(":/images/stadium4");
             }
+        }
     } break;
     case qct::BuildingType::Forest: {
         info="Forest";
