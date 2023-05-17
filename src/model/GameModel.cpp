@@ -125,6 +125,7 @@ void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
     emit meta()->boardChanged();
     m_money -= m_costOfPlacingZone;
     emit meta()->moneyChanged(m_money);
+    emit meta()->log("A zone has been placed");
 }
 
 void GameModel::breakDownZone(int row, int col) {
@@ -132,6 +133,7 @@ void GameModel::breakDownZone(int row, int col) {
     emit meta()->zonesChanged();
     m_money += m_costOfPlacingZone / 3;
     emit meta()->moneyChanged(m_money);
+    emit meta()->log("A zone has been broken down");
 }
 
 
@@ -144,6 +146,7 @@ void GameModel::placeBuilding(qct::BuildingType buildingType, int row, int col) 
     emit meta()->boardChanged();
     m_money -= m_costOfBuildingBuilding;
     emit meta()->moneyChanged(m_money);
+    emit meta()->log("A building has been placed");
 }
 
 void GameModel::evolveBuilding(int row, int col)
@@ -174,6 +177,7 @@ void GameModel::newGame() {
     emit meta()->moneyChanged(m_money);
     m_date = m_dateAtStart;
     emit meta()->dateChanged(m_date);
+    emit meta()->log("Starting a new game");
 }
 
 void GameModel::advanceSimulation() {
@@ -202,6 +206,7 @@ void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& build
             building->advanceBuildingProcess();
         }
     }
+    emit meta()->log("Advancing building processes");
 }
 
 void GameModel::distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings) {
@@ -222,6 +227,7 @@ void GameModel::distributeInhabitantsToWorkplaces(const std::vector<BuildingBase
             workplace->setWorkerCount(workplace->getWorkerCapacity() * workplaceLoadRatio);
         }
     }
+    emit meta()->log("Inhabitants were distributed between workplaces");
 }
 
 void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings) {
@@ -230,6 +236,7 @@ void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings) {
             m_money += house->calculateMoneyProduced();
         }
     }
+    emit meta()->log("Increasing the city's money");
 }
 
 void GameModel::buildOnRandomZone()
@@ -247,6 +254,7 @@ void GameModel::buildOnRandomZone()
                     int randomIndex = QRandomGenerator::global()->bounded(buildings.size());
                     m_Board.placeBuilding(buildings[randomIndex], {j, i}, m_date);
                     emit meta()->boardChanged();
+                    emit meta()->log("Automatically building on a random zone");
                 }
             }
         }
@@ -282,6 +290,7 @@ void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money -= (stadiumCount * m_costOfMaintainingStadium + policeCount * m_costOfMaintainingPolice);
+    emit meta()->log("Calculating the cost of maintaining service establishments");
 }
 
 void GameModel::maintainRoads(const std::vector<StructureBase *> &structures)
@@ -293,6 +302,7 @@ void GameModel::maintainRoads(const std::vector<StructureBase *> &structures)
                         });
 
     m_money -= (roadCount * m_costOfMaintainingRoad);
+    emit meta()->log("Calculating the cost of maintaining roads");
 }
 
 void GameModel::maintainForests(const std::vector<StructureBase *> &structures)
@@ -306,6 +316,7 @@ void GameModel::maintainForests(const std::vector<StructureBase *> &structures)
         }
     }
     m_money -= forestCount * m_costOfMaintainingForest;
+    emit meta()->log("Calculating the cost of maintaining forests");
 }
 
 void GameModel::increaseInhabitantAge(const std::vector<BuildingBase *> &buildings) {
@@ -314,6 +325,7 @@ void GameModel::increaseInhabitantAge(const std::vector<BuildingBase *> &buildin
             house->increseInhabitantAge();
         }
     }
+    emit meta()->log("Increasing the age of inhabitants");
 }
 
 bool GameModel::checkForRoad(std::pair<int, int> position)
@@ -367,6 +379,7 @@ void GameModel::calculateTax(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money += (taxedInhabitants * m_Tax);
+    emit meta()->log("Calculating taxes");
 }
 
 void GameModel::calculatePension(const std::vector<BuildingBase *> &buildings)
@@ -378,6 +391,8 @@ void GameModel::calculatePension(const std::vector<BuildingBase *> &buildings)
         }
     }
     m_money -= (pensionerInhabitants * m_Pension);
+    emit meta()->log("Calculating pension");
+
 }
 
 void GameModel::calculateForestBonus(const std::vector<StructureBase *> &structures)
@@ -392,12 +407,15 @@ void GameModel::calculateForestBonus(const std::vector<StructureBase *> &structu
         }
     }
     m_money += forestBonus;
+    emit meta()->log("Calculating forest bonuses");
+
 }
 
 void GameModel::catastrophe()
 {
     m_Board.catastrophe();
     emit meta()->releasedCatastrophe();
+    emit meta()->log("Catastrophe has just occurred");
 }
 
 QList<qct::BuildingType> GameModel::getCompatibleBuildings(qct::ZoneType zoneType)
