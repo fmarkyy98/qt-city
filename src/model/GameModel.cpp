@@ -116,6 +116,24 @@ int GameModel::getGlobalWorkerCapacity() const {
                            });
 }
 
+int GameModel::getGlobalHappyness() const {
+    auto buildings = m_Board.getBuildings();
+    auto [sumHappyness, houseCount]
+        = std::accumulate(buildings.begin(), buildings.end(),
+                          std::pair{0, 0},
+                          [](std::pair<int, int> accumulated, BuildingBase* building) {
+                              if (auto house = dynamic_cast<ResidentialBuilding*>(building);
+                                  house != nullptr) {
+                                  accumulated.first += house->getCapacity();
+                                  ++accumulated.second;
+                              }
+
+                              return accumulated;
+                          });
+
+    return sumHappyness / houseCount;
+}
+
 void GameModel::placeZone(qct::ZoneType zoneType, int row, int col) {
     if(m_money < m_costOfPlacingZone)
         throw std::invalid_argument("Not enough money left for Zone placement!");
@@ -184,6 +202,9 @@ void GameModel::advanceSimulation() {
     distributeInhabitantsToWorkplaces(buildings);
     increaseMoney(buildings);
     buildOnRandomZone();
+    calculateHappyness();
+    settleInPeople();
+
     m_date = m_date.addDays(1);
     emit meta()->dateChanged(m_date);
 
@@ -194,6 +215,18 @@ void GameModel::advanceSimulation() {
     if(m_date.daysInYear() == 1) {
         yearPassed(buildings, structures);
     }
+}
+
+void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings,
+                           const std::vector<StructureBase *> &structures)
+{
+    maintainCity(buildings);
+    maintainRoads(structures);
+    maintainForests(structures);
+    increaseInhabitantAge(buildings);
+    calculateTax(buildings);
+    calculatePension(buildings);
+    calculateForestBonus(structures);
 }
 
 void GameModel::advanceBuildingProcesses(const std::vector<BuildingBase*>& buildings) {
@@ -253,16 +286,56 @@ void GameModel::buildOnRandomZone()
     }
 }
 
-void GameModel::yearPassed(const std::vector<BuildingBase *> &buildings,
-                           const std::vector<StructureBase *> &structures)
-{
-    maintainCity(buildings);
-    maintainRoads(structures);
-    maintainForests(structures);
-    increaseInhabitantAge(buildings);
-    calculateTax(buildings);
-    calculatePension(buildings);
-    calculateForestBonus(structures);
+void GameModel::calculateHappyness() {
+    int globalHappyness = calculateGlobalHappyness();
+
+    for (int i = 0; i < getHeight(); ++i) {
+        for (int j = 0; j < getWidth(); ++j) {
+            std::pair pair(j, i);
+            auto house = dynamic_cast<ResidentialBuilding*>(m_Board.at(pair).structure);
+            if (house == nullptr)
+                continue;
+
+            int enviromentalHappyness =
+                calculateEnviromentalHappyness(pair, 5);
+
+            house->setHappyness(globalHappyness + enviromentalHappyness);
+        }
+    }
+}
+
+int GameModel::calculateGlobalHappyness() {
+    int happyness = 0;
+    happyness += 10 - m_Tax;
+    happyness += std::min(0, m_money / 100);
+
+    int serviceZoneCount = 0;
+    int industrialZoneCount = 0;
+    for (int i = 0; i < getHeight(); ++i) {
+        for (int j = 0; j < getWidth(); ++j) {
+            switch (m_Board.at({j, i}).zoneType) {
+            case qct::ZoneType::Service: {
+                ++serviceZoneCount;
+            } break;
+            case qct::ZoneType::Industrial: {
+                ++industrialZoneCount;
+            } break;
+            default: { } break;
+            }
+        }
+    }
+    happyness += -std::abs(serviceZoneCount - industrialZoneCount);
+
+    return happyness;
+}
+
+int GameModel::calculateEnviromentalHappyness(std::pair<int, int> position, int radius) {
+    // TODO
+    return 0;
+}
+
+void GameModel::settleInPeople() {
+
 }
 
 void GameModel::maintainCity(const std::vector<BuildingBase *> &buildings)
@@ -360,7 +433,7 @@ bool GameModel::checkForForest(std::pair<int, int> position)
 
 void GameModel::calculateTax(const std::vector<BuildingBase *> &buildings)
 {
-    int taxedInhabitants;
+    int taxedInhabitants = 0;
     for (auto building :buildings) {
         if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
             taxedInhabitants += house->getAdultInhabitantCount();
@@ -371,7 +444,7 @@ void GameModel::calculateTax(const std::vector<BuildingBase *> &buildings)
 
 void GameModel::calculatePension(const std::vector<BuildingBase *> &buildings)
 {
-    int pensionerInhabitants;
+    int pensionerInhabitants = 0;
     for (auto building :buildings) {
         if (auto house = dynamic_cast<ResidentialBuilding*>(building); house != nullptr) {
             pensionerInhabitants += house->getRetiredInhabitantCount();
@@ -382,7 +455,7 @@ void GameModel::calculatePension(const std::vector<BuildingBase *> &buildings)
 
 void GameModel::calculateForestBonus(const std::vector<StructureBase *> &structures)
 {
-    int forestBonus;
+    int forestBonus = 0;
     for (auto structure :structures) {
         if (auto forest = dynamic_cast<Forest*>(structure); forest != nullptr) {
             int years;

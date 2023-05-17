@@ -14,4 +14,5 @@ private:
     static constexpr qct::ZoneType s_Zone = qct::ZoneType::All;
     static constexpr int s_Width = 1;
     static constexpr int s_Height = 1;
+    static constexpr double s_HappynessFactor = 0;
 };

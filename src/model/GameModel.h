@@ -27,6 +27,7 @@ public:
     int getGlobalInhabitantCapacity() const override;
     int getGlobalWorkerCount() const override;
     int getGlobalWorkerCapacity() const override;
+    int getGlobalHappyness() const override;
     void placeZone(qct::ZoneType zoneType, int row, int col) override;
     void breakDownZone(int row, int col) override;
     void placeBuilding(qct::BuildingType buildingType, int row, int col) override;
@@ -38,13 +39,16 @@ public:
     void advanceSimulation() override;
 
 private:
-    bool canPlaceBuilding(); //TODO kell ez egyaltalan?
+    void yearPassed(const std::vector<BuildingBase *> &buildings,
+                    const std::vector<StructureBase *> &structures);
     void advanceBuildingProcesses(const std::vector<BuildingBase *> &buildings);
     void distributeInhabitantsToWorkplaces(const std::vector<BuildingBase *> &buildings);
     void increaseMoney(const std::vector<BuildingBase *> &buildings);
     void buildOnRandomZone();
-    void yearPassed(const std::vector<BuildingBase *> &buildings,
-                    const std::vector<StructureBase *> &structures);
+    void calculateHappyness();
+    int calculateGlobalHappyness();
+    int calculateEnviromentalHappyness(std::pair<int, int> position, int radius);
+    void settleInPeople();
     void maintainCity(const std::vector<BuildingBase *> &buildings);
     void maintainRoads(const std::vector<StructureBase *> &structures);
     void maintainForests(const std::vector<StructureBase *> &structures);
