@@ -4030,7 +4030,7 @@ border-radius: 10px;</string>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="7,1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="7,0">
        <item>
         <widget class="QTableWidget" name="tableWidget">
          <property name="autoFillBackground">
@@ -4085,7 +4085,15 @@ margin: 0 px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget_4">
+        <widget class="QTextEdit" name="textEdit">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 white, stop: 1 grey);
 border-style: solid;
@@ -4093,43 +4101,15 @@ border-color: black;
 border-radius: 10px;
 color: black;</string>
          </property>
-         <property name="gridStyle">
-          <enum>Qt::NoPen</enum>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
          </property>
-         <attribute name="horizontalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderHighlightSections">
-          <bool>false</bool>
-         </attribute>
-         <row>
-          <property name="text">
-           <string>New Row</string>
-          </property>
-         </row>
-         <row>
-          <property name="text">
-           <string>New Row</string>
-          </property>
-         </row>
-         <column>
-          <property name="text">
-           <string>New Column</string>
-          </property>
-         </column>
-         <item row="0" column="0">
-          <property name="text">
-           <string>Statistics:</string>
-          </property>
-         </item>
-         <item row="1" column="0">
-          <property name="text">
-           <string> text</string>
-          </property>
-         </item>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::NoTextInteraction</set>
+         </property>
         </widget>
        </item>
       </layout>

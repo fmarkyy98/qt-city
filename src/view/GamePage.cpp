@@ -108,13 +108,13 @@ void GamePage::onFasterButtonClicked()
 void GamePage::onLogChanged(const QString& newLog)
 {
     logList.append(newLog);
-    QString logMessage="";
+    QString logMessage="Statistics:\n";
     for (auto log : logList)
     {
         logMessage+=log;
-        logMessage+="\n ";
+        logMessage+="\n";
     }
-    ui->tableWidget_4->item(1,0)->setText(logMessage);
+    ui->textEdit->setText(logMessage);
 }
 
 
