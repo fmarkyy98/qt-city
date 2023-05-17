@@ -14,7 +14,6 @@ public:
 
     int getCapacity() const;
     int getCapacity(int level) const;
-
     int getChildInhabitantCount() const;
     int getAdultInhabitantCount() const;
     int getRetiredInhabitantCount() const;
