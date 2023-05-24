@@ -35,5 +35,25 @@
         <file alias="police2">police-station-2.png</file>
         <file alias="police3_construction">police-station-3-consttruct.png</file>
         <file alias="police3">police-station-3.png</file>
+        <file alias="radioactive">radioactive.png</file>
+        <file alias="stadium_new">stadium_new.png</file>
+        <file alias="stadium_mini">stadium_pici.png</file>
+        <file alias="stadium_new_construct">stadium_new_construct.png</file>
+        <file alias="2stadium">stadium2.png</file>
+        <file alias="3stadium">stadium3.png</file>
+        <file alias="2stadium_construction">2stadium_construction.png</file>
+        <file alias="3stadium_construction">3stadium_construction.png</file>
+        <file alias="3stadium-1">3stadium-1.png</file>
+        <file alias="3stadium-2">3stadium-2.png</file>
+        <file alias="3stadium-4">3stadium-4.png</file>
+        <file alias="3stadium-3">3stadium-3.png</file>
+        <file alias="2stadium-1">2stadium-1.png</file>
+        <file alias="2stadium-2">2stadium-2.png</file>
+        <file alias="2stadium-3">2stadium-3.png</file>
+        <file alias="2stadium-4">2stadium-4.png</file>
+        <file alias="3stadium-3done">3stadium-3done.png</file>
+        <file alias="3stadium-4done">3stadium-4done.png</file>
+        <file alias="2stadium-3done">2stadium-3done.png</file>
+        <file alias="2stadium-4done">2stadium-4done.png</file>
     </qresource>
 </RCC>
