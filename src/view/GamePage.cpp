@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QtGui>
 #include <QFileDialog>
+#include <QLocale>
 #include <iostream>
 
 #include "../model/building/ResidentialBuilding.h"
@@ -28,7 +29,7 @@ GamePage::GamePage(std::shared_ptr<IGameModel> model, QWidget *parent)
               ":/images/factory",
               ":/images/store",
               ":/images/police",
-              ":/images/stadium",
+              ":/images/stadium_mini",
               ":/images/forest"};
     stackedWidget = new QStackedWidget(this);
     stackedWidget->addWidget(ui->tableWidget_2);
@@ -161,7 +162,11 @@ void GamePage::onZonesChanged()
 
 void GamePage::onMoneyChanaged(int money)
 {
-    ui->label_3->setText("Pemz: " + QString::number(money) + " csengőPengő");
+    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+        QLocale aEnglish;
+    QString resultString = aEnglish.toString(money);
+
+    ui->label_3->setText("Money: " + resultString + " Csengőpengő");
 }
 
 void GamePage::onDateChanged(const QDate& date)
@@ -289,24 +294,80 @@ QPixmap GamePage::getPixMap(const StructureBase *structure, std::optional<std::p
         capacity=workPlace->getWorkerCapacity();
         peopleCount=workPlace->getWorkerCount();
         info="Stadium\nCount of the people: "+QString::number(peopleCount)+"\nCapacity: "+QString::number(capacity);
-        if(coordinates==std::nullopt)
-            return QPixmap(":/images/stadium");
-        if(workPlace->getLevel()==1){
-            //TODO
+        if(coordinates==std::nullopt && workPlace->isBuildInProgress()){
+            if(workPlace->getLevel()==0)
+                return QPixmap(":/images/stadium_new_construct");
+            else if (workPlace->getLevel()==1)
+                return QPixmap(":/images/2stadium_construction");
+            else
+                return QPixmap(":/images/3stadium_construction");
+        }else if(coordinates==std::nullopt && !workPlace->isBuildInProgress()){
+            if(workPlace->getLevel()==1)
+                return QPixmap(":/images/stadium_new");
+            else if (workPlace->getLevel()==2)
+                return QPixmap(":/images/2stadium");
+            else
+                return QPixmap(":/images/3stadium");
         }
-        if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
-            return QPixmap(":/images/stadium1");
-        } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
-            if(workPlace->isBuildInProgress()) {
-                return QPixmap(":/images/stadium-construction1");
-            } else return QPixmap(":/images/stadium3");
-        } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
-            return QPixmap(":/images/stadium2");
-        } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
-            if(workPlace->isBuildInProgress()) {
-                return QPixmap(":/images/stadium-construction2");
-            } else {
-                return QPixmap(":/images/stadium4");
+        if(workPlace->isBuildInProgress()) {
+            if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
+                if(workPlace->getLevel()==0)
+                    return QPixmap(":/images/stadium1");
+                else if (workPlace->getLevel()==1)
+                    return QPixmap(":/images/2stadium-1");
+                else
+                    return QPixmap(":/images/3stadium-1");
+            } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
+                if(workPlace->getLevel()==0)
+                    return QPixmap(":/images/stadium-construction1");
+                else if (workPlace->getLevel()==1)
+                    return QPixmap(":/images/2stadium-3");
+                else
+                    return QPixmap(":/images/3stadium-3");
+            } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
+                if(workPlace->getLevel()==0)
+                    return QPixmap(":/images/stadium2");
+                else if (workPlace->getLevel()==1)
+                    return QPixmap(":/images/2stadium-2");
+                else
+                    return QPixmap(":/images/3stadium-2");
+            } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
+                if(workPlace->getLevel()==0)
+                    return QPixmap(":/images/stadium-construction2");
+                else if (workPlace->getLevel()==1)
+                    return QPixmap(":/images/2stadium-4");
+                else
+                    return QPixmap(":/images/3stadium-4");
+            }
+        }else{
+            if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
+                if(workPlace->getLevel()==1)
+                    return QPixmap(":/images/stadium1");
+                else if (workPlace->getLevel()==2)
+                    return QPixmap(":/images/2stadium-1");
+                else
+                    return QPixmap(":/images/3stadium-1");
+            } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)!=structure) {
+                if(workPlace->getLevel()==1)
+                    return QPixmap(":/images/stadium3");
+                else if (workPlace->getLevel()==2)
+                    return QPixmap(":/images/2stadium-3done");
+                else
+                    return QPixmap(":/images/3stadium-3done");
+            } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second-1)!=structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
+                if(workPlace->getLevel()==1)
+                    return QPixmap(":/images/stadium2");
+                else if (workPlace->getLevel()==2)
+                    return QPixmap(":/images/2stadium-2");
+                else
+                    return QPixmap(":/images/3stadium-2");
+            } else if(m_pGameModel->structureAt(coordinates->first-1, coordinates->second)==structure && m_pGameModel->structureAt(coordinates->first, coordinates->second-1)==structure) {
+                if(workPlace->getLevel()==1)
+                    return QPixmap(":/images/stadium4");
+                else if (workPlace->getLevel()==2)
+                    return QPixmap(":/images/2stadium-4done");
+                else
+                    return QPixmap(":/images/3stadium-4done");
             }
         }
     } break;
@@ -527,9 +588,16 @@ void GamePage::onTableWidget2Clicked(int row, int column)
 }
 
 void GamePage::onRefreshboard() {
+    QLabel* label;
+    QRect viewportRect;
+    int cellWidth;
+    int cellHeight;
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
             switch (m_pGameModel->zoneAt(x,y)) {
+                case qct::ZoneType::Radioactive:
+                    ui->tableWidget->item(x,y)->setBackground(QColor(0, 10, 0));
+                    break;
                 case qct::ZoneType::Industrial:
                     ui->tableWidget->item(x,y)->setBackground(QColor(113, 10, 0));
                     break;
@@ -543,11 +611,12 @@ void GamePage::onRefreshboard() {
                     break;
             }
             auto structure = m_pGameModel->structureAt(x, y);
-            pixMap=getPixMap(structure, {{x, y}});
-            QLabel* label = new QLabel();
-            QRect viewportRect = ui->tableWidget->viewport()->rect();
-            int cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
-            int cellHeight = viewportRect.height() / ui->tableWidget->rowCount();
+            if (m_pGameModel->zoneAt(x,y)==qct::ZoneType::Radioactive) pixMap = QPixmap(":/images/radioactive");
+            else pixMap=getPixMap(structure, {{x, y}});
+            label = new QLabel();
+            viewportRect = ui->tableWidget->viewport()->rect();
+            cellWidth = viewportRect.width() / ui->tableWidget->columnCount();
+            cellHeight = viewportRect.height() / ui->tableWidget->rowCount();
             pixMap = pixMap.scaled(cellWidth, cellHeight, Qt::IgnoreAspectRatio);
             label->setPixmap(pixMap);
             label->setFixedSize(pixMap.size());

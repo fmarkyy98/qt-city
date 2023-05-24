@@ -4023,7 +4023,7 @@ padding: 10px;
 border-radius: 10px;</string>
          </property>
          <property name="text">
-          <string>GameName</string>
+          <string>QtCity</string>
          </property>
         </widget>
        </item>
@@ -4061,6 +4061,14 @@ color: black;</string>
        </item>
        <item row="0" column="1">
         <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: white;</string>
+         </property>
          <property name="text">
           <string>Status:</string>
          </property>
