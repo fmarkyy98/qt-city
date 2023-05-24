@@ -213,7 +213,11 @@ void GameBoard::demolishBuilding(std::pair<int, int> position)
     if (ptr == nullptr)
         throw std::invalid_argument("No bulding to demolish.");
 
-    m_TileMatrix[row][col].structure = nullptr;
+    for (int i = 0; i < m_TileMatrix.size(); ++i)
+        for (int j = 0; j < m_TileMatrix[i].size(); ++j)
+            if (m_TileMatrix[i][j].structure == ptr)
+                m_TileMatrix[i][j].structure = nullptr;
+
     std::erase_if(m_Buildings,
                   [ptr](auto&& building) {return building.get() == ptr;});
     std::erase_if(m_Structures,
