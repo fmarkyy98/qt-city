@@ -48,11 +48,11 @@ void GameModel::load(const QString &path) {
     assert(dataList.empty() && "Deserialization item number missmatch.");
 }
 
-int GameModel::getHeight() const {
+int GameModel::getWidth() const {
     return 25;
 }
 
-int GameModel::getWidth() const {
+int GameModel::getHeight() const {
     return 15;
 }
 
@@ -279,8 +279,8 @@ void GameModel::increaseMoney(const std::vector<BuildingBase *> &buildings) {
 
 void GameModel::buildOnRandomZone()
 {
-    for (int i = 0; i < getHeight(); ++i) {
-        for (int j = 0; j < getWidth(); ++j) {
+    for (int i = 0; i < getWidth(); ++i) {
+        for (int j = 0; j < getHeight(); ++j) {
             std::pair pair(j, i);
             if (m_Board.at(pair).structure == nullptr &&
                 static_cast<int>(m_Board.at(pair).zoneType) & static_cast<int>(qct::ZoneType::NotNone) &&
@@ -302,8 +302,8 @@ void GameModel::buildOnRandomZone()
 void GameModel::calculateHappyness() {
     int globalHappyness = calculateGlobalHappyness();
 
-    for (int i = 0; i < getHeight(); ++i) {
-        for (int j = 0; j < getWidth(); ++j) {
+    for (int i = 0; i < getWidth(); ++i) {
+        for (int j = 0; j < getHeight(); ++j) {
             std::pair pair(j, i);
             auto house = dynamic_cast<ResidentialBuilding*>(m_Board.at(pair).structure);
             if (house == nullptr)
@@ -324,8 +324,8 @@ int GameModel::calculateGlobalHappyness() {
 
     int serviceZoneCount = 0;
     int industrialZoneCount = 0;
-    for (int i = 0; i < getHeight(); ++i) {
-        for (int j = 0; j < getWidth(); ++j) {
+    for (int i = 0; i < getWidth(); ++i) {
+        for (int j = 0; j < getHeight(); ++j) {
             switch (m_Board.at({j, i}).zoneType) {
             case qct::ZoneType::Service: {
                 ++serviceZoneCount;
@@ -347,7 +347,7 @@ int GameModel::calculateEnviromentalHappyness(std::pair<int, int> position, int 
     auto [x, y] = position;
     for (int i = y - radius; i <= y + radius; ++i) {
         for (int j = x - radius; j <= x + radius; ++j) {
-            if (i < 0 || i >= getHeight() || j < 0 || j >= getWidth())
+            if (i < 0 || i >= getWidth() || j < 0 || j >= getHeight())
                 continue;
 
             if (auto structure = m_Board.at({j, i}).structure; structure != nullptr)
@@ -455,8 +455,8 @@ bool GameModel::checkForForest(std::pair<int, int> position)
     auto [row, col] = position;
     bool hasForestNearThis = false;
 
-    for (int i = std::max(0, col - 3); i <= std::min(getHeight(), col + 3); i++) {
-        for (int j = std::max(0, row - 3); j <= std::min(getWidth(), row + 3); j++) {
+    for (int i = std::max(0, col - 3); i <= std::min(getWidth(), col + 3); i++) {
+        for (int j = std::max(0, row - 3); j <= std::min(getHeight(), row + 3); j++) {
             if (m_Board.at(std::make_pair(j, i)).structure->getType() == qct::BuildingType::Forest) {
                 if (std::abs(i - col) + std::abs(j - row) <= 3)
                     hasForestNearThis = true;

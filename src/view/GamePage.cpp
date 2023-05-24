@@ -188,16 +188,16 @@ void GamePage::newGame()
 {
     isGamePaused = false;
     speedLevel=1000;
-    std::cerr<<m_pGameModel->getHeight();
     std::cerr<<m_pGameModel->getWidth();
+    std::cerr<<m_pGameModel->getHeight();
     ui->tableWidget->clear();
-    ui->tableWidget->setRowCount(m_pGameModel->getWidth());
-    ui->tableWidget->setColumnCount(m_pGameModel->getHeight());
+    ui->tableWidget->setRowCount(m_pGameModel->getHeight());
+    ui->tableWidget->setColumnCount(m_pGameModel->getWidth());
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    for(int y=0;y<m_pGameModel->getHeight();y++)
+    for(int y=0;y<m_pGameModel->getWidth();y++)
     {
-        for(int x=0;x<m_pGameModel->getWidth();x++)
+        for(int x=0;x<m_pGameModel->getHeight();x++)
         {
             QTableWidgetItem* newItem = new QTableWidgetItem;
             newItem->setBackground(QColor(113, 168, 93));
@@ -588,12 +588,17 @@ void GamePage::onTableWidget2Clicked(int row, int column)
 }
 
 void GamePage::onRefreshboard() {
+<<<<<<< .merge_file_0gbxqr
     QLabel* label;
     QRect viewportRect;
     int cellWidth;
     int cellHeight;
     for (int y = 0; y < m_pGameModel->getHeight(); y++) {
         for (int x = 0; x < m_pGameModel->getWidth(); x++) {
+=======
+    for (int y = 0; y < m_pGameModel->getWidth(); y++) {
+        for (int x = 0; x < m_pGameModel->getHeight(); x++) {
+>>>>>>> .merge_file_FHzBKE
             switch (m_pGameModel->zoneAt(x,y)) {
                 case qct::ZoneType::Radioactive:
                     ui->tableWidget->item(x,y)->setBackground(QColor(0, 10, 0));

@@ -19,8 +19,8 @@ public:
                        QObject* parent = nullptr);
     void save(const QString& path) const override;
     void load(const QString& path) override;
-    int getHeight() const override;
     int getWidth() const override;
+    int getHeight() const override;
     int getCostOfPlacingZone() const override;
     int getCostOfBuildingBuilding() const override;
     int getGlobalInhabitantCount() const override;
