@@ -16,10 +16,21 @@
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
+image: 
+  name: szofttech.inf.elte.hu:5050/szofttech-ab-2023/group-08/qt-city:latest
+
 stages:          # List of stages for jobs, and their order of execution
+  - test-runner
   - build
   - test
   - deploy
+
+test-runner:
+  image: szofttech.inf.elte.hu:5050/szofttech-ab-2023/group-08/qt-city:latest
+  stage: test-runner
+  tags: [windows]
+  script:
+    - Write-Host 'hello'
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
