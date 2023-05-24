@@ -588,17 +588,12 @@ void GamePage::onTableWidget2Clicked(int row, int column)
 }
 
 void GamePage::onRefreshboard() {
-<<<<<<< .merge_file_0gbxqr
     QLabel* label;
     QRect viewportRect;
     int cellWidth;
     int cellHeight;
-    for (int y = 0; y < m_pGameModel->getHeight(); y++) {
-        for (int x = 0; x < m_pGameModel->getWidth(); x++) {
-=======
     for (int y = 0; y < m_pGameModel->getWidth(); y++) {
         for (int x = 0; x < m_pGameModel->getHeight(); x++) {
->>>>>>> .merge_file_FHzBKE
             switch (m_pGameModel->zoneAt(x,y)) {
                 case qct::ZoneType::Radioactive:
                     ui->tableWidget->item(x,y)->setBackground(QColor(0, 10, 0));
