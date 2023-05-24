@@ -20,8 +20,8 @@ signals:
 class IGameModel : public IService<IGameModelMeta>
 {
 public:
-    virtual int getHeight() const = 0;
     virtual int getWidth() const = 0;
+    virtual int getHeight() const = 0;
     virtual int getCostOfPlacingZone() const = 0;
     virtual int getCostOfBuildingBuilding() const = 0;
     virtual int getGlobalInhabitantCount() const = 0;
