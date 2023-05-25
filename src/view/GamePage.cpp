@@ -169,6 +169,7 @@ void GamePage::onMoneyChanaged(int money)
     ui->label_3->setText("Money: " + resultString + " Csengőpengő");
 }
 
+//valami
 void GamePage::onDateChanged(const QDate& date)
 {
     ui->label_2->setText("Time: "+date.toString("yyyy.MM.dd"));
