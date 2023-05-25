@@ -23,7 +23,7 @@ before_script:
   - $env:Path += ";C:\Qt\Ninja;C:\Qt\CMake_64\bin;C:\Qt\mingw1120_64\bin"
 
 stages:          # List of stages for jobs, and their order of execution
-  - build-debug
+  - build
   - test
 
 build-job-debug:       # This job runs in the build stage, which runs first.
