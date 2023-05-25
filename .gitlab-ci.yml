@@ -32,7 +32,7 @@ build-job-debug:       # This job runs in the build stage, which runs first.
   script:
     - mkdir comp
     - cd comp
-    - cmake -DCMAKE_BUILD_TYPE=Debug -G "Ninja" ..
+    - cmake -DCMAKE_BUILD_TYPE=Debug -G "Ninja" -DCMAKE_AUTOMOC_MOC_EXECUTABLE=C:/Qt/6.4.3/mingw_64/bin/moc.exe ..
     - cmake -build .
   artifacts:
     paths:
