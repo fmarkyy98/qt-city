@@ -43,8 +43,7 @@ build-job-release:       # This job runs in the build stage, which runs first.
   stage: build
   tags: [windows]
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - dir
 
 build-job-unit-test:       # This job runs in the build stage, which runs first.
   stage: build
