@@ -53,5 +53,3 @@ if(WIN32)
         COMMENT "Deploying Qt..."
     )
 endif()
-
-

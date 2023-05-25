@@ -61,7 +61,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/view/ViewFactory.cpp
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
+add_executable(${TARGET} ${SOURCES} ${INTERNAL_HEADERS} ${PUBLIC_HEADERS} ${UIS} ${RECOURSES})
 
 target_link_libraries(${TARGET} ${LIBRARIES})
 target_include_directories(${TARGET} PRIVATE ${INCLUDES})
