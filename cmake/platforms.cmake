@@ -8,7 +8,6 @@ if(WIN32)
     # Make sure that you have the qt dependencie in <project's root'>/external/windows/qt path
     message(STATUS ">>>Windows")
     set(CMAKE_PREFIX_PATH "C:/Qt/6.4.3/mingw_64")
-    set(Qt6_DIR "C:/Qt/6.4.3/mingw_64")
     set(QT_WINDEPLOY "C:/Qt/6.4.3/mingw_64/bin/windeployqt.exe")
 elseif(LINUX)
     message(STATUS ">>>Linux")
