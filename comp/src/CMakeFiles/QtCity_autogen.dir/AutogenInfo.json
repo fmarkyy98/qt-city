@@ -1,0 +1,337 @@
+{
+	"BUILD_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/QtCity_autogen",
+	"CMAKE_BINARY_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp",
+	"CMAKE_CURRENT_BINARY_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/src",
+	"CMAKE_EXECUTABLE" : "C:/Program Files/CMake/bin/cmake.exe",
+	"CMAKE_LIST_FILES" : 
+	[
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/CMakeLists.txt",
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/resource/images.qrc"
+	],
+	"CMAKE_SOURCE_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city",
+	"DEP_FILE" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/QtCity_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "QtCity_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/GameBoard.h",
+			"MU",
+			"NLOY5YBGEN/moc_GameBoard.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/GameModel.h",
+			"MU",
+			"NLOY5YBGEN/moc_GameModel.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/Tile.h",
+			"MU",
+			"NLOY5YBGEN/moc_Tile.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Factory.h",
+			"MU",
+			"HQD32P4BRJ/moc_Factory.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Forest.h",
+			"MU",
+			"HQD32P4BRJ/moc_Forest.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Police.h",
+			"MU",
+			"HQD32P4BRJ/moc_Police.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/ResidentialBuilding.h",
+			"MU",
+			"HQD32P4BRJ/moc_ResidentialBuilding.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Road.h",
+			"MU",
+			"HQD32P4BRJ/moc_Road.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Stadium.h",
+			"MU",
+			"HQD32P4BRJ/moc_Stadium.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Store.h",
+			"MU",
+			"HQD32P4BRJ/moc_Store.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/base/BuildingBase.h",
+			"MU",
+			"BSZ4BE7LVA/moc_BuildingBase.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/base/StructureBase.h",
+			"MU",
+			"BSZ4BE7LVA/moc_StructureBase.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/base/WorkplaceBase.h",
+			"MU",
+			"BSZ4BE7LVA/moc_WorkplaceBase.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/export/Enums.h",
+			"MU",
+			"LVEQ2VYCUL/moc_Enums.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/export/GameModelFactory.h",
+			"MU",
+			"LVEQ2VYCUL/moc_GameModelFactory.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/export/IGameModel.h",
+			"MU",
+			"LVEQ2VYCUL/moc_IGameModel.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/export/IService.h",
+			"MU",
+			"LVEQ2VYCUL/moc_IService.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/persistence/FileIOService.h",
+			"MU",
+			"7QTDBEOKRE/moc_FileIOService.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/persistence/export/FileIOServiceFactory.h",
+			"MU",
+			"34MDCHZ4YR/moc_FileIOServiceFactory.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/persistence/export/IFileIOService.h",
+			"MU",
+			"34MDCHZ4YR/moc_IFileIOService.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/GamePage.h",
+			"MU",
+			"OTUN7GXZT4/moc_GamePage.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/MainWindow.h",
+			"MU",
+			"OTUN7GXZT4/moc_MainWindow.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/MenuPage.h",
+			"MU",
+			"OTUN7GXZT4/moc_MenuPage.cpp",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/export/ViewFactory.h",
+			"MU",
+			"YBSEQID77L/moc_ViewFactory.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/QtCity_autogen/include",
+	"MOC_COMPILATION_FILE" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/QtCity_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"MINGW_HAS_SECURE_API=1",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_WIDGETS_LIB",
+		"UNICODE",
+		"WIN32",
+		"WIN64",
+		"_ENABLE_EXTENDED_ALIGNED_STORAGE",
+		"_UNICODE",
+		"_WIN64"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src",
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/src",
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/export",
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/export",
+		"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/persistence/export",
+		"C:/Qt/6.4.3/mingw_64/include/QtWidgets",
+		"C:/Qt/6.4.3/mingw_64/include",
+		"C:/Qt/6.4.3/mingw_64/include/QtCore",
+		"C:/Qt/6.4.3/mingw_64/mkspecs/win32-g++",
+		"C:/Qt/6.4.3/mingw_64/include/QtGui",
+		"C:/msys64/mingw64/include/c++/12.1.0",
+		"C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32",
+		"C:/msys64/mingw64/include/c++/12.1.0/backward",
+		"C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include",
+		"C:/msys64/mingw64/include",
+		"C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/12.1.0/include-fixed"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_GADGET_EXPORT",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"C:/msys64/mingw64/bin/c++.exe",
+		"-dM",
+		"-E",
+		"-c",
+		"C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/QtCity_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/QtCity_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "C:/Qt/6.4.3/mingw_64/./bin/moc.exe",
+	"QT_UIC_EXECUTABLE" : "C:/Qt/6.4.3/mingw_64/./bin/uic.exe",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 4,
+	"SETTINGS_FILE" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/QtCity_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "D:/suli/elte/2022_2023_2/qtcity/qt-city/src/main.cpp", "MU", null ],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/GameBoard.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/GameModel.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/GameModelFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Factory.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Forest.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Police.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/ResidentialBuilding.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Road.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Stadium.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/Store.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/base/BuildingBase.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/base/StructureBase.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/model/building/base/WorkplaceBase.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/persistence/FileIOService.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/persistence/FileIOServiceFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/GamePage.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/MainWindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/MenuPage.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/ViewFactory.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

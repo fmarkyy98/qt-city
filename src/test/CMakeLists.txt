@@ -27,11 +27,17 @@ set(TEST_INCLUDES
     ${CMAKE_CURRENT_SOURCE_DIR}/../
     ${CMAKE_CURRENT_SOURCE_DIR}/../model
     ${CMAKE_CURRENT_SOURCE_DIR}/../model/export
+    ${CMAKE_CURRENT_SOURCE_DIR}/../model/building
+    ${CMAKE_CURRENT_SOURCE_DIR}/../model/building/base
+    ${CMAKE_CURRENT_SOURCE_DIR}/../persistence
+    ${CMAKE_CURRENT_SOURCE_DIR}/../persistence/export
 )
 
 set(TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/QtCityTestMain.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/QtCityGameModelTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/QtCityPersistenceTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/QtCityModelBaseTest.cpp
 )
 
 file(GLOB TEST_INTERNAL_HEADERS

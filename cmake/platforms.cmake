@@ -7,9 +7,9 @@ if(WIN32)
     # To build project without Qt Creator with CMake
     # Make sure that you have the qt dependencie in <project's root'>/external/windows/qt path
     message(STATUS ">>>Windows")
-    set(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/external/windows/qt/6.4.3/mingw_64)
-    set(Qt6_DIR ${PROJECT_SOURCE_DIR}/external/windows/qt/6.4.3/mingw_64/)
-    set(QT_WINDEPLOY ${PROJECT_SOURCE_DIR}/external/windows/qt/6.4.3/mingw_64/bin/windeployqt.exe)
+    set(CMAKE_PREFIX_PATH "C:/Qt/6.4.3/mingw_64")
+    set(QT_WINDEPLOY "C:/Qt/6.4.3/mingw_64/bin/windeployqt.exe")
+    set(Qt6_DIR "C:/Qt/6.4.3/mingw_64/lib/cmake/qt6") # CACHE PATH "Initial cache" FORCE
 elseif(LINUX)
     message(STATUS ">>>Linux")
 elseif(APPLE)
