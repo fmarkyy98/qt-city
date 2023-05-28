@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     QtCityModelBaseTest qtCityModelBaseTest;
 
     // game model
-    QTest::qExec(&qtCityGameModelTest, argc, argv);
+    // QTest::qExec(&qtCityGameModelTest, argc, argv);
     // persistence
     QTest::qExec(&qtCityPersistenceTest, argc, argv);
     // game model

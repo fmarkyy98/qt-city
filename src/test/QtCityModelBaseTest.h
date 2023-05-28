@@ -21,6 +21,10 @@ private slots:
 	void test_FactoryConstValues();
 	void test_FactoryWorkplace();
 	void test_FactoryPossibilities();
+	//Forest
+	void test_ForestValues();
+	//Police
+	void test_PoliceConstValues();
 
 	void cleanup();
 private:

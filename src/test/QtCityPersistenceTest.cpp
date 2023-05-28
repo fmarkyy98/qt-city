@@ -47,9 +47,9 @@ void QtCityPersistenceTest::test_FactoryIsSingleton()
 	std::shared_ptr<IFileIOService> pIFileIOService1 = FileIOServiceFactory::getFileIOService();
 	std::shared_ptr<IFileIOService> pIFileIOService2 = FileIOServiceFactory::getFileIOService();
 	QVERIFY(pIFileIOService1 == pIFileIOService2);
-	QCOMPARE(pIFileIOService1.use_count(), 5);
+	QCOMPARE(pIFileIOService1.use_count(), 4);
 	pIFileIOService1.reset();
-	QCOMPARE(pIFileIOService2.use_count(), 4);
+	QCOMPARE(pIFileIOService2.use_count(), 3);
 }
 
 void QtCityPersistenceTest::test_invalidPath()

@@ -1,6 +1,8 @@
 #include "QtCityModelBaseTest.h"
 #include "Enums.h"
 #include "Factory.h"
+#include "Forest.h"
+#include "Police.h"
 
 void QtCityModelBaseTest::init()
 {
@@ -36,6 +38,26 @@ void QtCityModelBaseTest::test_FactoryPossibilities()
 	QCOMPARE(factory.canBuildOnZone(qct::ZoneType::Service), false);
 	QCOMPARE(factory.canBuildOnZone(qct::ZoneType::All), true);
 	QCOMPARE(factory.canBuildOnZone(qct::ZoneType::NotNone), true);
+}
+
+void QtCityModelBaseTest::test_ForestValues()
+{
+	Forest forest;
+	QCOMPARE(forest.getHeight(), 1);
+	QCOMPARE(forest.getWidth(), 1);
+	QCOMPARE(forest.getType(), qct::BuildingType::Forest);
+	QCOMPARE(forest.getCompatibleZone(), qct::ZoneType::All);
+	QCOMPARE(forest.getHappynessFactor(), 5);
+}
+
+void QtCityModelBaseTest::test_PoliceConstValues()
+{
+	Police police;
+	QCOMPARE(police.getHeight(), 1);
+	QCOMPARE(police.getWidth(), 1);
+	QCOMPARE(police.getType(), qct::BuildingType::Police);
+	QCOMPARE(police.getCompatibleZone(), qct::ZoneType::Service);
+	QCOMPARE(police.getHappynessFactor(), 4);
 }
 
 void QtCityModelBaseTest::cleanup()
