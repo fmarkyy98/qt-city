@@ -16,19 +16,45 @@
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
+image: 
+  name: szofttech.inf.elte.hu:5050/szofttech-ab-2023/group-08/qt-city:latest
+
+before_script:
+  - $env:Path += ";C:\Qt\Tools\Ninja;C:\Qt\Tools\CMake_64\bin;C:\Qt\Tools\mingw1120_64\bin"
+
 stages:          # List of stages for jobs, and their order of execution
   - build
   - test
-  - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
+build-job-debug:       # This job runs in the build stage, which runs first.
   stage: build
+  tags: [windows]
+  script:
+    - mkdir conf
+    - cd conf
+    - cmake -DCMAKE_BUILD_TYPE=Debug -GNinja ..
+    - cmake -build .
+  artifacts:
+    paths:
+      - build/Debug
+    expire_in: 1 week
+
+build-job-release:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags: [windows]
+  script:
+    - dir
+
+build-job-unit-test:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags: [windows]
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
+  tags: [windows]
   script:
     - echo "Running unit tests... This will take about 60 seconds."
     - sleep 60
