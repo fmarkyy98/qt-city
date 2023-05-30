@@ -1,8 +1,13 @@
 #include "QtCityModelBaseTest.h"
+
 #include "Enums.h"
 #include "Factory.h"
 #include "Forest.h"
 #include "Police.h"
+#include "ResidentialBuilding.h"
+#include "Road.h"
+#include "Stadium.h"
+#include "Store.h"
 
 void QtCityModelBaseTest::init()
 {
@@ -58,6 +63,49 @@ void QtCityModelBaseTest::test_PoliceConstValues()
 	QCOMPARE(police.getType(), qct::BuildingType::Police);
 	QCOMPARE(police.getCompatibleZone(), qct::ZoneType::Service);
 	QCOMPARE(police.getHappynessFactor(), 4);
+}
+
+void QtCityModelBaseTest::test_ResidentialBuildingConstValues()
+{
+	ResidentialBuilding residentialBuilding;
+	QCOMPARE(residentialBuilding.getHeight(), 1);
+	QCOMPARE(residentialBuilding.getWidth(), 1);
+	QCOMPARE(residentialBuilding.getCapacity(3), 400);
+	QCOMPARE(residentialBuilding.getCompatibleZone(), qct::ZoneType::Residential);
+	QCOMPARE(residentialBuilding.getHappynessFactor(), 0);
+	QCOMPARE(residentialBuilding.getAdultInhabitantCount(), 0);
+	QCOMPARE(residentialBuilding.getRetiredInhabitantCount(), 0);
+	QCOMPARE(residentialBuilding.getChildInhabitantCount(), 0);
+}
+
+void QtCityModelBaseTest::test_RoadConstValues()
+{
+	Road road;
+	QCOMPARE(road.getHeight(), 1);
+	QCOMPARE(road.getWidth(), 1);
+	QCOMPARE(road.getType(), qct::BuildingType::Road);
+	QCOMPARE(road.getCompatibleZone(), qct::ZoneType::All);
+	QCOMPARE(road.getHappynessFactor(), 0);
+}
+
+void QtCityModelBaseTest::test_StadiumConstValues()
+{
+	Stadium stadium;
+	QCOMPARE(stadium.getHeight(), 2);
+	QCOMPARE(stadium.getWidth(), 2);
+	QCOMPARE(stadium.getType(), qct::BuildingType::Stadium);
+	QCOMPARE(stadium.getCompatibleZone(), qct::ZoneType::Service);
+	QCOMPARE(stadium.getHappynessFactor(), 8);
+}
+
+void QtCityModelBaseTest::test_StoreConstValues()
+{
+	Store store;
+	QCOMPARE(store.getHeight(), 1);
+	QCOMPARE(store.getWidth(), 1);
+	QCOMPARE(store.getType(), qct::BuildingType::Store);
+	QCOMPARE(store.getCompatibleZone(), qct::ZoneType::Service);
+	QCOMPARE(store.getHappynessFactor(), 0);
 }
 
 void QtCityModelBaseTest::cleanup()

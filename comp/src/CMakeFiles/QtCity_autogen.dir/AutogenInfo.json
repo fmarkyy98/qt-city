@@ -3,7 +3,7 @@
 	"CMAKE_BINARY_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp",
 	"CMAKE_CURRENT_BINARY_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src",
 	"CMAKE_CURRENT_SOURCE_DIR" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/src",
-	"CMAKE_EXECUTABLE" : "C:/Program Files/CMake/bin/cmake.exe",
+	"CMAKE_EXECUTABLE" : "C:/Qt/Tools/CMake_64/bin/cmake.exe",
 	"CMAKE_LIST_FILES" : 
 	[
 		"D:/suli/elte/2022_2023_2/qtcity/qt-city/src/CMakeLists.txt",
@@ -167,6 +167,7 @@
 		"MINGW_HAS_SECURE_API=1",
 		"QT_CORE_LIB",
 		"QT_GUI_LIB",
+		"QT_NO_DEBUG",
 		"QT_WIDGETS_LIB",
 		"UNICODE",
 		"WIN32",
@@ -217,7 +218,7 @@
 		"-dM",
 		"-E",
 		"-c",
-		"C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCXXCompilerABI.cpp"
+		"C:/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCXXCompilerABI.cpp"
 	],
 	"MOC_PREDEFS_FILE" : "D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/QtCity_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,

@@ -645,4 +645,4 @@ src/QtCity_autogen/timestamp: \
   D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/export/ViewFactory.h \
   D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/GamePage.ui \
   D:/suli/elte/2022_2023_2/qtcity/qt-city/src/view/MenuPage.ui \
-  C:/Program\ Files/CMake/bin/cmake.exe
+  C:/Qt/Tools/CMake_64/bin/cmake.exe

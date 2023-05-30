@@ -25,6 +25,14 @@ private slots:
 	void test_ForestValues();
 	//Police
 	void test_PoliceConstValues();
+	//ResidentialBuilding
+	void test_ResidentialBuildingConstValues();
+	//Road
+	void test_RoadConstValues();
+	//Satdium
+	void test_StadiumConstValues();
+	//Store
+	void test_StoreConstValues();
 
 	void cleanup();
 private:
