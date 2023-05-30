@@ -18,6 +18,8 @@
 
 image: 
   name: szofttech.inf.elte.hu:5050/szofttech-ab-2023/group-08/qt-city:latest
+  entrypoint:
+    - ["powershell"]
 
 before_script:
   - $env:Path += ";C:\Qt\Tools\Ninja;C:\Qt\Tools\CMake_64\bin;C:\Qt\Tools\mingw1120_64\bin"
@@ -33,7 +35,7 @@ build-job-debug:       # This job runs in the build stage, which runs first.
     - mkdir conf
     - cd conf
     - cmake -DCMAKE_BUILD_TYPE=Debug -GNinja ..
-    - cmake -build .
+    - cmake --build .
   artifacts:
     paths:
       - build/Debug
