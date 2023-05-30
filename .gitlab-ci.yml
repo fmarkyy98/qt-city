@@ -18,8 +18,7 @@
 
 image: 
   name: szofttech.inf.elte.hu:5050/szofttech-ab-2023/group-08/qt-city:latest
-  entrypoint:
-    - ["powershell"]
+  entrypoint: ["powershell"]
 
 before_script:
   - $env:Path += ";C:\Qt\Tools\Ninja;C:\Qt\Tools\CMake_64\bin;C:\Qt\Tools\mingw1120_64\bin"
