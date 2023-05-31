@@ -73,6 +73,7 @@ CMakeLists.txt.user*
 *.exe
 out/
 build/
+conf/
 
 # VS 
 .vs/
