@@ -1,0 +1,32 @@
+# FROM mcr.microsoft.com/powershell:latest
+# Use a base Windows image
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+
+# Set the SHELL to cmd
+SHELL ["cmd", "/S", "/C"]
+
+# Install Chocolatey
+RUN powershell -NoProfile -ExecutionPolicy Bypass -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+
+# Install CMake, Ninja, and MinGW, and pwsh
+RUN choco install -y cmake ninja mingw
+RUN choco install -y powershell-core 
+
+# Set the working directory
+# WORKDIR /app
+
+# Add CMake, Ninja, and MinGW to PATH
+RUN setx /M PATH "%PATH%;C:\Program Files\CMake\bin;C:\Program Files\ninja;C:\MinGW\bin"
+RUN setx /M PATH "%PATH%;%ProgramFiles%\PowerShell\7"
+
+# Copy your application files to the container (if needed)
+
+# copy files
+COPY Qt c:/
+
+# setup powershell core to entry point
+# ENTRYPOINT ["pwsh"]
+
+# NOTE
+# It needs the Qt files to be in the same directory as the Dockerfile,
+# current version is 6.4.3 mingw_64
