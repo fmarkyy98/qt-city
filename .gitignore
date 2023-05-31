@@ -74,6 +74,7 @@ CMakeLists.txt.user*
 out/
 build/
 conf/
+comp/
 
 # VS 
 .vs/

@@ -1,7 +1,0 @@
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/CMakeFiles/edit_cache.dir
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/CMakeFiles/rebuild_cache.dir
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/QtCity.dir
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/edit_cache.dir
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/rebuild_cache.dir
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/QtCity_autogen_timestamp_deps.dir
-D:/suli/elte/2022_2023_2/qtcity/qt-city/comp/src/CMakeFiles/QtCity_autogen.dir
