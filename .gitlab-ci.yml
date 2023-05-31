@@ -32,7 +32,7 @@ build-job-debug:       # This job runs in the build stage, which runs first.
   script:
     - mkdir conf
     - cd conf
-    - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH="C:/Qt/6.5.1/mingw_64" -GNinja ..
+    - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=C:/Qt/6.5.1/mingw_64 -GNinja ..
     - cmake --build .
   artifacts:
     paths:
